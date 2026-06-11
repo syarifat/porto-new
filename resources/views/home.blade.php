@@ -97,14 +97,6 @@
 
         .nav-links a:hover { color: var(--primary); }
 
-        .nav-admin-btn {
-            background: var(--gradient-1);
-            color: white !important;
-            padding: 0.4rem 1rem !important;
-            border-radius: 6px;
-            font-size: 0.8rem !important;
-        }
-
         .nav-hamburger {
             display: none;
             flex-direction: column;
@@ -947,7 +939,6 @@
             <li><a href="#techstack">Tech Stack</a></li>
             <li><a href="#timeline">Proyek</a></li>
             <li><a href="#certificates">Sertifikat</a></li>
-            <li><a href="{{ route('admin.login') }}" class="nav-admin-btn">Admin</a></li>
         </ul>
     </div>
 </nav>
@@ -1040,7 +1031,7 @@
                 Berpengalaman di bidang <strong style="color: var(--primary)">Full-Stack Development</strong>, <strong style="color: var(--primary)">Mobile Development</strong>, dan <strong style="color: var(--primary)">Internet of Things (IoT)</strong>, saya memiliki antusiasme mendalam dalam menjembatani dunia fisik dengan ekosistem digital.
             </p>
             <p>
-                Sebagai <strong style="color: var(--accent)">Founder dari SAT Project (DevXpert)</strong>, saya mendedikasikan diri untuk merancang, mengelola, dan mengimplementasikan berbagai solusi teknologi end-to-end — mulai dari sistem otomatisasi cerdas, aplikasi manajemen terintegrasi, hingga pemeliharaan infrastruktur IT skala perusahaan.
+                Sebagai <strong style="color: var(--accent)">Founder dari SAT Project </strong>, saya mendedikasikan diri untuk merancang, mengelola, dan mengimplementasikan berbagai solusi teknologi end-to-end — mulai dari sistem otomatisasi cerdas, aplikasi manajemen terintegrasi, hingga pemeliharaan infrastruktur IT skala perusahaan.
             </p>
             <p>
                 Dengan pendekatan yang selalu berfokus pada efisiensi, performa, dan skalabilitas, saya siap berkolaborasi untuk mengubah ide-ide kompleks menjadi solusi digital yang nyata dan berdampak.
@@ -1338,13 +1329,11 @@
 
 <!-- Footer -->
 <footer>
-    <p>© {{ date('Y') }} <strong>Syarif Ahsani Taqwim</strong> &mdash; Founder of SAT Project (DevXpert)</p>
+    <p>© {{ date('Y') }} <strong>Syarif Ahsani Taqwim</strong> &mdash; Founder of SAT Project</p>
     <p style="margin-top: 0.5rem;">
         <a href="mailto:syarifahsanit@gmail.com">syarifahsanit@gmail.com</a>
         &bull;
         <a href="https://instagram.com/syariif.at" target="_blank">@syariif.at</a>
-        &bull;
-        <a href="{{ route('admin.login') }}">Admin Panel</a>
     </p>
 </footer>
 
