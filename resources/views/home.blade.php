@@ -500,9 +500,21 @@
         }
 
         .bento-glyph {
-            font-size: 1.6rem;
             margin-bottom: 1rem;
             line-height: 1;
+            color: var(--text-3);
+        }
+
+        .bento-glyph svg {
+            width: 28px;
+            height: 28px;
+            display: block;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .bento-card:hover .bento-glyph svg {
+            transform: scale(1.08);
+            color: var(--accent);
         }
 
         /* ===== TECH STACK ===== */
@@ -1172,28 +1184,65 @@
     <div class="bento-grid fade-up">
         <!-- Card 1: col 1–2, row 1 (wide) -->
         <div class="bento-card wide">
-            <div class="bento-glyph">💻</div>
+            <div class="bento-glyph">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="3" width="20" height="13" rx="2"/>
+                    <line x1="12" y1="16" x2="12" y2="20"/>
+                    <line x1="8" y1="20" x2="16" y2="20"/>
+                    <path d="M8 8l-2 2 2 2"/>
+                    <path d="M16 8l2 2-2 2"/>
+                    <line x1="13" y1="7" x2="11" y2="13"/>
+                </svg>
+            </div>
             <div class="bento-eyebrow">Software</div>
             <h3>Full-Stack &amp; Mobile Development</h3>
             <p>PHP/Laravel untuk backend yang solid. JavaScript di sisi klien. Mobile development untuk Android &amp; iOS. Dari skema database sampai halaman yang nyaman dipakai orang awam.</p>
         </div>
         <!-- Card 2: col 3, row 1–2 (tall) -->
         <div class="bento-card tall">
-            <div class="bento-glyph">🔌</div>
+            <div class="bento-glyph">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="5" y="5" width="14" height="14" rx="2"/>
+                    <path d="M9 9h6v6H9z"/>
+                    <path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/>
+                </svg>
+            </div>
             <div class="bento-eyebrow">IoT</div>
             <h3>Internet of Things</h3>
             <p>Perancangan perangkat keras cerdas: ESP32, ESP8266, Arduino. Integrasi sensor (RFID, ultrasonik, GPS NEO-6M, load cell HX711) ke dashboard yang bisa dimonitor real-time lewat web.</p>
         </div>
         <!-- Card 3: col 1, row 2 -->
         <div class="bento-card">
-            <div class="bento-glyph">⚙️</div>
+            <div class="bento-glyph">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="6" rx="1"/>
+                    <rect x="2" y="9" width="20" height="6" rx="1"/>
+                    <rect x="2" y="16" width="20" height="6" rx="1"/>
+                    <circle cx="6" cy="5" r="1" fill="currentColor"/>
+                    <circle cx="10" cy="5" r="1" fill="currentColor"/>
+                    <circle cx="6" cy="12" r="1" fill="currentColor"/>
+                    <circle cx="10" cy="12" r="1" fill="currentColor"/>
+                    <circle cx="6" cy="19" r="1" fill="currentColor"/>
+                    <circle cx="10" cy="19" r="1" fill="currentColor"/>
+                </svg>
+            </div>
             <div class="bento-eyebrow">Infrastructure</div>
             <h3>IT Infra &amp; DevOps</h3>
             <p>SysAdmin Linux, Docker, Vercel &amp; Cloudflare. Pengelolaan home server dan enterprise server dari nol.</p>
         </div>
         <!-- Card 4: col 2, row 2 -->
         <div class="bento-card">
-            <div class="bento-glyph">🔐</div>
+            <div class="bento-glyph">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"/>
+                    <circle cx="12" cy="4" r="2.5"/>
+                    <circle cx="4" cy="18" r="2.5"/>
+                    <circle cx="20" cy="18" r="2.5"/>
+                    <line x1="12" y1="6.5" x2="12" y2="9"/>
+                    <line x1="5.7" y1="16.3" x2="9.8" y2="13.7"/>
+                    <line x1="18.3" y1="16.3" x2="14.2" y2="13.7"/>
+                </svg>
+            </div>
             <div class="bento-eyebrow">Networking</div>
             <h3>Enterprise Networking</h3>
             <p>Cisco &amp; MikroTik, DHCP/DNS/Firewall, VoIP, CCTV, dan keamanan jaringan perusahaan skala menengah.</p>
