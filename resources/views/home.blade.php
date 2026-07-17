@@ -827,7 +827,9 @@
             transition: filter 0.3s;
         }
 
-        .client-logo:hover { filter: brightness(0.75) saturate(0.15); }
+        .client-logo:hover {
+            filter: brightness(1) saturate(1);
+        }
 
         .client-name {
             font-size: 0.65rem;
