@@ -803,20 +803,24 @@
             text-transform: uppercase;
             color: var(--text-3);
             margin-bottom: 2rem;
+            text-align: center;
         }
 
         .clients-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 1.25rem 3rem;
-            align-items: center;
+            gap: 2rem 2.5rem;
+            align-items: flex-start;
+            justify-content: center;
         }
 
         .client-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.5rem;
+            width: 140px;
+            text-align: center;
         }
 
         .client-logo {
@@ -835,6 +839,7 @@
             font-size: 0.65rem;
             color: var(--text-3);
             letter-spacing: 0.04em;
+            line-height: 1.35;
         }
 
         /* ===== FOOTER ===== */
