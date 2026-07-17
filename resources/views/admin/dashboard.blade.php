@@ -8,31 +8,31 @@
 
 <!-- Stats Grid -->
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
-    <div class="card" style="padding: 1.5rem; border-top: 3px solid #6366f1;">
+    <div class="card" style="padding: 1.5rem; border-top: 3px solid var(--primary);">
         <div style="display:flex; align-items:center; gap:1rem;">
-            <div style="width:48px;height:48px;border-radius:12px;background:rgba(99,102,241,0.15);display:flex;align-items:center;justify-content:center;font-size:1.3rem;">📁</div>
+            <div style="width:48px;height:48px;border-radius:12px;background:rgba(217, 119, 6, 0.12);display:flex;align-items:center;justify-content:center;font-size:1.3rem;">📁</div>
             <div>
-                <div style="font-size:2rem;font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1;">{{ $totalProjects }}</div>
+                <div style="font-size:2rem;font-weight:700;line-height:1;">{{ $totalProjects }}</div>
                 <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.15rem;">Total Proyek</div>
             </div>
         </div>
     </div>
 
-    <div class="card" style="padding: 1.5rem; border-top: 3px solid #8b5cf6;">
+    <div class="card" style="padding: 1.5rem; border-top: 3px solid var(--secondary);">
         <div style="display:flex; align-items:center; gap:1rem;">
-            <div style="width:48px;height:48px;border-radius:12px;background:rgba(139,92,246,0.15);display:flex;align-items:center;justify-content:center;font-size:1.3rem;">🏆</div>
+            <div style="width:48px;height:48px;border-radius:12px;background:rgba(245, 158, 11, 0.12);display:flex;align-items:center;justify-content:center;font-size:1.3rem;">🏆</div>
             <div>
-                <div style="font-size:2rem;font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1;">{{ $totalCertificates }}</div>
+                <div style="font-size:2rem;font-weight:700;line-height:1;">{{ $totalCertificates }}</div>
                 <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.15rem;">Sertifikat</div>
             </div>
         </div>
     </div>
 
-    <div class="card" style="padding: 1.5rem; border-top: 3px solid #06b6d4;">
+    <div class="card" style="padding: 1.5rem; border-top: 3px solid var(--primary-dark);">
         <div style="display:flex; align-items:center; gap:1rem;">
-            <div style="width:48px;height:48px;border-radius:12px;background:rgba(6,182,212,0.15);display:flex;align-items:center;justify-content:center;font-size:1.3rem;">🤝</div>
+            <div style="width:48px;height:48px;border-radius:12px;background:rgba(180, 83, 9, 0.12);display:flex;align-items:center;justify-content:center;font-size:1.3rem;">🤝</div>
             <div>
-                <div style="font-size:2rem;font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1;">{{ $totalClients }}</div>
+                <div style="font-size:2rem;font-weight:700;line-height:1;">{{ $totalClients }}</div>
                 <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.15rem;">Klien dengan Logo</div>
             </div>
         </div>
@@ -94,10 +94,10 @@
                         @foreach($recentProjects as $project)
                         <tr>
                             <td style="font-weight:500;">{{ Str::limit($project->title, 30) }}</td>
-                            <td>{{ $project->partner_name ?? '—' }}</td>
+                            <td>{{ $project->partner_name ?? 'N/A' }}</td>
                             <td style="font-size:0.8rem;">
                                 {{ $project->start_date->format('M Y') }}
-                                @if($project->end_date) – {{ $project->end_date->format('M Y') }} @else – Skrg @endif
+                                @if($project->end_date) s/d {{ $project->end_date->format('M Y') }} @else s/d Sekarang @endif
                             </td>
                             <td>
                                 <span class="badge {{ $project->status === 'completed' ? 'badge-success' : 'badge-warning' }}">

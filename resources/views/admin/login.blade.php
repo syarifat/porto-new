@@ -6,19 +6,19 @@
     <title>Admin Login | SAT Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #6366f1;
-            --secondary: #8b5cf6;
-            --bg: #050508;
-            --bg-card: #0d0d18;
-            --border: rgba(99, 102, 241, 0.15);
-            --text: #f1f5f9;
-            --text-muted: #64748b;
-            --text-secondary: #94a3b8;
+            --primary: #d97706;
+            --secondary: #f59e0b;
+            --bg: #0f0f0d;
+            --bg-card: #171714;
+            --border: rgba(255, 255, 255, 0.07);
+            --text: #f5f5f3;
+            --text-muted: #70706b;
+            --text-secondary: #b5b5b0;
             --danger: #ef4444;
-            --gradient: linear-gradient(135deg, #6366f1, #8b5cf6);
+            --gradient: linear-gradient(135deg, #d97706, #f59e0b);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -39,16 +39,16 @@
         .bg-gradient {
             position: absolute;
             inset: 0;
-            background: radial-gradient(ellipse 70% 70% at 50% -10%, rgba(99, 102, 241, 0.2) 0%, transparent 60%),
-                        radial-gradient(ellipse 40% 40% at 90% 90%, rgba(139, 92, 246, 0.12) 0%, transparent 50%);
+            background: radial-gradient(ellipse 70% 70% at 50% -10%, rgba(217, 119, 6, 0.12) 0%, transparent 60%),
+                        radial-gradient(ellipse 40% 40% at 90% 90%, rgba(245, 158, 11, 0.06) 0%, transparent 50%);
         }
 
         .bg-grid {
             position: absolute;
             inset: 0;
-            background-image: linear-gradient(rgba(99, 102, 241, 0.04) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(99, 102, 241, 0.04) 1px, transparent 1px);
-            background-size: 60px 60px;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+            background-size: 26px 26px;
         }
 
         .login-card {
@@ -60,7 +60,7 @@
             max-width: 420px;
             position: relative;
             z-index: 1;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
             animation: slideUp 0.5s ease;
         }
 
@@ -84,13 +84,13 @@
             justify-content: center;
             margin: 0 auto 1rem;
             font-size: 1.5rem;
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 10px 30px rgba(217, 119, 6, 0.3);
         }
 
         .login-logo h1 {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 1.5rem;
-            font-weight: 700;
+            font-weight: 800;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -128,7 +128,7 @@
 
         .form-control:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
         }
 
         .form-control::placeholder { color: var(--text-muted); }
@@ -196,7 +196,7 @@
         .btn-submit:hover {
             opacity: 0.9;
             transform: translateY(-1px);
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 8px 25px rgba(217, 119, 6, 0.3);
         }
 
         .btn-submit:active {

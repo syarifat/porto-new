@@ -6,26 +6,26 @@
     <title>Admin - @yield('title', 'Dashboard') | SAT Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #8b5cf6;
-            --accent: #06b6d4;
-            --success: #22c55e;
+            --primary: #d97706;
+            --primary-dark: #b45309;
+            --secondary: #f59e0b;
+            --accent: #d97706;
+            --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
-            --bg: #08080f;
-            --bg-sidebar: #0c0c18;
-            --bg-card: #0f0f1e;
-            --bg-input: #131325;
-            --border: rgba(99, 102, 241, 0.15);
-            --border-hover: rgba(99, 102, 241, 0.35);
-            --text: #f1f5f9;
-            --text-muted: #64748b;
-            --text-secondary: #94a3b8;
-            --gradient: linear-gradient(135deg, #6366f1, #8b5cf6);
+            --bg: #0f0f0d;
+            --bg-sidebar: #171714;
+            --bg-card: #1e1e1a;
+            --bg-input: #262620;
+            --border: rgba(255, 255, 255, 0.07);
+            --border-hover: rgba(255, 255, 255, 0.15);
+            --text: #f5f5f3;
+            --text-muted: #70706b;
+            --text-secondary: #b5b5b0;
+            --gradient: linear-gradient(135deg, #d97706, #f59e0b);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -65,15 +65,20 @@
         }
 
         .sidebar-logo a {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text);
             text-decoration: none;
+            letter-spacing: -0.02em;
         }
+
+        .sidebar-logo a .logo-dot  { color: var(--accent); }
+        .sidebar-logo a .logo-x    { color: var(--text-muted); font-weight: 400; font-size: 0.8rem; margin: 0 0.1rem; }
+        .sidebar-logo a .logo-icon { width: 18px; height: 18px; display: block; flex-shrink: 0; opacity: 0.85; }
 
         .sidebar-logo p {
             font-size: 0.72rem;
@@ -112,14 +117,14 @@
         }
 
         .sidebar-nav a:hover {
-            background: rgba(99, 102, 241, 0.1);
+            background: rgba(217, 119, 6, 0.08);
             color: var(--text);
         }
 
         .sidebar-nav a.active {
-            background: rgba(99, 102, 241, 0.15);
+            background: rgba(217, 119, 6, 0.15);
             color: var(--primary);
-            border: 1px solid rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(217, 119, 6, 0.25);
         }
 
         .sidebar-nav a svg {
@@ -280,7 +285,7 @@
         .btn-primary:hover {
             opacity: 0.9;
             transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+            box-shadow: 0 6px 20px rgba(217, 119, 6, 0.25);
         }
 
         .btn-danger {
@@ -332,7 +337,7 @@
 
         .form-control:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
         }
 
         .form-control::placeholder { color: var(--text-muted); }
@@ -382,7 +387,7 @@
             text-transform: uppercase;
             letter-spacing: 0.06em;
             border-bottom: 1px solid var(--border);
-            background: rgba(99, 102, 241, 0.04);
+            background: rgba(255, 255, 255, 0.02);
         }
 
         table.admin-table td {
@@ -395,7 +400,7 @@
 
         table.admin-table tr:last-child td { border-bottom: none; }
 
-        table.admin-table tr:hover td { background: rgba(99, 102, 241, 0.03); }
+        table.admin-table tr:hover td { background: rgba(255, 255, 255, 0.015); }
 
         table.admin-table td:first-child { color: var(--text); }
 
@@ -426,7 +431,7 @@
 
         .file-upload-area:hover {
             border-color: var(--primary);
-            background: rgba(99, 102, 241, 0.05);
+            background: rgba(217, 119, 6, 0.05);
         }
 
         .file-upload-area input[type="file"] {
@@ -568,7 +573,11 @@
 <!-- Sidebar -->
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
-        <a href="{{ route('admin.dashboard') }}">SAT Admin</a>
+        <a href="{{ route('admin.dashboard') }}">
+            SAT<span class="logo-dot">.</span> Admin
+            <span class="logo-x">×</span>
+            <img class="logo-icon" src="/logosat-white.svg" alt="SAT logo mark" width="18" height="18">
+        </a>
         <p>Portfolio Management</p>
     </div>
     <nav class="sidebar-nav">
