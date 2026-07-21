@@ -1785,7 +1785,7 @@
             </div>
             <div>
                 <div class="ai-chat-title">SAT Assistant</div>
-                <div class="ai-chat-subtitle">● Online (Groq AI Powered)</div>
+                <div class="ai-chat-subtitle">● Online</div>
             </div>
         </div>
         <button class="ai-chat-close" id="aiChatClose" aria-label="Tutup Chat">✕</button>
