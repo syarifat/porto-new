@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Syarif Ahsani Taqwim, Full-Stack Developer, IoT Engineer, dan IT Infrastructure Specialist. Membangun sistem end-to-end yang benar-benar berjalan.">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Syarif Ahsani Taqwim</title>
 
     <!-- Google Fonts: Inter + DM Sans -->
@@ -948,6 +949,276 @@
 
         .modal-close:hover { background: var(--surface-2); color: var(--text-1); }
 
+        /* ===== AI CHAT WIDGET ===== */
+        .ai-chat-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 999;
+            background: var(--surface);
+            border: 1px solid rgba(217, 119, 6, 0.4);
+            color: var(--text-1);
+            padding: 0.75rem 1.25rem;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 15px rgba(217, 119, 6, 0.15);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .ai-chat-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            border-color: var(--accent);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 25px rgba(217, 119, 6, 0.3);
+        }
+
+        .ai-chat-pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent);
+            animation: aiPulse 2s infinite;
+        }
+
+        @keyframes aiPulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(217, 119, 6, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(217, 119, 6, 0); }
+        }
+
+        .ai-chat-box {
+            position: fixed;
+            bottom: 5.5rem;
+            right: 2rem;
+            width: 380px;
+            max-width: calc(100vw - 2.5rem);
+            height: 520px;
+            max-height: calc(100vh - 7.5rem);
+            background: rgba(23, 23, 20, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-hover);
+            border-radius: var(--r-lg);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(217, 119, 6, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+
+        .ai-chat-box.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .ai-chat-header {
+            padding: 0.9rem 1.1rem;
+            background: var(--surface-2);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .ai-chat-header-info {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+        }
+
+        .ai-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: var(--accent-dim);
+            border: 1px solid rgba(217, 119, 6, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .ai-chat-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-1);
+            line-height: 1.2;
+        }
+
+        .ai-chat-subtitle {
+            font-size: 0.7rem;
+            color: var(--text-3);
+        }
+
+        .ai-chat-close {
+            background: transparent;
+            border: none;
+            color: var(--text-3);
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: var(--r);
+            transition: color 0.2s;
+        }
+
+        .ai-chat-close:hover { color: var(--text-1); }
+
+        .ai-chat-body {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            font-size: 0.84rem;
+        }
+
+        .ai-chat-body::-webkit-scrollbar { width: 4px; }
+        .ai-chat-body::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 2px; }
+
+        .ai-msg {
+            display: flex;
+            gap: 0.5rem;
+            max-width: 88%;
+        }
+
+        .ai-msg.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .ai-msg-bubble {
+            padding: 0.65rem 0.9rem;
+            border-radius: 14px;
+            line-height: 1.5;
+            word-break: break-word;
+            font-size: 0.83rem;
+        }
+
+        .ai-msg.bot .ai-msg-bubble {
+            background: var(--surface-2);
+            color: var(--text-1);
+            border: 1px solid var(--border);
+            border-top-left-radius: 4px;
+        }
+
+        .ai-msg.user .ai-msg-bubble {
+            background: var(--accent);
+            color: #fff;
+            border-top-right-radius: 4px;
+            font-weight: 500;
+        }
+
+        .ai-pills {
+            padding: 0.5rem 0.8rem;
+            display: flex;
+            gap: 0.4rem;
+            overflow-x: auto;
+            border-top: 1px solid var(--border);
+            background: var(--bg);
+        }
+
+        .ai-pills::-webkit-scrollbar { display: none; }
+
+        .ai-pill {
+            white-space: nowrap;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            font-size: 0.72rem;
+            padding: 0.35rem 0.7rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .ai-pill:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        .ai-chat-footer {
+            padding: 0.65rem 0.85rem;
+            background: var(--surface-2);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ai-chat-input {
+            flex: 1;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.55rem 0.9rem;
+            color: var(--text-1);
+            font-size: 0.82rem;
+            font-family: 'DM Sans', sans-serif;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .ai-chat-input:focus { border-color: var(--accent); }
+
+        .ai-chat-send {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+            flex-shrink: 0;
+        }
+
+        .ai-chat-send:hover { opacity: 0.9; transform: scale(1.05); }
+
+        .ai-typing-dots {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 0.4rem 0.2rem;
+        }
+
+        .ai-typing-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--text-3);
+            border-radius: 50%;
+            animation: aiTyping 1.4s infinite ease-in-out both;
+        }
+
+        .ai-typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .ai-typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes aiTyping {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        @media (max-width: 480px) {
+            .ai-chat-btn { bottom: 1.25rem; right: 1.25rem; padding: 0.6rem 1rem; }
+            .ai-chat-box { bottom: 4.75rem; right: 0.75rem; left: 0.75rem; width: auto; height: 75vh; }
+        }
+
         /* ===== DOT CANVAS ===== */
         #dot-canvas {
             position: fixed;
@@ -1494,6 +1765,57 @@
     <img src="" alt="Sertifikat" class="modal-img" id="modalImg" onclick="event.stopPropagation()">
 </div>
 
+<!-- AI Chat Floating Button -->
+<button class="ai-chat-btn" id="aiChatToggle" aria-label="Tanya SAT AI">
+    <div class="ai-chat-pulse"></div>
+    <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+    </svg>
+    <span>Tanya SAT AI</span>
+</button>
+
+<!-- AI Chat Box -->
+<div class="ai-chat-box" id="aiChatBox" aria-hidden="true">
+    <div class="ai-chat-header">
+        <div class="ai-chat-header-info">
+            <div class="ai-avatar">
+                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+            </div>
+            <div>
+                <div class="ai-chat-title">SAT Assistant</div>
+                <div class="ai-chat-subtitle">● Online (Groq AI Powered)</div>
+            </div>
+        </div>
+        <button class="ai-chat-close" id="aiChatClose" aria-label="Tutup Chat">✕</button>
+    </div>
+
+    <div class="ai-chat-body" id="aiChatBody">
+        <div class="ai-msg bot">
+            <div class="ai-msg-bubble">
+                Halo! Saya <strong>SAT Assistant</strong> 👋. Ada yang ingin Anda ketahui tentang Syarif, keahliannya, atau proyek yang pernah ia garap?
+            </div>
+        </div>
+    </div>
+
+    <div class="ai-pills">
+        <button class="ai-pill" onclick="sendQuickPill('Siapa Syarif Ahsani Taqwim?')">👋 Siapa Syarif?</button>
+        <button class="ai-pill" onclick="sendQuickPill('Apa saja keahlian utamanya?')">⚡ Keahlian Utama</button>
+        <button class="ai-pill" onclick="sendQuickPill('Ada proyek IoT apa saja?')">📡 Proyek IoT</button>
+        <button class="ai-pill" onclick="sendQuickPill('Bagaimana cara menghubungi Syarif?')">📞 Kontak WA</button>
+    </div>
+
+    <div class="ai-chat-footer">
+        <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="Tulis pertanyaan Anda..." autocomplete="off">
+        <button class="ai-chat-send" id="aiChatSend" aria-label="Kirim Pesan">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9-7-9-7v5l-9 2 9 2v5z"/>
+            </svg>
+        </button>
+    </div>
+</div>
+
 <script>
     // Hamburger
     const hamburger = document.getElementById('hamburger');
@@ -1523,6 +1845,125 @@
     }
 
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // ===== AI CHAT WIDGET =====
+    const aiChatToggle = document.getElementById('aiChatToggle');
+    const aiChatBox    = document.getElementById('aiChatBox');
+    const aiChatClose  = document.getElementById('aiChatClose');
+    const aiChatBody   = document.getElementById('aiChatBody');
+    const aiChatInput  = document.getElementById('aiChatInput');
+    const aiChatSend   = document.getElementById('aiChatSend');
+
+    let chatHistory = [];
+    let isAiThinking = false;
+
+    function toggleAiChat() {
+        const isOpen = aiChatBox.classList.toggle('open');
+        aiChatBox.setAttribute('aria-hidden', !isOpen);
+        if (isOpen) {
+            aiChatInput.focus();
+        }
+    }
+
+    aiChatToggle.addEventListener('click', toggleAiChat);
+    aiChatClose.addEventListener('click', toggleAiChat);
+
+    function appendMessage(role, text) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `ai-msg ${role}`;
+        
+        const bubble = document.createElement('div');
+        bubble.className = 'ai-msg-bubble';
+        
+        if (role === 'bot') {
+            bubble.innerHTML = text.replace(/\n/g, '<br>');
+        } else {
+            bubble.textContent = text;
+        }
+
+        msgDiv.appendChild(bubble);
+        aiChatBody.appendChild(msgDiv);
+        aiChatBody.scrollTop = aiChatBody.scrollHeight;
+
+        chatHistory.push({ role: role === 'bot' ? 'assistant' : 'user', content: text });
+    }
+
+    function showTypingIndicator() {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'ai-msg bot';
+        typingDiv.id = 'aiTypingIndicator';
+        typingDiv.innerHTML = `
+            <div class="ai-msg-bubble">
+                <div class="ai-typing-dots">
+                    <div class="ai-typing-dot"></div>
+                    <div class="ai-typing-dot"></div>
+                    <div class="ai-typing-dot"></div>
+                </div>
+            </div>
+        `;
+        aiChatBody.appendChild(typingDiv);
+        aiChatBody.scrollTop = aiChatBody.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+        const indicator = document.getElementById('aiTypingIndicator');
+        if (indicator) indicator.remove();
+    }
+
+    async function sendAiMessage() {
+        const message = aiChatInput.value.trim();
+        if (!message || isAiThinking) return;
+
+        appendMessage('user', message);
+        aiChatInput.value = '';
+        isAiThinking = true;
+        showTypingIndicator();
+
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+        try {
+            const res = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken || ''
+                },
+                body: JSON.stringify({
+                    message: message,
+                    history: chatHistory.slice(-6)
+                })
+            });
+
+            const data = await res.json();
+            removeTypingIndicator();
+            isAiThinking = false;
+
+            if (res.ok && data.success) {
+                appendMessage('bot', data.reply);
+            } else {
+                appendMessage('bot', data.error || 'Maaf, terjadi masalah saat memproses pesan.');
+            }
+
+        } catch (err) {
+            removeTypingIndicator();
+            isAiThinking = false;
+            appendMessage('bot', 'Maaf, gagal terhubung ke server. Silakan periksa koneksi internet Anda.');
+        }
+    }
+
+    aiChatSend.addEventListener('click', sendAiMessage);
+    aiChatInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') sendAiMessage();
+    });
+
+    window.sendQuickPill = function(questionText) {
+        if (!aiChatBox.classList.contains('open')) {
+            toggleAiChat();
+        }
+        aiChatInput.value = questionText;
+        sendAiMessage();
+    };
 
     // ===== CANVAS DOT RIPPLE =====
     (function() {

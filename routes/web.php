@@ -5,10 +5,14 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\CertificateController;
+use App\Http\Controllers\AIChatController;
 use Illuminate\Support\Facades\Route;
 
 // Landing page
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// AI Chat API
+Route::post('/api/chat', [AIChatController::class, 'chat'])->name('api.chat');
 
 // Admin Auth
 Route::prefix('admin')->name('admin.')->group(function () {
