@@ -1336,40 +1336,64 @@
         }
 
         .btn-load-more {
+            position: relative;
             display: inline-flex;
             align-items: center;
-            gap: 0.6rem;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
             cursor: pointer;
-            padding: 0.8rem 1.8rem;
             border: 1px solid var(--border);
-            border-radius: 9999px;
-            background: transparent;
+            border-radius: 50%;
+            background: rgba(23, 23, 20, 0.6);
+            backdrop-filter: blur(8px);
             color: var(--text-2);
-            font-family: 'Inter', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            transition: all 0.25s ease;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             outline: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-load-more::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border: 1px solid var(--accent);
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .btn-load-more:hover {
-            border-color: var(--border-hover);
-            background: var(--surface);
-            color: var(--text-1);
+            border-color: transparent;
+            color: var(--accent);
+            background: var(--surface-2);
+            box-shadow: 0 0 20px rgba(217, 119, 6, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .btn-load-more:hover::before {
+            opacity: 0.4;
+            transform: scale(1);
         }
 
         .btn-load-more:active {
-            transform: scale(0.97);
+            transform: translateY(0) scale(0.95);
         }
 
         .btn-load-more svg {
-            transition: transform 0.25s ease;
+            transition: transform 0.3s ease;
+            animation: bounceUpDown 2s infinite ease-in-out;
         }
 
         .btn-load-more:hover svg {
-            transform: translateY(2px);
+            animation-play-state: paused;
+            transform: translateY(3px) scale(1.1);
+        }
+
+        @keyframes bounceUpDown {
+            0%, 100% { transform: translateY(-2px); }
+            50% { transform: translateY(2px); }
         }
     </style>
 </head>
@@ -1730,10 +1754,12 @@
             @endforeach
         </div>
         @if($projects->count() > 3)
-            <div class="load-more-wrap fade-up" style="text-align: center; margin-top: 3rem;">
-                <button id="btn-load-more" class="btn-load-more">
-                    <span>Lihat Proyek Lainnya</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <div class="load-more-wrap fade-up" style="text-align: center; margin-top: 3.5rem;">
+                <button id="btn-load-more" class="btn-load-more" aria-label="Tampilkan Lebih Banyak Proyek">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="7 13 12 18 17 13"></polyline>
+                        <polyline points="7 6 12 11 17 6"></polyline>
+                    </svg>
                 </button>
             </div>
         @endif
