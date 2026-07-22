@@ -1786,7 +1786,7 @@
 @if($clients->isNotEmpty())
 <div class="clients-section">
     <div class="clients-inner">
-        <div class="clients-lbl">Dipercaya oleh</div>
+        <div class="clients-lbl">Telah Bekerja Sama Dengan</div>
         <div class="clients-grid">
             @foreach($clients as $client)
             <div class="client-item">
