@@ -1322,6 +1322,54 @@
             .stat-num                  { font-size: 2.2rem; }
             .stat-item                 { padding: 1.25rem; }
             .proj-top                  { flex-direction: column; gap: 0.25rem; }
+            .btn-load-more             { width: 100%; justify-content: center; }
+        }
+
+        /* Text Justification */
+        p, .proj-desc, .bio-desc, .section-sub {
+            text-align: justify;
+        }
+
+        /* Load More Button & Pagination */
+        .project-entry.hidden-chunk {
+            display: none !important;
+        }
+
+        .btn-load-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            cursor: pointer;
+            padding: 0.8rem 1.8rem;
+            border: 1px solid var(--border);
+            border-radius: 9999px;
+            background: transparent;
+            color: var(--text-2);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.25s ease;
+            outline: none;
+        }
+
+        .btn-load-more:hover {
+            border-color: var(--border-hover);
+            background: var(--surface);
+            color: var(--text-1);
+        }
+
+        .btn-load-more:active {
+            transform: scale(0.97);
+        }
+
+        .btn-load-more svg {
+            transition: transform 0.25s ease;
+        }
+
+        .btn-load-more:hover svg {
+            transform: translateY(2px);
         }
     </style>
 </head>
@@ -1647,7 +1695,7 @@
         <div class="timeline-wrap">
             <div class="t-line"></div>
             @foreach($projects as $index => $project)
-            <div class="project-entry">
+            <div class="project-entry @if($index >= 3) hidden-chunk @endif">
                 <div class="proj-card">
                     <div class="proj-top">
                         <span class="proj-title">{{ $project->title }}</span>
@@ -1681,6 +1729,14 @@
             </div>
             @endforeach
         </div>
+        @if($projects->count() > 3)
+            <div class="load-more-wrap fade-up" style="text-align: center; margin-top: 3rem;">
+                <button id="btn-load-more" class="btn-load-more">
+                    <span>Lihat Proyek Lainnya</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+            </div>
+        @endif
     @endif
 </section>
 
@@ -1831,6 +1887,31 @@
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
     document.querySelectorAll('.fade-up, .project-entry').forEach(el => observer.observe(el));
+
+    // Load More Projects Pagination
+    (function() {
+        const btnLoadMore = document.getElementById('btn-load-more');
+        if (btnLoadMore) {
+            btnLoadMore.addEventListener('click', () => {
+                const hiddenProjects = document.querySelectorAll('.project-entry.hidden-chunk');
+                const chunkSize = 3;
+                const showCount = Math.min(chunkSize, hiddenProjects.length);
+                for (let i = 0; i < showCount; i++) {
+                    hiddenProjects[i].classList.remove('hidden-chunk');
+                }
+                
+                const remainingHidden = document.querySelectorAll('.project-entry.hidden-chunk');
+                if (remainingHidden.length === 0) {
+                    btnLoadMore.closest('.load-more-wrap').style.display = 'none';
+                }
+            });
+            
+            const totalHidden = document.querySelectorAll('.project-entry.hidden-chunk');
+            if (totalHidden.length === 0) {
+                btnLoadMore.closest('.load-more-wrap').style.display = 'none';
+            }
+        }
+    })();
 
     // Modal
     function openModal(imgSrc) {
