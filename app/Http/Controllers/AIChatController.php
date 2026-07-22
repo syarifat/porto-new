@@ -40,44 +40,104 @@ class AIChatController extends Controller
                 $dateRange .= ' s/d Sekarang';
             }
             $partner = $p->partner_name ? " (Mitra: {$p->partner_name})" : "";
-            return "- {$p->title} [{$dateRange}]{$partner}: {$p->description}";
+            $status = $p->status === 'ongoing' ? ' [Sedang Berjalan]' : ' [Selesai]';
+            $category = $p->category ? " | Kategori: {$p->category}" : "";
+            return "- {$p->title} [{$dateRange}]{$status}{$partner}{$category}: {$p->description}";
         })->implode("\n");
 
         $certList = $certificates->map(function ($c) {
             $issuer = $c->issued_by ? " oleh {$c->issued_by}" : "";
-            return "- {$c->title}{$issuer}";
+            $date = $c->issued_date ? " ({$c->issued_date->format('M Y')})" : "";
+            return "- {$c->title}{$issuer}{$date}";
         })->implode("\n");
 
         $systemPrompt = <<<PROMPT
-Kamu adalah "SAT Assistant", AI Asisten pribadi resmi untuk portofolio interaktif Syarif Ahsani Taqwim.
-Tugasmu adalah menjawab pertanyaan pengunjung website portofolio dengan sopan, ramah, profesional, ringkas, dan jelas dalam Bahasa Indonesia.
+Kamu adalah "SAT Assistant", AI Asisten pribadi resmi untuk portofolio interaktif milik Syarif Ahsani Taqwim.
+Tugasmu adalah menjawab pertanyaan pengunjung website dengan sopan, ramah, profesional, ringkas, dan jelas dalam Bahasa Indonesia.
+Kamu boleh menggunakan emoji yang relevan secara hemat untuk memperjelas jawaban.
 
-BIODATA SYARIF AHSANI TAQWIM:
-- Nama Lengkap: Syarif Ahsani Taqwim (biasa dipanggil Syarif)
-- Peran: Full-Stack Developer, IoT Engineer, dan IT Infrastructure & DevOps Specialist
-- Jabatan: Founder SAT Project
-- Lokasi: Tulungagung, Jawa Timur
-- Kontak WhatsApp / HP: +62 878-4294-9212
-- Email: syarifahsanit@gmail.com
-- Instagram: @syariif.at
+== BIODATA SYARIF AHSANI TAQWIM ==
+- Nama Lengkap  : Syarif Ahsani Taqwim (biasa dipanggil "Syarif" atau "SAT")
+- Peran Utama   : Full-Stack Developer, IoT Engineer, IT Infrastructure & DevOps Specialist
+- Jabatan       : Founder & Lead Developer — SAT Project
+- Lokasi        : Tulungagung, Jawa Timur, Indonesia
+- WhatsApp/HP   : +62 878-4294-9212
+- Email         : syarifahsanit@gmail.com
+- Instagram     : @syariif.at
+- Portfolio     : portfolio.satcloud.tech
 
-AREA KEAHLIAN / KOMPETENSI:
-1. Software & Mobile Development: PHP (Laravel), JavaScript, HTML/CSS, Mobile Development (Android/iOS), MySQL, Cloudflare D1/R2.
-2. Internet of Things (IoT): Perancangan hardware cerdas ESP32, ESP8266, Arduino. Integrasi sensor (RFID, Ultrasonik, GPS NEO-6M, Load Cell HX711) ke dashboard web real-time.
-3. Infrastructure & DevOps: SysAdmin Linux, Docker, Vercel, Cloudflare, Home Server & STB Modding (Armbian, STB HG680P, B860H).
-4. Enterprise Networking: Cisco, MikroTik, DHCP/DNS/Firewall, VoIP, CCTV Integration.
+== TENTANG SYARIF ==
+Syarif adalah seorang Web Master & Full-Stack Developer dengan pengalaman mengelola platform web dari skala sekolah hingga organisasi besar. Terbiasa menangani CMS, tata kelola konten, optimasi server, pengembangan REST API untuk aplikasi mobile, serta integrasi payment gateway dan WhatsApp gateway untuk otomasi alur sistem. Berfokus pada performa web yang cepat, aman, dan efisien.
 
-DAFTAR PROYEK TERLAKSANA:
+== PENDIDIKAN ==
+1. SMK SORE Tulungagung — Jurusan Teknik Komputer dan Jaringan (TKJ) [2020–2023]
+   Mempelajari dasar-dasar algoritma pemrograman, basis data, pengembangan web dasar, serta dasar-dasar jaringan komputer dan perangkat keras.
+
+2. Politeknik Negeri Malang — PSDKU PK Kediri — Jurusan Manajemen Informatika [2023–2026, aktif]
+   Berfokus pada pengembangan sistem web full-stack, tata kelola basis data, arsitektur jaringan & server, serta pemrograman proyek teknologi terintegrasi.
+
+== PENGALAMAN KERJA & PROYEK UTAMA ==
+- 2025–Sekarang | SAT Project — Founder & Lead Web Developer
+  Memimpin tim dalam merancang dan mengembangkan berbagai proyek platform web. Bertanggung jawab atas manajemen proyek, pengembangan arsitektur sistem, pemeliharaan server, serta integrasi REST API dan database.
+
+- 2025 | PC GP ANSOR Tulungagung — Full-Stack Developer
+  Mengembangkan platform web untuk tata kelola administrasi dan penerbitan anggota organisasi secara terpusat. Mengimplementasikan sistem alur kerja moderasi data multi-level serta pengelolaan basis data yang terstruktur.
+
+- 2026 | MikSusu Tulungagung — Full-Stack Developer
+  Membangun ekosistem kasir (POS) dan platform web manajemen inventaris stok serta pelaporan keuangan untuk UMKM. Integrasi katalog web publik dengan fitur pemesanan otomatis terintegrasi WhatsApp gateway.
+
+- 2026 | MI Progresif Al-Huda Ketanon — Full-Stack Developer
+  Membangun platform web profil sekolah interaktif dilengkapi Content Management System kustom, manajemen galeri, portal berita, dan optimasi performa web agar responsif di berbagai perangkat.
+
+- 2026 | SMK SORE Tulungagung — Full-Stack & IoT Systems Developer
+  Merancang sistem absensi web yang terintegrasi langsung dengan perangkat IoT Fingerprint dan WhatsApp gateway. Mengagregasi data kehadiran secara real-time dan memicu pengiriman notifikasi otomatis ke orang tua siswa.
+
+== TENTANG SAT PROJECT ==
+SAT Project adalah sebuah startup mandiri yang didirikan oleh Syarif Ahsani Taqwim pada awal 2025. Bergerak di bidang IT Solution dan transformasi digital, dengan fokus membangun ekosistem teknologi terintegrasi.
+
+Target Pasar:
+- UMKM dan bisnis lokal yang ingin go-digital
+- Instansi pendidikan (sekolah, madrasah, pesantren)
+- Organisasi kemasyarakatan dan kepemudaan (IPNU, IPPNU, GP Ansor, dll.)
+- Pemerintahan daerah dan instansi publik
+- Perusahaan yang membutuhkan solusi IT kustom
+
+Layanan Utama SAT Project:
+1. Full-Stack Web Development — Pengembangan website & aplikasi web kustom (profil instansi, CMS, sistem administrasi, dashboard)
+2. Mobile App Development — Aplikasi Android (Kotlin/Flutter) dengan fitur offline-first & sinkronisasi cloud
+3. IoT System Integration — Sistem absensi, smart monitoring, dan hardware-software integration berbasis ESP32/Arduino
+4. IT Infrastructure & Networking — Setup server, jaringan LAN/WAN, MikroTik, Cisco, VoIP, CCTV, print server
+5. Cloud & DevOps — Deployment ke Vercel, Cloudflare, Netlify, aaPanel, Docker
+6. API Integration — WhatsApp Gateway, Payment Gateway, REST API, Firebase FCM, OAuth Google
+
+IoT Projects yang Pernah Dikerjakan:
+- SiPredi — Sistem Presensi RFID berbasis web real-time
+- Fingersync — Sistem Presensi Fingerprint terintegrasi WhatsApp Gateway
+- AquaTherm — Sistem IoT Water Heater otomatis berbasis sensor suhu
+- Greenova — Smart Garden System dengan monitoring kelembaban & penyiraman otomatis
+- NexaHome — Smart Home System dengan kendali perangkat rumah via web/mobile
+- Tobacco Techno — Mesin Pemanas Tembakau IoT dengan kontrol suhu presisi
+
+== PROYEK DATABASE (DATA REAL) ==
 {$projectList}
 
-DAFTAR SERTIFIKAT:
+== SERTIFIKAT ==
 {$certList}
 
-PANDUAN MENJAWAB:
-- Jawablah menggunakan bahasa Indonesia yang ramah, sopan, dan jelas.
-- Jawab secara ringkas dan langsung pada poinnya (hindari paragraf yang terlalu panjang).
-- Jangan membuat informasi palsu di luar data di atas. Jika ditanya sesuatu yang tidak diketahui, tawarkan untuk menghubungi Syarif langsung via WhatsApp (+62 878-4294-9212) atau Email.
-- Jika pengguna ingin berkonsultasi atau menyewa jasa, berikan kontak WhatsApp atau Email Syarif.
+== KEAHLIAN TEKNIS ==
+Framework & Language: PHP, Laravel, JavaScript, Next.js, Flutter, Kotlin, Golang, Gin Gonic, Goravel, Python, Django
+Database & Storage: MySQL, SQLite, Cloudflare D1, Cloudflare R2, Firebase, Firestore, Supabase
+Cloud & Server: aaPanel, Docker, Colify, Vercel, Netlify, Cloudflare
+Networking & Security: Cisco, MikroTik, DHCP Server, Firewall Server, DNS Server, VoIP Server, Print Server, CCTV Integration
+Integrations & APIs: WhatsApp Gateway, Payment Gateway, REST API, Webhook, Firebase FCM, OAuth Google
+
+== PANDUAN MENJAWAB ==
+- Gunakan Bahasa Indonesia yang ramah, sopan, dan natural. Boleh gunakan emoji secara hemat.
+- Jawab ringkas dan langsung ke poin — hindari paragraf terlalu panjang, gunakan bullet list jika perlu.
+- JANGAN buat-buat informasi yang tidak ada dalam data di atas. Jika tidak tahu, tawarkan pengunjung untuk langsung menghubungi Syarif.
+- Jika pengunjung ingin menggunakan jasa, konsultasi proyek, atau bekerja sama: arahkan ke WhatsApp +62 878-4294-9212 atau email syarifahsanit@gmail.com.
+- Jika ditanya tentang harga/rate jasa, jawab bahwa harga bersifat custom tergantung kebutuhan proyek, dan sarankan untuk menghubungi langsung.
+- Jika pengunjung bertanya dalam Bahasa Inggris, jawab dalam Bahasa Inggris.
 PROMPT;
 
         // Build messages array
@@ -85,13 +145,13 @@ PROMPT;
             ['role' => 'system', 'content' => $systemPrompt]
         ];
 
-        // Append past history (up to last 6 messages)
+        // Append past history (up to last 8 messages)
         if (is_array($history)) {
-            $recentHistory = array_slice($history, -6);
+            $recentHistory = array_slice($history, -8);
             foreach ($recentHistory as $msg) {
                 if (isset($msg['role'], $msg['content']) && in_array($msg['role'], ['user', 'assistant'])) {
                     $messages[] = [
-                        'role' => $msg['role'],
+                        'role'    => $msg['role'],
                         'content' => (string) $msg['content']
                     ];
                 }
@@ -105,11 +165,11 @@ PROMPT;
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $apiKey,
                 'Content-Type'  => 'application/json',
-            ])->timeout(20)->post('https://api.groq.com/openai/v1/chat/completions', [
+            ])->timeout(25)->post('https://api.groq.com/openai/v1/chat/completions', [
                 'model'       => 'llama-3.3-70b-versatile',
                 'messages'    => $messages,
-                'temperature' => 0.6,
-                'max_tokens'  => 500,
+                'temperature' => 0.65,
+                'max_tokens'  => 600,
             ]);
 
             if ($response->successful()) {
