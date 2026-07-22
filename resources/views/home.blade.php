@@ -1554,48 +1554,48 @@
                         <span class="chip">PHP</span>
                         <span class="chip">Laravel</span>
                         <span class="chip">JavaScript</span>
-                        <span class="chip">HTML/CSS</span>
-                        <span class="chip">Mobile/iOS</span>
+                        <span class="chip">Next.js</span>
+                        <span class="chip">Flutter</span>
+                        <span class="chip">Kotlin</span>
+                        <span class="chip">Golang</span>
+                        <span class="chip">Gin Gonic</span>
+                        <span class="chip">Goravel</span>
+                        <span class="chip">Python</span>
+                        <span class="chip">Django</span>
                     </td>
                 </tr>
                 <tr>
                     <td>Database &amp; Storage</td>
                     <td>
                         <span class="chip">MySQL</span>
-                        <span class="chip">Cloudflare D1 (SQLite)</span>
+                        <span class="chip">SQLite</span>
+                        <span class="chip">Cloudflare D1</span>
                         <span class="chip">Cloudflare R2</span>
+                        <span class="chip">Firebase</span>
+                        <span class="chip">Firestore</span>
+                        <span class="chip">Supabase</span>
                     </td>
                 </tr>
                 <tr>
-                    <td>IoT &amp; Hardware</td>
+                    <td>IoT Projects</td>
                     <td>
-                        <span class="chip">ESP32</span>
-                        <span class="chip">ESP8266</span>
-                        <span class="chip">Arduino</span>
-                        <span class="chip">RFID Readers</span>
-                        <span class="chip">Ultrasonic Sensors</span>
-                        <span class="chip">Load Cell HX711</span>
-                        <span class="chip">GPS NEO-6M</span>
+                        <span class="chip">SiPredi — Presensi RFID</span>
+                        <span class="chip">Fingersync — Presensi Fingerprint</span>
+                        <span class="chip">AquaTherm — Water Heater IoT</span>
+                        <span class="chip">Greenova — Smart Garden</span>
+                        <span class="chip">NexaHome — Smart Home</span>
+                        <span class="chip">Tobacco Techno — Mesin Pemanas Tembakau</span>
                     </td>
                 </tr>
                 <tr>
                     <td>Cloud &amp; Server</td>
                     <td>
-                        <span class="chip">Vercel</span>
-                        <span class="chip">Cloudflare</span>
-                        <span class="chip">Docker</span>
                         <span class="chip">aaPanel</span>
-                        <span class="chip">Linux Server</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Hardware Modding</td>
-                    <td>
-                        <span class="chip">Armbian</span>
-                        <span class="chip">STB HG680P</span>
-                        <span class="chip">B860H</span>
-                        <span class="chip">SSD Storage</span>
-                        <span class="chip">Home Server Setup</span>
+                        <span class="chip">Docker</span>
+                        <span class="chip">Colify</span>
+                        <span class="chip">Vercel</span>
+                        <span class="chip">Netlify</span>
+                        <span class="chip">Cloudflare</span>
                     </td>
                 </tr>
                 <tr>
@@ -1603,24 +1603,24 @@
                     <td>
                         <span class="chip">Cisco</span>
                         <span class="chip">MikroTik</span>
-                        <span class="chip">DHCP</span>
-                        <span class="chip">DNS</span>
-                        <span class="chip">Firewall</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Enterprise IT &amp; Comms</td>
-                    <td>
-                        <span class="chip">VoIP Systems</span>
+                        <span class="chip">DHCP Server</span>
+                        <span class="chip">Firewall Server</span>
+                        <span class="chip">DNS Server</span>
+                        <span class="chip">Cloud Server</span>
+                        <span class="chip">VoIP Server</span>
+                        <span class="chip">Print Server</span>
                         <span class="chip">CCTV Integration</span>
-                        <span class="chip">Enterprise IT Support</span>
                     </td>
                 </tr>
                 <tr>
                     <td>Integrations &amp; APIs</td>
                     <td>
-                        <span class="chip">WhatsApp API Gateway</span>
+                        <span class="chip">WhatsApp Gateway</span>
                         <span class="chip">Payment Gateway</span>
+                        <span class="chip">REST API</span>
+                        <span class="chip">Webhook</span>
+                        <span class="chip">Firebase FCM</span>
+                        <span class="chip">OAuth Google</span>
                     </td>
                 </tr>
             </tbody>
