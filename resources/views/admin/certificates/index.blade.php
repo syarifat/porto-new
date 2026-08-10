@@ -4,28 +4,35 @@
 @section('content')
 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
     <div>
-        <p style="color:var(--text-secondary); font-size:0.875rem;">Seret baris untuk mengatur urutan tampilan di landing page.</p>
+        <p style="color:var(--text-secondary); font-size:0.875rem;">Seret baris untuk mengatur urutan, lalu klik <strong style="color:var(--primary);">Simpan Urutan</strong>.</p>
     </div>
-    <a href="{{ route('admin.certificates.create') }}" class="btn btn-primary" id="add-cert-btn">
-        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-        </svg>
-        Tambah Sertifikat
-    </a>
+    <div style="display:flex; gap:0.75rem; align-items:center; flex-wrap:wrap;">
+        <button type="submit" form="reorder-form" id="btn-save-order" class="btn btn-primary" style="display:none;">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Simpan Urutan
+        </button>
+        <a href="{{ route('admin.certificates.create') }}" class="btn btn-secondary" id="add-cert-btn">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+            </svg>
+            Tambah Sertifikat
+        </a>
+    </div>
 </div>
 
-<!-- Toast notification -->
-<div id="sort-toast" style="
-    position:fixed; bottom:2rem; right:2rem; z-index:9999;
-    background:#171714; border:1px solid rgba(217,119,6,0.4);
-    color:#e8e6e0; padding:0.75rem 1.25rem; border-radius:10px;
-    font-size:0.85rem; font-weight:600; display:flex; align-items:center; gap:0.5rem;
-    box-shadow:0 8px 24px rgba(0,0,0,0.4); opacity:0; transition:opacity 0.3s ease;
-    pointer-events:none;
-">
-    <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="#d97706" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-    Urutan berhasil disimpan
-</div>
+@if(session('success'))
+    <div style="
+        background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3);
+        color:#10b981; padding:0.75rem 1.1rem; border-radius:8px;
+        font-size:0.85rem; font-weight:600; margin-bottom:1.25rem;
+        display:flex; align-items:center; gap:0.5rem;
+    ">
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        {{ session('success') }}
+    </div>
+@endif
 
 @if($certificates->isEmpty())
     <div class="card">
@@ -36,6 +43,13 @@
         </div>
     </div>
 @else
+
+{{-- Hidden form untuk submit urutan --}}
+<form id="reorder-form" action="{{ route('admin.certificates.reorder') }}" method="POST" style="display:none;">
+    @csrf
+    <div id="order-inputs"></div>
+</form>
+
 <div class="card" style="padding:0; overflow:hidden;">
     <table style="width:100%; border-collapse:collapse;">
         <thead>
@@ -109,13 +123,28 @@
     const tbody = document.getElementById('cert-sortable');
     if (!tbody) return;
 
-    const toast = document.getElementById('sort-toast');
-    let toastTimer;
+    const btnSave   = document.getElementById('btn-save-order');
+    const orderDiv  = document.getElementById('order-inputs');
+    let isDirty     = false;
 
-    function showToast() {
-        clearTimeout(toastTimer);
-        toast.style.opacity = '1';
-        toastTimer = setTimeout(() => { toast.style.opacity = '0'; }, 3000);
+    function markDirty() {
+        if (!isDirty) {
+            isDirty = true;
+            btnSave.style.display = 'inline-flex';
+            btnSave.style.animation = 'fadeIn 0.3s ease';
+        }
+    }
+
+    function syncForm() {
+        // Build hidden inputs with current order
+        orderDiv.innerHTML = '';
+        tbody.querySelectorAll('tr[data-id]').forEach((row, i) => {
+            const inp = document.createElement('input');
+            inp.type  = 'hidden';
+            inp.name  = 'order[]';
+            inp.value = row.dataset.id;
+            orderDiv.appendChild(inp);
+        });
     }
 
     Sortable.create(tbody, {
@@ -129,24 +158,8 @@
                 const numCell = row.querySelector('.row-num');
                 if (numCell) numCell.textContent = i + 1;
             });
-
-            // Collect new order
-            const order = Array.from(tbody.querySelectorAll('tr[data-id]')).map(tr => tr.dataset.id);
-
-            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-
-            fetch('{{ route("admin.certificates.reorder") }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken || '',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify({ order }),
-            })
-            .then(res => res.json())
-            .then(data => { if (data.success) showToast(); })
-            .catch(err => console.error('Reorder failed:', err));
+            markDirty();
+            syncForm();
         }
     });
 
@@ -154,6 +167,11 @@
     tbody.querySelectorAll('tr.cert-row').forEach(row => {
         row.addEventListener('mouseenter', () => row.style.background = 'var(--bg-hover)');
         row.addEventListener('mouseleave', () => row.style.background = '');
+    });
+
+    // Warn if leaving with unsaved changes
+    window.addEventListener('beforeunload', (e) => {
+        if (isDirty) e.preventDefault();
     });
 })();
 </script>
@@ -163,5 +181,6 @@
 .sortable-chosen { background: rgba(217,119,6,0.04) !important; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
 .drag-handle:hover svg { opacity: 1; }
 .drag-handle:hover { color: var(--primary); }
+@keyframes fadeIn { from { opacity:0; transform:scale(0.95); } to { opacity:1; transform:scale(1); } }
 </style>
 @endsection

@@ -101,6 +101,6 @@ class CertificateController extends Controller
             Certificate::where('id', $id)->update(['sort_order' => $position + 1]);
         }
 
-        return response()->json(['success' => true, 'message' => 'Urutan berhasil disimpan.']);
+        return redirect()->route('admin.certificates.index')->with('success', 'Urutan sertifikat berhasil disimpan!');
     }
 }
