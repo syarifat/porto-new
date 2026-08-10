@@ -707,100 +707,130 @@
         }
 
         /* ===== CERTIFICATES ===== */
-        /* ===== CERTIFICATES — Horizontal List Cards ===== */
-        .certs-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1px;
-            background: var(--border);
-            border: 1px solid var(--border);
-            border-radius: var(--r-lg);
-            overflow: hidden;
+        /* ===== CERTIFICATES — Premium Grid Cards ===== */
+        .certs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1rem;
         }
 
         .cert-card {
-            display: flex;
-            align-items: stretch;
-            background: var(--surface);
-            cursor: pointer;
-            transition: background 0.2s, transform 0.2s;
             position: relative;
-            text-decoration: none;
-            color: inherit;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            overflow: hidden;
+            cursor: pointer;
+            transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
         }
 
-        .cert-card:hover { background: var(--surface-2); }
+        .cert-card:hover {
+            border-color: rgba(217,119,6,0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(217,119,6,0.15);
+        }
 
         .cert-card.hidden-cert { display: none !important; }
 
-        .cert-rank {
-            position: absolute;
-            top: 0.9rem;
-            left: 0.9rem;
-            width: 22px;
-            height: 22px;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.65rem;
-            font-weight: 800;
-            color: var(--text-2);
-            letter-spacing: -0.02em;
-            z-index: 1;
-        }
-
-        .cert-img-col {
-            width: 140px;
-            flex-shrink: 0;
+        .cert-img-wrap {
+            position: relative;
+            width: 100%;
+            height: 180px;
             overflow: hidden;
             background: var(--surface-2);
-            position: relative;
+            flex-shrink: 0;
         }
 
-        .cert-img-col img {
+        .cert-img-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.6) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .cert-card:hover .cert-img-wrap::after { opacity: 1; }
+
+        .cert-img-wrap img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.45s ease;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             display: block;
         }
 
-        .cert-card:hover .cert-img-col img { transform: scale(1.06); }
+        .cert-card:hover .cert-img-wrap img { transform: scale(1.08); }
 
         .cert-img-ph {
             width: 100%;
             height: 100%;
-            min-height: 100px;
             display: none;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
-            background: linear-gradient(135deg, var(--surface-2), rgba(217,119,6,0.06));
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--surface-2), rgba(217,119,6,0.08));
+        }
+
+        .cert-rank {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            z-index: 2;
+            background: rgba(15,15,13,0.75);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 7px;
+            padding: 0.2rem 0.5rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: var(--text-2);
+            letter-spacing: 0.02em;
+        }
+
+        .cert-view-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            z-index: 2;
+            width: 30px;
+            height: 30px;
+            background: rgba(217,119,6,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.7);
+            transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cert-card:hover .cert-view-btn {
+            opacity: 1;
+            transform: scale(1);
         }
 
         .cert-body {
-            flex: 1;
-            padding: 1.1rem 1.4rem;
+            padding: 1rem 1.1rem 1.15rem;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             gap: 0.3rem;
+            flex: 1;
         }
 
         .cert-name {
             font-family: 'Inter', sans-serif;
-            font-size: 0.92rem;
+            font-size: 0.86rem;
             font-weight: 700;
             color: var(--text-1);
             line-height: 1.35;
         }
 
         .cert-issuer {
-            font-size: 0.78rem;
+            font-size: 0.74rem;
             color: var(--accent);
             font-weight: 500;
         }
@@ -808,13 +838,13 @@
         .cert-meta {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
             flex-wrap: wrap;
-            margin-top: 0.1rem;
+            margin-top: 0.35rem;
         }
 
         .cert-date {
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             color: var(--text-3);
         }
 
@@ -822,10 +852,10 @@
             display: inline-flex;
             align-items: center;
             gap: 0.3rem;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             color: var(--text-2);
-            background: var(--surface-2);
-            border: 1px solid var(--border);
+            background: rgba(217,119,6,0.08);
+            border: 1px solid rgba(217,119,6,0.2);
             border-radius: 999px;
             padding: 0.15rem 0.55rem;
             transition: all 0.2s;
@@ -833,25 +863,13 @@
         }
 
         .cert-cred-badge:hover {
-            border-color: var(--accent);
+            background: rgba(217,119,6,0.15);
+            border-color: rgba(217,119,6,0.5);
             color: var(--accent);
-        }
-
-        .cert-arrow {
-            display: flex;
-            align-items: center;
-            padding: 1.1rem 1.2rem;
-            color: var(--text-3);
-            transition: color 0.2s, transform 0.2s;
-            flex-shrink: 0;
-        }
-
-        .cert-card:hover .cert-arrow {
-            color: var(--accent);
-            transform: translateX(3px);
         }
 
         .certs-empty {
+            grid-column: 1 / -1;
             text-align: center;
             padding: 3.5rem;
             color: var(--text-3);
@@ -864,12 +882,14 @@
         }
 
         @media (max-width: 640px) {
-            .cert-img-col { width: 90px; }
-            .cert-body { padding: 0.85rem 1rem; }
-            .cert-name { font-size: 0.82rem; }
-            .cert-arrow { padding: 0.85rem 0.75rem; }
+            .certs-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+            .cert-img-wrap { height: 130px; }
+            .cert-name { font-size: 0.78rem; }
         }
 
+        @media (max-width: 400px) {
+            .certs-grid { grid-template-columns: 1fr; }
+        }
 
         /* ===== CLIENTS ===== */
         .clients-section {
@@ -1862,7 +1882,7 @@
     <h2 class="section-title fade-up">Pencapaian<br>&amp; Sertifikasi.</h2>
     <p class="section-sub fade-up" style="margin-bottom: 2.5rem;">Bukti belajar yang tersertifikasi.</p>
 
-    <div class="certs-list fade-up">
+    <div class="certs-grid fade-up">
         @if($certificates->isEmpty())
             <div class="certs-empty">
                 <p>Belum ada sertifikat yang ditambahkan.</p>
@@ -1870,8 +1890,11 @@
         @else
             @foreach($certificates as $i => $cert)
             <div class="cert-card {{ $i >= 5 ? 'hidden-cert' : '' }}" onclick="openModal('{{ $cert->image_url }}')" id="cert-{{ $cert->id }}">
-                <div class="cert-img-col">
+                <div class="cert-img-wrap">
                     <span class="cert-rank">#{{ $i + 1 }}</span>
+                    <div class="cert-view-btn">
+                        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                    </div>
                     <img
                         src="{{ $cert->image_url }}"
                         alt="{{ $cert->title }}"
@@ -1889,19 +1912,14 @@
                             <span class="cert-date">{{ $cert->issued_date->format('d M Y') }}</span>
                         @endif
                         @if($cert->credential_url)
-                            <a href="{{ $cert->credential_url }}" target="_blank" rel="noopener" class="cert-cred-badge" onclick="event.stopPropagation()" title="Lihat Credential">
-                                <svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                            <a href="{{ $cert->credential_url }}" target="_blank" rel="noopener" class="cert-cred-badge" onclick="event.stopPropagation()">
+                                <svg width="9" height="9" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                                 Verifikasi
                             </a>
                         @elseif($cert->credential_id)
                             <span class="cert-cred-badge">ID: {{ $cert->credential_id }}</span>
                         @endif
                     </div>
-                </div>
-                <div class="cert-arrow">
-                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <polyline points="9 18 15 12 9 6"/>
-                    </svg>
                 </div>
             </div>
             @endforeach
