@@ -840,7 +840,8 @@
             align-items: center;
             gap: 0.5rem;
             flex-wrap: wrap;
-            margin-top: 0.35rem;
+            margin-top: auto;
+            padding-top: 0.5rem;
         }
 
         .cert-date {
