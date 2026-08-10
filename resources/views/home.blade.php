@@ -707,9 +707,10 @@
         }
 
         /* ===== CERTIFICATES ===== */
-        .certs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+        /* ===== CERTIFICATES — Horizontal List Cards ===== */
+        .certs-list {
+            display: flex;
+            flex-direction: column;
             gap: 1px;
             background: var(--border);
             border: 1px solid var(--border);
@@ -718,73 +719,157 @@
         }
 
         .cert-card {
+            display: flex;
+            align-items: stretch;
             background: var(--surface);
             cursor: pointer;
-            transition: background 0.2s;
-            overflow: hidden;
+            transition: background 0.2s, transform 0.2s;
+            position: relative;
+            text-decoration: none;
+            color: inherit;
         }
 
         .cert-card:hover { background: var(--surface-2); }
 
-        .cert-img-wrap {
-            width: 100%;
-            height: 155px;
-            overflow: hidden;
-            border-bottom: 1px solid var(--border);
-            background: var(--surface-2);
+        .cert-card.hidden-cert { display: none !important; }
+
+        .cert-rank {
+            position: absolute;
+            top: 0.9rem;
+            left: 0.9rem;
+            width: 22px;
+            height: 22px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: var(--text-2);
+            letter-spacing: -0.02em;
+            z-index: 1;
         }
 
-        .cert-img-wrap img {
+        .cert-img-col {
+            width: 140px;
+            flex-shrink: 0;
+            overflow: hidden;
+            background: var(--surface-2);
+            position: relative;
+        }
+
+        .cert-img-col img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.45s ease;
+            display: block;
         }
 
-        .cert-card:hover .cert-img-wrap img { transform: scale(1.05); }
+        .cert-card:hover .cert-img-col img { transform: scale(1.06); }
 
-        .cert-ph {
+        .cert-img-ph {
             width: 100%;
-            height: 155px;
+            height: 100%;
+            min-height: 100px;
             display: none;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            border-bottom: 1px solid var(--border);
-            background: var(--surface-2);
+            background: linear-gradient(135deg, var(--surface-2), rgba(217,119,6,0.06));
         }
 
         .cert-body {
-            padding: 1rem 1.2rem;
+            flex: 1;
+            padding: 1.1rem 1.4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.3rem;
         }
 
         .cert-name {
             font-family: 'Inter', sans-serif;
-            font-size: 0.88rem;
+            font-size: 0.92rem;
             font-weight: 700;
             color: var(--text-1);
-            margin-bottom: 0.25rem;
-            line-height: 1.3;
+            line-height: 1.35;
         }
 
         .cert-issuer {
-            font-size: 0.72rem;
+            font-size: 0.78rem;
             color: var(--accent);
-            margin-bottom: 0.2rem;
+            font-weight: 500;
+        }
+
+        .cert-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-top: 0.1rem;
         }
 
         .cert-date {
-            font-size: 0.68rem;
+            font-size: 0.72rem;
             color: var(--text-3);
         }
 
+        .cert-cred-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.7rem;
+            color: var(--text-2);
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.15rem 0.55rem;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .cert-cred-badge:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .cert-arrow {
+            display: flex;
+            align-items: center;
+            padding: 1.1rem 1.2rem;
+            color: var(--text-3);
+            transition: color 0.2s, transform 0.2s;
+            flex-shrink: 0;
+        }
+
+        .cert-card:hover .cert-arrow {
+            color: var(--accent);
+            transform: translateX(3px);
+        }
+
         .certs-empty {
-            grid-column: 1 / -1;
             text-align: center;
             padding: 3.5rem;
             color: var(--text-3);
             font-size: 0.875rem;
         }
+
+        .cert-load-wrap {
+            text-align: center;
+            margin-top: 2.5rem;
+        }
+
+        @media (max-width: 640px) {
+            .cert-img-col { width: 90px; }
+            .cert-body { padding: 0.85rem 1rem; }
+            .cert-name { font-size: 0.82rem; }
+            .cert-arrow { padding: 0.85rem 0.75rem; }
+        }
+
 
         /* ===== CLIENTS ===== */
         .clients-section {
@@ -1777,35 +1862,62 @@
     <h2 class="section-title fade-up">Pencapaian<br>&amp; Sertifikasi.</h2>
     <p class="section-sub fade-up" style="margin-bottom: 2.5rem;">Bukti belajar yang tersertifikasi.</p>
 
-    <div class="certs-grid fade-up">
+    <div class="certs-list fade-up">
         @if($certificates->isEmpty())
             <div class="certs-empty">
                 <p>Belum ada sertifikat yang ditambahkan.</p>
             </div>
         @else
-            @foreach($certificates as $cert)
-            <div class="cert-card" onclick="openModal('{{ $cert->image_url }}')" id="cert-{{ $cert->id }}">
-                <div class="cert-img-wrap">
+            @foreach($certificates as $i => $cert)
+            <div class="cert-card {{ $i >= 5 ? 'hidden-cert' : '' }}" onclick="openModal('{{ $cert->image_url }}')" id="cert-{{ $cert->id }}">
+                <div class="cert-img-col">
+                    <span class="cert-rank">#{{ $i + 1 }}</span>
                     <img
                         src="{{ $cert->image_url }}"
                         alt="{{ $cert->title }}"
-                        onerror="this.closest('.cert-img-wrap').style.display='none'; this.closest('.cert-card').querySelector('.cert-ph').style.display='flex';"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                     >
+                    <div class="cert-img-ph">🏆</div>
                 </div>
-                <div class="cert-ph">🏆</div>
                 <div class="cert-body">
                     <div class="cert-name">{{ $cert->title }}</div>
                     @if($cert->issued_by)
                         <div class="cert-issuer">{{ $cert->issued_by }}</div>
                     @endif
-                    @if($cert->issued_date)
-                        <div class="cert-date">{{ $cert->issued_date->format('d M Y') }}</div>
-                    @endif
+                    <div class="cert-meta">
+                        @if($cert->issued_date)
+                            <span class="cert-date">{{ $cert->issued_date->format('d M Y') }}</span>
+                        @endif
+                        @if($cert->credential_url)
+                            <a href="{{ $cert->credential_url }}" target="_blank" rel="noopener" class="cert-cred-badge" onclick="event.stopPropagation()" title="Lihat Credential">
+                                <svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                Verifikasi
+                            </a>
+                        @elseif($cert->credential_id)
+                            <span class="cert-cred-badge">ID: {{ $cert->credential_id }}</span>
+                        @endif
+                    </div>
+                </div>
+                <div class="cert-arrow">
+                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"/>
+                    </svg>
                 </div>
             </div>
             @endforeach
         @endif
     </div>
+
+    @if($certificates->count() > 5)
+    <div class="cert-load-wrap fade-up">
+        <button id="btn-load-certs" class="btn-load-more" aria-label="Tampilkan Lebih Banyak Sertifikat">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="7 13 12 18 17 13"></polyline>
+                <polyline points="7 6 12 11 17 6"></polyline>
+            </svg>
+        </button>
+    </div>
+    @endif
 </section>
 
 <!-- Clients -->
@@ -1925,19 +2037,41 @@
                 for (let i = 0; i < showCount; i++) {
                     hiddenProjects[i].classList.remove('hidden-chunk');
                 }
-                
                 const remainingHidden = document.querySelectorAll('.project-entry.hidden-chunk');
                 if (remainingHidden.length === 0) {
                     btnLoadMore.closest('.load-more-wrap').style.display = 'none';
                 }
             });
-            
             const totalHidden = document.querySelectorAll('.project-entry.hidden-chunk');
             if (totalHidden.length === 0) {
                 btnLoadMore.closest('.load-more-wrap').style.display = 'none';
             }
         }
     })();
+
+    // Load More Certificates Pagination
+    (function() {
+        const btnLoadCerts = document.getElementById('btn-load-certs');
+        if (btnLoadCerts) {
+            btnLoadCerts.addEventListener('click', () => {
+                const hiddenCerts = document.querySelectorAll('.cert-card.hidden-cert');
+                const chunkSize = 5;
+                const showCount = Math.min(chunkSize, hiddenCerts.length);
+                for (let i = 0; i < showCount; i++) {
+                    hiddenCerts[i].classList.remove('hidden-cert');
+                }
+                const remainingHidden = document.querySelectorAll('.cert-card.hidden-cert');
+                if (remainingHidden.length === 0) {
+                    btnLoadCerts.closest('.cert-load-wrap').style.display = 'none';
+                }
+            });
+            const totalHidden = document.querySelectorAll('.cert-card.hidden-cert');
+            if (totalHidden.length === 0) {
+                btnLoadCerts.closest('.cert-load-wrap').style.display = 'none';
+            }
+        }
+    })();
+
 
     // Modal
     function openModal(imgSrc) {

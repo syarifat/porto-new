@@ -11,7 +11,7 @@ class CertificateController extends Controller
 {
     public function index()
     {
-        $certificates = Certificate::orderBy('issued_date', 'desc')->get();
+        $certificates = Certificate::orderBy('sort_order', 'asc')->orderBy('issued_date', 'desc')->get();
         return view('admin.certificates.index', compact('certificates'));
     }
 
@@ -38,6 +38,9 @@ class CertificateController extends Controller
 
         $imagePath = $request->file('image')->store('certificates', 'public');
 
+        // Assign sort_order = max + 1
+        $maxOrder = Certificate::max('sort_order') ?? 0;
+
         Certificate::create([
             'title'          => $request->title,
             'issued_by'      => $request->issued_by,
@@ -45,6 +48,7 @@ class CertificateController extends Controller
             'image_path'     => $imagePath,
             'credential_id'  => $request->credential_id,
             'credential_url' => $request->credential_url,
+            'sort_order'     => $maxOrder + 1,
         ]);
 
         return redirect()->route('admin.certificates.index')->with('success', 'Sertifikat berhasil ditambahkan!');
@@ -84,5 +88,19 @@ class CertificateController extends Controller
         $certificate->delete();
 
         return redirect()->route('admin.certificates.index')->with('success', 'Sertifikat berhasil dihapus!');
+    }
+
+    public function reorder(Request $request)
+    {
+        $request->validate([
+            'order'   => 'required|array',
+            'order.*' => 'integer|exists:certificates,id',
+        ]);
+
+        foreach ($request->order as $position => $id) {
+            Certificate::where('id', $id)->update(['sort_order' => $position + 1]);
+        }
+
+        return response()->json(['success' => true, 'message' => 'Urutan berhasil disimpan.']);
     }
 }

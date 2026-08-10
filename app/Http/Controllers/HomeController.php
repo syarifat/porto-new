@@ -10,7 +10,7 @@ class HomeController extends Controller
     public function index()
     {
         $projects = Project::orderBy('start_date', 'desc')->get();
-        $certificates = Certificate::orderBy('issued_date', 'desc')->get();
+        $certificates = Certificate::orderBy('sort_order', 'asc')->orderBy('issued_date', 'desc')->get();
         $clients = Project::whereNotNull('partner_logo')
             ->whereNotNull('partner_name')
             ->select('partner_name', 'partner_logo')

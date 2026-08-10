@@ -13,6 +13,7 @@ class Certificate extends Model
         'image_path',
         'credential_id',
         'credential_url',
+        'sort_order',
     ];
 
     protected $casts = [

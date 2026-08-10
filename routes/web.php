@@ -28,6 +28,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('projects', ProjectController::class)->except(['show']);
 
         // Certificates
+        Route::post('certificates/reorder', [CertificateController::class, 'reorder'])->name('certificates.reorder');
         Route::resource('certificates', CertificateController::class)->except(['show']);
     });
 });
