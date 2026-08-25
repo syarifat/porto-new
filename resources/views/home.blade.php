@@ -579,54 +579,136 @@
 
         .chip:hover { border-color: var(--border-hover); color: var(--text-1); }
 
-        /* ===== PROJECT MAP — Constellation Scatter ===== */
-        .proj-map-outer {
+        /* ===== EMBEDDED INTERACTIVE TIMELINE STAGE ===== */
+        .stage-timeline-container {
             position: relative;
+            background: radial-gradient(circle at 50% 0%, rgba(217,119,6,0.06), transparent 70%), var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-xl, 18px);
+            box-shadow: var(--shadow-lg, 0 10px 30px rgba(0,0,0,0.5)), inset 0 1px 0 rgba(255,255,255,0.05);
+            overflow: hidden;
+            margin-top: 1.5rem;
         }
 
-        .proj-map {
-            position: relative;
-            width: 100%;
-            min-height: 480px;
-            /* height overridden by JS */
-        }
-
-        .proj-map-svg {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .proj-pin {
-            position: absolute;
+        .stage-timeline-header {
             display: flex;
             align-items: center;
-            gap: 9px;
-            cursor: pointer;
-            z-index: 2;
-            transform: translateY(-50%);
-            transition: opacity 0.3s ease;
+            justify-content: space-between;
+            padding: 0.9rem 1.4rem;
+            background: rgba(22,22,20,0.75);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 5;
+            position: relative;
         }
 
-        .proj-pin.label-left { flex-direction: row-reverse; text-align: right; }
-        .proj-pin.hidden-chunk { display: none !important; }
+        .stage-stats {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
 
-        .proj-pin-dot {
-            flex-shrink: 0;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
+        .stage-stat-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.72rem;
+            color: var(--text-2);
+        }
+
+        .stage-stat-val {
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stage-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stage-nav-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
             background: var(--surface-2);
-            border: 2px solid rgba(255,255,255,0.12);
-            transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), border-color 0.25s, box-shadow 0.25s;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .stage-nav-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        .stage-canvas {
             position: relative;
+            width: 100%;
+            height: 380px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            cursor: grab;
+            user-select: none;
+            scroll-behavior: smooth;
+        }
+
+        .stage-canvas:active {
+            cursor: grabbing;
+        }
+
+        .stage-canvas::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .stage-canvas::-webkit-scrollbar-thumb {
+            background: rgba(217,119,6,0.3);
+            border-radius: 2px;
+        }
+
+        .stage-inner {
+            position: relative;
+            height: 100%;
+        }
+
+        .stage-svg {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
             z-index: 1;
         }
 
-        .proj-pin-dot::after {
+        /* Timeline Nodes */
+        .stage-node {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: transform 0.25s cubic-bezier(0.16,1,0.3,1);
+        }
+
+        .stage-node-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--surface-2);
+            border: 2px solid rgba(255,255,255,0.18);
+            position: relative;
+            transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), border-color 0.25s, box-shadow 0.25s;
+            flex-shrink: 0;
+            z-index: 2;
+        }
+
+        .stage-node-dot::after {
             content: '';
             position: absolute;
             inset: 3px;
@@ -635,53 +717,136 @@
             transition: background 0.2s;
         }
 
-        .proj-pin:hover .proj-pin-dot {
-            border-color: var(--accent);
-            transform: scale(1.45);
-            box-shadow: 0 0 14px rgba(217,119,6,0.45);
-        }
-
-        .proj-pin:hover .proj-pin-dot::after { background: var(--accent); }
-
-        /* ongoing: amber + pulse ring */
-        .proj-pin-dot.ongoing {
+        .stage-node-dot.ongoing {
             border-color: var(--accent);
         }
-        .proj-pin-dot.ongoing::after { background: var(--accent); }
-        .proj-pin-dot.ongoing::before {
+
+        .stage-node-dot.ongoing::after {
+            background: var(--accent);
+        }
+
+        .stage-node-dot.ongoing::before {
             content: '';
             position: absolute;
             inset: -5px;
             border-radius: 50%;
             border: 1.5px solid rgba(217,119,6,0.5);
-            animation: mapPulse 2s infinite;
+            animation: stagePulse 2s infinite;
         }
 
-        @keyframes mapPulse {
+        @keyframes stagePulse {
             0%,100% { opacity: 0.6; transform: scale(1); }
             50%      { opacity: 0;   transform: scale(2.2); }
         }
 
-        .proj-pin-label { max-width: 180px; }
+        .stage-node:hover .stage-node-dot {
+            border-color: var(--accent);
+            transform: scale(1.4);
+            box-shadow: 0 0 16px rgba(217,119,6,0.55);
+        }
 
-        .proj-pin-name {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.8rem;
+        .stage-node:hover .stage-node-dot::after {
+            background: var(--accent);
+        }
+
+        /* Node Card Badge */
+        .stage-node-card {
+            background: rgba(30, 30, 27, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.5rem 0.75rem;
+            max-width: 170px;
+            min-width: 130px;
+            text-align: center;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+            transition: all 0.25s ease;
+            pointer-events: none;
+        }
+
+        .stage-node:hover .stage-node-card {
+            border-color: rgba(217,119,6,0.45);
+            background: rgba(35, 35, 30, 0.95);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(217,119,6,0.2);
+        }
+
+        .stage-node-title {
+            font-size: 0.73rem;
             font-weight: 700;
             color: var(--text-1);
             line-height: 1.25;
-            transition: color 0.2s;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            transition: color 0.2s;
         }
 
-        .proj-pin:hover .proj-pin-name { color: var(--accent); }
+        .stage-node:hover .stage-node-title {
+            color: var(--accent);
+        }
 
-        .proj-pin-date {
-            font-size: 0.63rem;
+        .stage-node-date {
+            font-size: 0.62rem;
             color: var(--text-3);
-            margin-top: 1px;
+            margin-top: 2px;
+        }
+
+        .stage-node.pos-top {
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .stage-node.pos-bottom {
+            flex-direction: column-reverse;
+            gap: 9px;
+        }
+
+        /* Bottom Scrubber Bar */
+        .stage-scrubber {
+            position: relative;
+            height: 52px;
+            background: rgba(18,18,16,0.85);
+            border-top: 1px solid var(--border);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .stage-scrubber-inner {
+            position: relative;
+            height: 100%;
+        }
+
+        .stage-scrubber-line {
+            position: absolute;
+            top: 50%;
+            left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(217,119,6,0.3) 10%, rgba(217,119,6,0.3) 90%, transparent);
+        }
+
+        .stage-scrubber-tick {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .stage-scrubber-tick-line {
+            width: 1px;
+            height: 10px;
+            background: rgba(217,119,6,0.35);
+        }
+
+        .stage-scrubber-year {
+            font-size: 0.63rem;
+            font-weight: 700;
+            color: var(--text-3);
+            letter-spacing: 0.05em;
         }
 
         .timeline-empty {
@@ -694,8 +859,8 @@
         .proj-modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.72);
-            backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.78);
+            backdrop-filter: blur(12px);
             z-index: 9000;
             display: flex;
             align-items: center;
@@ -714,7 +879,7 @@
         .proj-modal-box {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: var(--r-lg);
+            border-radius: var(--r-lg, 16px);
             max-width: 560px;
             width: 100%;
             max-height: 88vh;
@@ -722,6 +887,7 @@
             transform: scale(0.94) translateY(16px);
             transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
             position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
         }
 
         .proj-modal-overlay.active .proj-modal-box {
@@ -831,20 +997,6 @@
             display: flex;
             flex-wrap: wrap;
             gap: 0.35rem;
-        }
-
-        .proj-map-more { text-align: center; margin-top: 1.5rem; }
-
-        /* Mobile: vertical list fallback */
-        @media (max-width: 600px) {
-            .proj-map { min-height: unset !important; }
-            .proj-pin {
-                position: static !important;
-                transform: none !important;
-                padding: 0.8rem 0;
-                border-bottom: 1px solid var(--border);
-            }
-            .proj-pin.label-left { flex-direction: row; text-align: left; }
         }
 
 
@@ -1998,33 +2150,67 @@
         const PROJ_DATA = @json($projectsJson);
         </script>
 
-        <div class="proj-map-outer fade-up">
-            <div class="proj-map" id="proj-map">
-                <svg class="proj-map-svg" id="proj-map-svg"></svg>
-                @foreach($projects as $index => $project)
-                <div class="proj-pin {{ $index >= 6 ? 'hidden-chunk' : '' }}"
-                     data-id="{{ $project->id }}"
-                     onclick="openProjModal({{ $project->id }})">
-                    <div class="proj-pin-dot {{ $project->status === 'ongoing' ? 'ongoing' : '' }}"></div>
-                    <div class="proj-pin-label">
-                        <div class="proj-pin-name">{{ $project->title }}</div>
-                        <div class="proj-pin-date">{{ $project->start_date->format('M Y') }}</div>
+        <div class="stage-timeline-container fade-up">
+            <!-- Stage Top Bar / Controls -->
+            <div class="stage-timeline-header">
+                <div class="stage-stats">
+                    <div class="stage-stat-item">
+                        <span>Total Proyek:</span>
+                        <span class="stage-stat-val">{{ $projects->count() }}</span>
                     </div>
+                    <div class="stage-stat-item">
+                        <span>Selesai:</span>
+                        <span class="stage-stat-val" style="color: var(--green-text, #10b981);">{{ $projects->where('status', 'completed')->count() }}</span>
+                    </div>
+                    @php $ongoingCount = $projects->where('status', '!=', 'completed')->count(); @endphp
+                    @if($ongoingCount > 0)
+                    <div class="stage-stat-item">
+                        <span>Berjalan:</span>
+                        <span class="stage-stat-val">{{ $ongoingCount }}</span>
+                    </div>
+                    @endif
                 </div>
-                @endforeach
+
+                <div class="stage-controls">
+                    <button type="button" class="stage-nav-btn" id="stageScrollLeft" aria-label="Geser Kiri">
+                        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <button type="button" class="stage-nav-btn" id="stageScrollRight" aria-label="Geser Kanan">
+                        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Interactive Canvas -->
+            <div class="stage-canvas" id="stageCanvas">
+                <div class="stage-inner" id="stageInner">
+                    <svg class="stage-svg" id="stageSvg"></svg>
+                    @foreach($projects as $index => $project)
+                    <div class="stage-node {{ $index % 2 === 0 ? 'pos-top' : 'pos-bottom' }}"
+                         id="stage-node-{{ $project->id }}"
+                         data-id="{{ $project->id }}"
+                         data-index="{{ $index }}"
+                         onclick="openProjModal({{ $project->id }})">
+                        <div class="stage-node-card">
+                            <div class="stage-node-title">{{ $project->title }}</div>
+                            <div class="stage-node-date">
+                                {{ $project->start_date->format('M Y') }}
+                                @if($project->partner_name) &middot; {{ $project->partner_name }} @endif
+                            </div>
+                        </div>
+                        <div class="stage-node-dot {{ $project->status === 'ongoing' ? 'ongoing' : '' }}"></div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <!-- Bottom Time Scrubber -->
+            <div class="stage-scrubber">
+                <div class="stage-scrubber-inner" id="stageScrubber">
+                    <div class="stage-scrubber-line"></div>
+                </div>
             </div>
         </div>
-
-        @if($projects->count() > 6)
-        <div class="proj-map-more fade-up">
-            <button id="btn-load-more" class="btn-load-more" aria-label="Tampilkan Lebih Banyak Proyek">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="7 13 12 18 17 13"></polyline>
-                    <polyline points="7 6 12 11 17 6"></polyline>
-                </svg>
-            </button>
-        </div>
-        @endif
     @endif
 </section>
 
@@ -2033,7 +2219,7 @@
     <div class="proj-modal-box">
         <button class="proj-modal-close" onclick="closeProjModal()">&#10005;</button>
         <img id="pm-hero" class="proj-modal-hero" alt="" style="display:none;">
-        <div id="pm-hero-ph" class="proj-modal-hero-ph">🗂️</div>
+        <div id="pm-hero-ph" class="proj-modal-hero-ph">&#128193;</div>
         <div class="proj-modal-body">
             <div id="pm-title" class="proj-modal-title"></div>
             <div id="pm-meta" class="proj-modal-meta"></div>
@@ -2221,126 +2407,179 @@
 
     document.querySelectorAll('.fade-up, .project-entry').forEach(el => observer.observe(el));
 
-    // ===== Project serpentine map =====
-    // 4 columns, snake L→R then R→L then L→R ...
-    const COLS   = [11, 37, 63, 88]; // left% for each column
-    const ROW_H  = 110;              // px between rows
-    const ROW_Y0 = 55;               // top offset px
+    // ===== EMBEDDED INTERACTIVE STAGE TIMELINE =====
+    function initStageTimeline() {
+        const canvas   = document.getElementById('stageCanvas');
+        const inner    = document.getElementById('stageInner');
+        const scrubber = document.getElementById('stageScrubber');
+        const svg      = document.getElementById('stageSvg');
+        if (!canvas || !inner || !svg || typeof PROJ_DATA === 'undefined') return;
 
-    function buildSnakePos(count) {
-        const pos = [];
-        for (let i = 0; i < count; i++) {
-            const row = Math.floor(i / COLS.length);
-            const col = i % COLS.length;
-            const leftToRight = row % 2 === 0;
-            const colIdx = leftToRight ? col : (COLS.length - 1 - col);
-            pos.push({ left: COLS[colIdx], top: ROW_Y0 + row * ROW_H });
-        }
-        return pos;
-    }
+        const nodes = Array.from(inner.querySelectorAll('.stage-node'));
+        const n     = nodes.length;
+        if (n === 0) return;
 
-    function scatterPins() {
-        const map = document.getElementById('proj-map');
-        if (!map) return;
+        const COL_W   = 220;
+        const PAD_L   = 140;
+        const PAD_R   = 140;
+        const totalW  = PAD_L + (n - 1) * COL_W + PAD_R;
+        const canvasH = canvas.clientHeight || 380;
+        const ROW_TOP = canvasH * 0.28;
+        const ROW_BOT = canvasH * 0.70;
 
-        const isMobile = window.innerWidth <= 600;
-        const pins = Array.from(map.querySelectorAll('.proj-pin:not(.hidden-chunk)'));
-        if (pins.length === 0) return;
+        inner.style.width    = totalW + 'px';
+        svg.setAttribute('width', totalW);
+        svg.setAttribute('height', canvasH);
+        svg.setAttribute('viewBox', `0 0 ${totalW} ${canvasH}`);
+        if (scrubber) scrubber.style.width = totalW + 'px';
 
-        if (isMobile) {
-            // Reset to static flow on mobile
-            pins.forEach(pin => { pin.style.left = ''; pin.style.top = ''; });
-            map.style.minHeight = '';
-            return;
-        }
+        const pts = [];
 
-        const snakePos = buildSnakePos(pins.length);
-        let maxBottom = 0;
+        nodes.forEach((node, i) => {
+            const data = PROJ_DATA[i];
+            if (!data) return;
 
-        pins.forEach((pin, i) => {
-            const p = snakePos[i];
-            pin.style.left = p.left + '%';
-            pin.style.top  = p.top  + 'px';
+            const x = PAD_L + i * COL_W;
+            const y = i % 2 === 0 ? ROW_TOP : ROW_BOT;
 
-            // Label: goes left if column is on the right half
-            if (p.left > 55) {
-                pin.classList.add('label-left');
-            } else {
-                pin.classList.remove('label-left');
-            }
+            node.style.left = x + 'px';
+            node.style.top  = y + 'px';
 
-            maxBottom = Math.max(maxBottom, p.top + 60);
+            pts.push({ x, y });
         });
 
-        map.style.minHeight = (maxBottom + 48) + 'px';
+        // Draw bezier track
+        drawStagePath(svg, pts, totalW, canvasH);
 
-        drawSnakePath(map, pins, snakePos);
+        // Draw scrubber ticks
+        if (scrubber) {
+            scrubber.querySelectorAll('.stage-scrubber-tick').forEach(t => t.remove());
+            const seenYears = new Set();
+            PROJ_DATA.forEach((p, i) => {
+                const yr = (p.date || '').substring(0, 4) || (new Date().getFullYear());
+                const yearNum = p.date.match(/\d{4}/) ? p.date.match(/\d{4}/)[0] : yr;
+                if (seenYears.has(yearNum)) return;
+                seenYears.add(yearNum);
+
+                const x = PAD_L + i * COL_W;
+                const tick = document.createElement('div');
+                tick.className = 'stage-scrubber-tick';
+                tick.style.left = x + 'px';
+                tick.innerHTML = `<div class="stage-scrubber-tick-line"></div><div class="stage-scrubber-year">${yearNum}</div>`;
+                scrubber.appendChild(tick);
+            });
+        }
     }
 
-    function drawSnakePath(map, pins, snakePos) {
-        const svg = document.getElementById('proj-map-svg');
-        if (!svg || pins.length < 2) return;
+    function drawStagePath(svg, pts, W, H) {
+        if (!svg || pts.length < 2) return;
         svg.innerHTML = '';
-
-        const W = map.getBoundingClientRect().width;
-
-        // Convert left% to absolute px (+ 7 to center on dot)
-        const pts = snakePos.map(p => ({
-            x: p.left / 100 * W + 7,
-            y: p.top,
-        }));
-
-        // Oval extension for U-turns (how far the bezier arm extends sideways)
-        const ext = Math.min(W * 0.1, 72);
+        const midY = H * 0.5;
 
         let d = `M ${pts[0].x} ${pts[0].y}`;
-
         for (let i = 0; i < pts.length - 1; i++) {
-            const cur = pts[i];
-            const nxt = pts[i + 1];
-            const sameRow = Math.abs(cur.y - nxt.y) < 10;
-
-            if (sameRow) {
-                // Straight horizontal with slight ease
-                const dx = nxt.x - cur.x;
-                d += ` C ${cur.x + dx * 0.35} ${cur.y} ${nxt.x - dx * 0.35} ${nxt.y} ${nxt.x} ${nxt.y}`;
-            } else {
-                // U-turn: elongated oval bend
-                // If current dot is on the RIGHT side, bulge further right
-                const onRight = cur.x > W * 0.5;
-                if (onRight) {
-                    d += ` C ${cur.x + ext} ${cur.y} ${nxt.x + ext} ${nxt.y} ${nxt.x} ${nxt.y}`;
-                } else {
-                    d += ` C ${cur.x - ext} ${cur.y} ${nxt.x - ext} ${nxt.y} ${nxt.x} ${nxt.y}`;
-                }
-            }
+            const a = pts[i];
+            const b = pts[i + 1];
+            const mx = (a.x + b.x) / 2;
+            d += ` C ${mx} ${a.y} ${mx} ${b.y} ${b.x} ${b.y}`;
         }
 
+        // Glow path
+        const glow = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        glow.setAttribute('d', d);
+        glow.setAttribute('fill', 'none');
+        glow.setAttribute('stroke', 'rgba(217,119,6,0.12)');
+        glow.setAttribute('stroke-width', '10');
+        glow.setAttribute('stroke-linecap', 'round');
+        svg.appendChild(glow);
+
+        // Main dotted path
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         path.setAttribute('d', d);
         path.setAttribute('fill', 'none');
-        path.setAttribute('stroke', 'rgba(217,119,6,0.22)');
-        path.setAttribute('stroke-width', '1.5');
-        path.setAttribute('stroke-dasharray', '5 8');
+        path.setAttribute('stroke', 'rgba(217,119,6,0.4)');
+        path.setAttribute('stroke-width', '1.75');
+        path.setAttribute('stroke-dasharray', '6 8');
         path.setAttribute('stroke-linecap', 'round');
         svg.appendChild(path);
+
+        // Vertical drop guidelines
+        pts.forEach(p => {
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', p.x);
+            line.setAttribute('y1', p.y);
+            line.setAttribute('x2', p.x);
+            line.setAttribute('y2', midY);
+            line.setAttribute('stroke', 'rgba(217,119,6,0.08)');
+            line.setAttribute('stroke-width', '1');
+            line.setAttribute('stroke-dasharray', '3 4');
+            svg.appendChild(line);
+        });
     }
 
-    // Run on load + resize
-    document.addEventListener('DOMContentLoaded', scatterPins);
-    window.addEventListener('resize', scatterPins);
+    // Drag-to-scroll & Button Controls
+    (function() {
+        const canvas   = document.getElementById('stageCanvas');
+        const scrubber = document.getElementById('stageScrubber');
+        const btnL     = document.getElementById('stageScrollLeft');
+        const btnR     = document.getElementById('stageScrollRight');
+        if (!canvas) return;
 
+        let isDown = false, startX, scrollLeft;
+
+        canvas.addEventListener('mousedown', e => {
+            isDown = true;
+            startX = e.pageX - canvas.offsetLeft;
+            scrollLeft = canvas.scrollLeft;
+        });
+        window.addEventListener('mouseup',   () => isDown = false);
+        canvas.addEventListener('mouseleave', () => isDown = false);
+        canvas.addEventListener('mousemove', e => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - canvas.offsetLeft;
+            const walk = (x - startX) * 1.5;
+            canvas.scrollLeft = scrollLeft - walk;
+        });
+
+        // Wheel scroll horizontally
+        canvas.addEventListener('wheel', e => {
+            if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+                e.preventDefault();
+                canvas.scrollLeft += e.deltaY;
+            }
+        }, { passive: false });
+
+        // Scrubber sync
+        if (scrubber && scrubber.parentElement) {
+            const scrubberWrap = scrubber.parentElement;
+            canvas.addEventListener('scroll', () => {
+                scrubberWrap.scrollLeft = canvas.scrollLeft;
+            });
+        }
+
+        // Nav buttons
+        if (btnL) btnL.addEventListener('click', () => { canvas.scrollBy({ left: -320, behavior: 'smooth' }); });
+        if (btnR) btnR.addEventListener('click', () => { canvas.scrollBy({ left: 320, behavior: 'smooth' }); });
+    })();
+
+    // Run Stage Timeline on Load & Resize
+    document.addEventListener('DOMContentLoaded', initStageTimeline);
+    window.addEventListener('resize', () => {
+        const svg = document.getElementById('stageSvg');
+        if (svg) svg.innerHTML = '';
+        initStageTimeline();
+    });
 
     // ===== Project modal =====
     function openProjModal(id) {
         const data = (typeof PROJ_DATA !== 'undefined') ? PROJ_DATA.find(p => p.id == id) : null;
         if (!data) return;
 
-        const modal = document.getElementById('projModal');
+        const modal   = document.getElementById('projModal');
         const heroImg = document.getElementById('pm-hero');
         const heroPh  = document.getElementById('pm-hero-ph');
 
-        // Hero: partner logo as banner, or placeholder
         if (data.partner_logo) {
             heroImg.src = data.partner_logo;
             heroImg.style.display = 'block';
@@ -2410,31 +2649,6 @@
         }
     });
 
-    // Load More Projects Pagination
-    (function() {
-        const btnLoadMore = document.getElementById('btn-load-more');
-        if (btnLoadMore) {
-            btnLoadMore.addEventListener('click', () => {
-                const hiddenProjects = document.querySelectorAll('.proj-pin.hidden-chunk');
-                const chunkSize = 6;
-                const showCount = Math.min(chunkSize, hiddenProjects.length);
-                for (let i = 0; i < showCount; i++) {
-                    hiddenProjects[i].classList.remove('hidden-chunk');
-                }
-                scatterPins();
-                const remainingHidden = document.querySelectorAll('.proj-pin.hidden-chunk');
-                if (remainingHidden.length === 0) {
-                    const wrap = btnLoadMore.closest('.proj-map-more');
-                    if (wrap) wrap.style.display = 'none';
-                }
-            });
-            const totalHidden = document.querySelectorAll('.proj-pin.hidden-chunk');
-            if (totalHidden.length === 0) {
-                const wrap = btnLoadMore.closest('.proj-map-more');
-                if (wrap) wrap.style.display = 'none';
-            }
-        }
-    })();
 
 
     // Load More Certificates Pagination
