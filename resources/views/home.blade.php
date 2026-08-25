@@ -85,34 +85,30 @@
             position: relative;
             overflow: hidden;
             text-decoration: none;
-            min-width: 80px;
+            flex-shrink: 0;
+            min-width: 180px;
         }
 
         .nav-logo-state {
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
             font-family: 'DM Sans', 'Inter', sans-serif;
-            font-size: 0.88rem;
-            font-weight: 600;
+            font-size: 0.82rem;
             color: var(--text-1);
-            letter-spacing: 0.08em;
             position: absolute;
             left: 0;
-            transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.65s ease, filter 0.65s ease;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease, filter 0.6s ease;
             white-space: nowrap;
         }
 
         .nav-logo-state.initials {
-            letter-spacing: 0.22em;
+            letter-spacing: 0.08em;
             font-weight: 700;
-            font-size: 0.84rem;
         }
 
         .nav-logo-state.fullname {
             letter-spacing: -0.01em;
             font-weight: 600;
-            font-size: 0.88rem;
         }
 
         .nav-logo-state.active {
@@ -138,10 +134,11 @@
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.8rem;
             list-style: none;
             align-items: center;
         }
+
 
         .nav-links a {
             color: var(--text-2);
@@ -2034,10 +2031,10 @@
         <ul class="nav-links" id="navLinks">
             <li><a href="#about">Tentang</a></li>
             <li><a href="#skills">Keahlian</a></li>
-            <li><a href="#techstack">Tech Stack</a></li>
             <li><a href="#timeline">Proyek</a></li>
             <li><a href="#certificates">Sertifikat</a></li>
         </ul>
+
 
         <!-- Right Pill CTA -->
         <div style="display: flex; align-items: center; gap: 0.75rem;">
@@ -2233,110 +2230,10 @@
 
 <div class="section-rule"></div>
 
-<!-- Tech Stack -->
-<section class="site-section" id="techstack">
-    <div class="section-label fade-up">
-        <span class="section-num">03</span>
-        <span class="section-tag-txt">Tech Stack</span>
-    </div>
-    <h2 class="section-title fade-up">Tools<br>&amp; Teknologi.</h2>
-    <p class="section-sub fade-up" style="margin-bottom: 2.5rem;">Semua teknologi, hardware, dan platform yang pernah saya tangani langsung.</p>
-
-    <div class="tech-wrap fade-up">
-        <table class="tech-tbl">
-            <thead>
-                <tr>
-                    <th>Kategori</th>
-                    <th>Teknologi &amp; Perangkat</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Framework &amp; Language</td>
-                    <td>
-                        <span class="chip">PHP</span>
-                        <span class="chip">Laravel</span>
-                        <span class="chip">JavaScript</span>
-                        <span class="chip">Next.js</span>
-                        <span class="chip">Flutter</span>
-                        <span class="chip">Kotlin</span>
-                        <span class="chip">Golang</span>
-                        <span class="chip">Gin Gonic</span>
-                        <span class="chip">Goravel</span>
-                        <span class="chip">Python</span>
-                        <span class="chip">Django</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Database &amp; Storage</td>
-                    <td>
-                        <span class="chip">MySQL</span>
-                        <span class="chip">SQLite</span>
-                        <span class="chip">Cloudflare D1</span>
-                        <span class="chip">Cloudflare R2</span>
-                        <span class="chip">Firebase</span>
-                        <span class="chip">Firestore</span>
-                        <span class="chip">Supabase</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>IoT Projects</td>
-                    <td>
-                        <span class="chip">SiPredi — Presensi RFID</span>
-                        <span class="chip">Fingersync — Presensi Fingerprint</span>
-                        <span class="chip">AquaTherm — Water Heater IoT</span>
-                        <span class="chip">Greenova — Smart Garden</span>
-                        <span class="chip">NexaHome — Smart Home</span>
-                        <span class="chip">Tobacco Techno — Mesin Pemanas Tembakau</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Cloud &amp; Server</td>
-                    <td>
-                        <span class="chip">aaPanel</span>
-                        <span class="chip">Docker</span>
-                        <span class="chip">Colify</span>
-                        <span class="chip">Vercel</span>
-                        <span class="chip">Netlify</span>
-                        <span class="chip">Cloudflare</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Networking &amp; Security</td>
-                    <td>
-                        <span class="chip">Cisco</span>
-                        <span class="chip">MikroTik</span>
-                        <span class="chip">DHCP Server</span>
-                        <span class="chip">Firewall Server</span>
-                        <span class="chip">DNS Server</span>
-                        <span class="chip">Cloud Server</span>
-                        <span class="chip">VoIP Server</span>
-                        <span class="chip">Print Server</span>
-                        <span class="chip">CCTV Integration</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Integrations &amp; APIs</td>
-                    <td>
-                        <span class="chip">WhatsApp Gateway</span>
-                        <span class="chip">Payment Gateway</span>
-                        <span class="chip">REST API</span>
-                        <span class="chip">Webhook</span>
-                        <span class="chip">Firebase FCM</span>
-                        <span class="chip">OAuth Google</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</section>
-
-<div class="section-rule"></div>
-
 <!-- Timeline / Projects -->
 <section class="site-section" id="timeline">
     <div class="section-label fade-up">
-        <span class="section-num">04</span>
+        <span class="section-num">03</span>
         <span class="section-tag-txt">Portfolio</span>
     </div>
     <h2 class="section-title fade-up">Timeline<br>Proyek.</h2>
@@ -2444,9 +2341,10 @@
 <!-- Certificates -->
 <section class="site-section" id="certificates">
     <div class="section-label fade-up">
-        <span class="section-num">05</span>
+        <span class="section-num">04</span>
         <span class="section-tag-txt">Sertifikat</span>
     </div>
+
     <h2 class="section-title fade-up">Pencapaian<br>&amp; Sertifikasi.</h2>
     <p class="section-sub fade-up" style="margin-bottom: 2.5rem;">Bukti belajar yang tersertifikasi.</p>
 
