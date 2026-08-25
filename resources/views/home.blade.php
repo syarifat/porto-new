@@ -238,12 +238,20 @@
             transform: translateY(115%);
             opacity: 0;
             filter: blur(8px);
-            animation: heroLineRise 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .hero-line-1 { animation-delay: 2.05s; }
-        .hero-line-2 { animation-delay: 2.18s; }
-        .hero-line-3 { animation-delay: 2.30s; }
+        #hero.animate-in .hero-line-inner {
+            transform: translateY(0);
+            opacity: 1;
+            filter: blur(0px);
+        }
+
+        #hero.animate-in .hero-line-1 { transition-delay: 0.1s; }
+        #hero.animate-in .hero-line-2 { transition-delay: 0.22s; }
+        #hero.animate-in .hero-line-3 { transition-delay: 0.34s; }
 
         .hero-desc {
             font-size: 0.98rem;
@@ -252,48 +260,36 @@
             max-width: 480px;
             font-weight: 300;
             margin-bottom: 2.25rem;
-        }
-
-        .hero-desc.hero-anim-desc {
             opacity: 0;
             transform: translateY(18px);
             filter: blur(6px);
-            animation: heroFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 2.45s forwards;
+            transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .hero-actions.hero-anim-actions {
+        #hero.animate-in .hero-desc {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0px);
+            transition-delay: 0.46s;
+        }
+
+        .hero-actions {
             opacity: 0;
             transform: translateY(18px);
-            animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 2.58s forwards;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        @keyframes heroLineRise {
-            0% {
-                transform: translateY(115%);
-                opacity: 0;
-                filter: blur(8px);
-            }
-            100% {
-                transform: translateY(0);
-                opacity: 1;
-                filter: blur(0px);
-            }
-        }
-
-        @keyframes heroFadeUp {
-            0% {
-                opacity: 0;
-                transform: translateY(18px);
-                filter: blur(6px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-                filter: blur(0px);
-            }
+        #hero.animate-in .hero-actions {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.58s;
         }
 
         /* 3D Globe Container */
+
 
         .hero-globe-wrap {
             position: relative;
@@ -2197,8 +2193,8 @@
         </div>
 
     </div>
-    <div class="scroll-hint">Gulir ke bawah</div>
 </section>
+
 
 
 <!-- Manifesto Statement Banner with Dynamic ASCII Matrix Wave -->
@@ -2607,7 +2603,11 @@
     // ===== INTRO PRELOADER WAVE =====
     (function() {
         const curtain = document.getElementById('intro-curtain');
-        if (!curtain) return;
+        const hero = document.getElementById('hero');
+        if (!curtain) {
+            if (hero) hero.classList.add('animate-in');
+            return;
+        }
 
         document.body.style.overflow = 'hidden';
 
@@ -2615,6 +2615,7 @@
             setTimeout(() => {
                 curtain.classList.add('hide');
                 document.body.style.overflow = '';
+                if (hero) hero.classList.add('animate-in');
                 setTimeout(() => {
                     if (curtain && curtain.parentNode) {
                         curtain.parentNode.removeChild(curtain);
@@ -2634,12 +2635,37 @@
             if (curtain && !curtain.classList.contains('hide')) {
                 curtain.classList.add('hide');
                 document.body.style.overflow = '';
+                if (hero) hero.classList.add('animate-in');
             }
         }, 3800);
     })();
 
+    // ===== HERO ANIMATION RE-TRIGGER ON SCROLL =====
+    (function() {
+        const hero = document.getElementById('hero');
+        if (!hero) return;
+
+        let hasLoaded = false;
+        setTimeout(() => { hasLoaded = true; }, 2100);
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (hasLoaded) {
+                        hero.classList.add('animate-in');
+                    }
+                } else {
+                    hero.classList.remove('animate-in');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        observer.observe(hero);
+    })();
+
     // Hamburger
     const hamburger = document.getElementById('hamburger');
+
     const navLinks  = document.getElementById('navLinks');
     hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
     navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
