@@ -579,92 +579,159 @@
 
         .chip:hover { border-color: var(--border-hover); color: var(--text-1); }
 
-        /* ===== TIMELINE ===== */
+        /* ===== TIMELINE — Maps Dot Style ===== */
         .timeline-wrap {
             position: relative;
-            padding-left: 2rem;
+            padding-left: 2.5rem;
         }
 
         .t-line {
             position: absolute;
-            left: 0;
-            top: 10px;
-            bottom: 0;
+            left: 7px;
+            top: 8px;
+            bottom: 8px;
             width: 1px;
-            background: var(--border);
+            background: linear-gradient(to bottom, var(--accent), rgba(217,119,6,0.1));
         }
 
         .project-entry {
             position: relative;
-            margin-bottom: 1.5rem;
+            margin-bottom: 0;
             opacity: 0;
-            transform: translateY(18px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            transform: translateY(12px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
         .project-entry.visible { opacity: 1; transform: translateY(0); }
+        .project-entry.hidden-chunk { display: none !important; }
 
-        /* Amber diamond marker */
-        .project-entry::before {
+        /* Dot marker */
+        .proj-dot {
+            position: absolute;
+            left: -2.5rem;
+            top: 1.05rem;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .proj-dot::after {
             content: '';
             position: absolute;
-            left: -2rem;
-            top: 0.85rem;
-            width: 5px;
-            height: 5px;
-            background: var(--accent);
-            transform: rotate(45deg);
-            border-radius: 1px;
+            inset: 3px;
+            border-radius: 50%;
+            background: var(--text-3);
+            transition: background 0.25s ease;
         }
+
+        .project-entry.active .proj-dot,
+        .proj-dot:hover {
+            border-color: var(--accent);
+            transform: scale(1.2);
+        }
+
+        .project-entry.active .proj-dot::after,
+        .proj-dot:hover::after {
+            background: var(--accent);
+        }
+
+        /* ongoing pulse */
+        .proj-dot.ongoing-dot {
+            border-color: var(--accent);
+        }
+        .proj-dot.ongoing-dot::after { background: var(--accent); }
+        .proj-dot.ongoing-dot::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 1px solid rgba(217,119,6,0.4);
+            animation: dotPulse 2s infinite;
+        }
+
+        @keyframes dotPulse {
+            0%,100% { opacity: 0.5; transform: scale(1); }
+            50%      { opacity: 0; transform: scale(1.6); }
+        }
+
+        /* Summary row (always visible) */
+        .proj-summary {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 0;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .proj-summary-info { flex: 1; min-width: 0; }
+
+        .proj-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-1);
+            transition: color 0.2s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .proj-summary:hover .proj-title,
+        .project-entry.active .proj-title { color: var(--accent); }
+
+        .proj-date {
+            font-size: 0.68rem;
+            color: var(--text-3);
+            margin-top: 0.1rem;
+        }
+
+        .proj-toggle-icon {
+            color: var(--text-3);
+            flex-shrink: 0;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s;
+        }
+
+        .project-entry.active .proj-toggle-icon {
+            transform: rotate(180deg);
+            color: var(--accent);
+        }
+
+        /* Detail panel */
+        .proj-detail {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .proj-detail.open { max-height: 600px; }
 
         .proj-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: var(--r-lg);
-            padding: 1.4rem 1.5rem;
-            box-shadow: var(--shadow-sm);
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-
-        .proj-card:hover {
-            border-color: var(--border-hover);
-            box-shadow: var(--shadow-md);
-        }
-
-        .proj-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-bottom: 0.4rem;
-        }
-
-        .proj-title {
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            color: var(--text-1);
-        }
-
-        .proj-date {
-            font-size: 0.7rem;
-            color: var(--text-3);
-            white-space: nowrap;
-            margin-top: 0.15rem;
+            border-left: 2px solid var(--accent);
+            border-radius: 0 var(--r-lg) var(--r-lg) 0;
+            padding: 1.25rem 1.4rem;
+            margin-bottom: 0.75rem;
+            margin-left: 0.25rem;
         }
 
         .proj-partner {
             font-size: 0.76rem;
             color: var(--text-3);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
         }
 
         .proj-partner strong { color: var(--text-2); font-weight: 500; }
 
         .proj-desc {
-            font-size: 0.84rem;
+            font-size: 0.83rem;
             color: var(--text-2);
             line-height: 1.72;
             font-weight: 300;
@@ -705,6 +772,7 @@
             color: var(--text-3);
             font-size: 0.875rem;
         }
+
 
         /* ===== CERTIFICATES ===== */
         /* ===== CERTIFICATES — Premium Grid Cards ===== */
@@ -1825,42 +1893,53 @@
         <div class="timeline-wrap">
             <div class="t-line"></div>
             @foreach($projects as $index => $project)
-            <div class="project-entry @if($index >= 3) hidden-chunk @endif">
-                <div class="proj-card">
-                    <div class="proj-top">
-                        <span class="proj-title">{{ $project->title }}</span>
-                        <span class="proj-date">
+            <div class="project-entry @if($index >= 3) hidden-chunk @endif" id="proj-entry-{{ $project->id }}">
+                <div class="proj-dot {{ $project->status === 'ongoing' ? 'ongoing-dot' : '' }}"></div>
+                <div class="proj-summary" onclick="toggleProject({{ $project->id }})">
+                    <div class="proj-summary-info">
+                        <div class="proj-title">{{ $project->title }}</div>
+                        <div class="proj-date">
                             {{ $project->start_date->format('M Y') }}
                             @if($project->end_date)
-                                s/d {{ $project->end_date->format('M Y') }}
+                                &ndash; {{ $project->end_date->format('M Y') }}
                             @else
-                                s/d Sekarang
+                                &ndash; Sekarang
                             @endif
-                        </span>
+                            @if($project->partner_name)
+                                &nbsp;&middot;&nbsp;{{ $project->partner_name }}
+                            @endif
+                        </div>
                     </div>
-                    @if($project->partner_name)
-                    <div class="proj-partner">Mitra: <strong>{{ $project->partner_name }}</strong></div>
-                    @endif
-                    <p class="proj-desc">{{ $project->description }}</p>
-                    <div class="proj-chips">
-                        <span class="status-chip {{ $project->status }}">
-                            @if($project->status === 'completed') ✓ Selesai @else · Berlangsung @endif
-                        </span>
-                        @if($project->category)
-                            <span class="chip">{{ $project->category }}</span>
+                    <svg class="proj-toggle-icon" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                </div>
+                <div class="proj-detail" id="proj-detail-{{ $project->id }}">
+                    <div class="proj-card">
+                        @if($project->partner_name)
+                        <div class="proj-partner">Mitra: <strong>{{ $project->partner_name }}</strong></div>
                         @endif
-                        @if($project->tech_stack)
-                            @foreach(explode(',', $project->tech_stack) as $tech)
-                                <span class="chip">{{ trim($tech) }}</span>
-                            @endforeach
-                        @endif
+                        <p class="proj-desc">{{ $project->description }}</p>
+                        <div class="proj-chips">
+                            <span class="status-chip {{ $project->status }}">
+                                @if($project->status === 'completed') &#10003; Selesai @else &middot; Berlangsung @endif
+                            </span>
+                            @if($project->category)
+                                <span class="chip">{{ $project->category }}</span>
+                            @endif
+                            @if($project->tech_stack)
+                                @foreach(explode(',', $project->tech_stack) as $tech)
+                                    <span class="chip">{{ trim($tech) }}</span>
+                                @endforeach
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
             @endforeach
         </div>
         @if($projects->count() > 3)
-            <div class="load-more-wrap fade-up" style="text-align: center; margin-top: 3.5rem;">
+            <div class="load-more-wrap fade-up" style="text-align: center; margin-top: 3rem;">
                 <button id="btn-load-more" class="btn-load-more" aria-label="Tampilkan Lebih Banyak Proyek">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="7 13 12 18 17 13"></polyline>
@@ -2042,6 +2121,27 @@
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
     document.querySelectorAll('.fade-up, .project-entry').forEach(el => observer.observe(el));
+
+    // Timeline dot toggle
+    function toggleProject(id) {
+        const entry  = document.getElementById('proj-entry-' + id);
+        const detail = document.getElementById('proj-detail-' + id);
+        if (!entry || !detail) return;
+
+        const isOpen = entry.classList.contains('active');
+
+        // Close all open entries first
+        document.querySelectorAll('.project-entry.active').forEach(el => {
+            el.classList.remove('active');
+            el.querySelector('.proj-detail').classList.remove('open');
+        });
+
+        // If it was closed, open it
+        if (!isOpen) {
+            entry.classList.add('active');
+            detail.classList.add('open');
+        }
+    }
 
     // Load More Projects Pagination
     (function() {
