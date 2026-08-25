@@ -630,208 +630,437 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* ===== ABOUT SECTION EDITORIAL ===== */
+        /* ===== ABOUT SECTION (METACCI & EDITORIAL STYLE) ===== */
         .about-layout {
             display: grid;
             grid-template-columns: 1.05fr 0.95fr;
             gap: 4.5rem;
             align-items: start;
+            margin-bottom: 4.5rem;
         }
 
         .about-quote {
             font-family: 'Inter', sans-serif;
-            font-size: clamp(1.35rem, 2.4vw, 1.85rem);
-            font-weight: 600;
-            line-height: 1.38;
-            letter-spacing: -0.025em;
+            font-size: clamp(1.4rem, 2.5vw, 2rem);
+            font-weight: 700;
+            line-height: 1.3;
+            letter-spacing: -0.03em;
             color: var(--text-1);
-            margin-top: 1.75rem;
-            margin-bottom: 2rem;
-            position: relative;
+            margin-top: 1.5rem;
+            margin-bottom: 1.8rem;
         }
 
-        .about-quote-mark {
-            font-size: 2.4rem;
-            line-height: 0;
+        .about-quote .accent-word {
             color: var(--accent);
-            display: inline-block;
-            margin-right: 0.2rem;
-            vertical-align: -0.3rem;
+            font-style: italic;
         }
 
-        .about-features {
+        .about-meta-pills {
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .about-meta-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255,255,255,0.035);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 999px;
+            padding: 0.35rem 0.85rem;
+            font-size: 0.74rem;
+            color: var(--text-2);
+            font-weight: 500;
+        }
+
+        .about-meta-pill span.dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        /* 4-Phases Workflow Grid (Image 3 Style) */
+        .process-header-wrap {
+            margin-top: 3.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
             gap: 1.25rem;
         }
 
-        .about-card {
-            background: rgba(255,255,255,0.025);
+        .process-card {
+            background: rgba(255,255,255,0.02);
             border: 1px solid rgba(255,255,255,0.07);
-            border-radius: var(--r-md);
-            padding: 1.5rem 1.75rem;
-            transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+            border-radius: var(--r-lg);
+            padding: 1.75rem 1.4rem;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
         }
 
-        .about-card:hover {
-            border-color: rgba(255,255,255,0.18);
+        .process-card:hover {
+            border-color: rgba(217, 119, 6, 0.4);
             background: rgba(255,255,255,0.04);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
         }
 
-        .about-card-title {
+        .process-card-num {
             font-family: 'Inter', sans-serif;
-            font-size: 0.98rem;
-            font-weight: 700;
-            color: var(--text-1);
-            margin-bottom: 0.45rem;
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+            margin-bottom: 1.25rem;
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            justify-content: space-between;
         }
 
-        .about-card-title span.badge-num {
-            font-size: 0.72rem;
-            color: var(--accent);
-            font-weight: 700;
+        .process-card-num::after {
+            content: '→';
+            font-size: 0.85rem;
+            opacity: 0.4;
+            transition: transform 0.2s;
         }
 
-        .about-card-desc {
-            font-size: 0.88rem;
-            color: var(--text-2);
-            line-height: 1.7;
-            font-weight: 300;
+        .process-card:hover .process-card-num::after {
+            opacity: 1;
+            transform: translateX(3px);
         }
 
-
-        /* ===== SKILLS — BENTO ===== */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1px;
-            background: var(--border);
-            border: 1px solid var(--border);
-            border-radius: var(--r-lg);
-            overflow: hidden;
-        }
-
-        .bento-card {
-            background: var(--surface);
-            padding: 2rem 2rem 2.25rem;
-            transition: background 0.2s;
-        }
-
-        .bento-card:hover { background: var(--surface-2); }
-
-        /* Card 1 spans 2 of 3 cols */
-        .bento-card.wide { grid-column: span 2; }
-        /* Card 2 spans 2 rows */
-        .bento-card.tall { grid-row: span 2; }
-
-        .bento-eyebrow {
-            font-size: 0.62rem;
-            font-weight: 600;
-            letter-spacing: 0.13em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 0.8rem;
-        }
-
-        .bento-card h3 {
+        .process-card-title {
             font-family: 'Inter', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 800;
-            letter-spacing: -0.025em;
+            font-size: 1.05rem;
+            font-weight: 700;
             color: var(--text-1);
-            margin-bottom: 0.7rem;
-            line-height: 1.2;
+            margin-bottom: 0.65rem;
+            letter-spacing: -0.02em;
         }
 
-        .bento-card p {
-            font-size: 0.84rem;
+        .process-card-desc {
+            font-size: 0.82rem;
             color: var(--text-2);
-            line-height: 1.72;
+            line-height: 1.65;
             font-weight: 300;
         }
 
-        .bento-glyph {
-            margin-bottom: 1rem;
-            line-height: 1;
-            color: var(--text-3);
+        /* ===== SKILLS / TECH SETS (BENJAMIN & METACCI INDEXED STYLE) ===== */
+        .skills-system-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
-        .bento-glyph svg {
-            width: 28px;
-            height: 28px;
-            display: block;
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-
-        .bento-card:hover .bento-glyph svg {
-            transform: scale(1.08);
-            color: var(--accent);
-        }
-
-        /* ===== TECH STACK ===== */
-        .tech-wrap {
-            border: 1px solid var(--border);
-            border-radius: var(--r-lg);
+        .skills-system-card {
+            background: rgba(22, 22, 19, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: var(--r-xl);
+            padding: 2rem 2.25rem;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
             overflow: hidden;
-            box-shadow: var(--shadow-sm);
         }
 
-        table.tech-tbl {
-            width: 100%;
-            border-collapse: collapse;
+        .skills-system-card:hover {
+            border-color: rgba(255,255,255,0.18);
+            background: rgba(28, 28, 24, 0.85);
+            transform: translateY(-2px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.5);
         }
 
-        .tech-tbl thead tr {
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
+        .skills-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.85rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
         }
 
-        .tech-tbl th {
-            padding: 0.85rem 1.5rem;
-            text-align: left;
-            font-size: 0.65rem;
+        .skills-card-index {
+            font-family: 'Inter', monospace, sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+        }
+
+        .skills-card-category {
+            font-size: 0.68rem;
             font-weight: 600;
             letter-spacing: 0.12em;
             text-transform: uppercase;
             color: var(--text-3);
         }
 
-        .tech-tbl td {
-            padding: 0.8rem 1.5rem;
-            font-size: 0.84rem;
-            color: var(--text-2);
-            border-top: 1px solid var(--border);
-            vertical-align: middle;
-        }
-
-        .tech-tbl tbody tr { background: var(--bg); transition: background 0.15s; }
-        .tech-tbl tbody tr:hover { background: var(--surface); }
-
-        .tech-tbl td:first-child {
-            font-size: 0.78rem;
-            font-weight: 500;
+        .skills-system-card h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
             color: var(--text-1);
-            white-space: nowrap;
-            width: 185px;
+            margin-bottom: 0.6rem;
         }
 
-        .chip {
-            display: inline-block;
-            background: var(--surface-2);
-            border: 1px solid var(--border);
+        .skills-system-card p {
+            font-size: 0.86rem;
             color: var(--text-2);
-            font-size: 0.7rem;
-            padding: 0.18rem 0.6rem;
-            border-radius: 3px;
-            margin: 0.12rem 0.08rem;
-            transition: border-color 0.15s, color 0.15s;
+            line-height: 1.7;
+            font-weight: 300;
+            margin-bottom: 1.4rem;
         }
 
-        .chip:hover { border-color: var(--border-hover); color: var(--text-1); }
+        .skills-chips-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+        }
+
+        .skill-tag-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.09);
+            color: var(--text-1);
+            font-size: 0.73rem;
+            font-weight: 500;
+            padding: 0.3rem 0.7rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .skill-tag-chip:hover {
+            border-color: var(--accent);
+            background: rgba(217, 119, 6, 0.12);
+            color: #fff;
+        }
+
+        /* ===== FAQ ACCORDION (IMAGE 3 METACCI STYLE) ===== */
+        .faq-wrap {
+            max-width: 860px;
+            margin: 2.5rem auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .faq-item {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: var(--r-lg);
+            overflow: hidden;
+            transition: border-color 0.25s ease, background 0.25s ease;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.035);
+        }
+
+        .faq-item.open {
+            border-color: rgba(217, 119, 6, 0.4);
+            background: rgba(255,255,255,0.035);
+        }
+
+        .faq-btn {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 1.35rem 1.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            cursor: pointer;
+            color: var(--text-1);
+            font-family: 'Inter', sans-serif;
+            font-size: 1.02rem;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+        }
+
+        .faq-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s;
+        }
+
+        .faq-item.open .faq-icon {
+            transform: rotate(45deg);
+            background: var(--accent);
+            color: #121210;
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 0 1.75rem;
+        }
+
+        .faq-item.open .faq-content {
+            max-height: 240px;
+            padding-bottom: 1.5rem;
+        }
+
+        .faq-content p {
+            font-size: 0.88rem;
+            color: var(--text-2);
+            line-height: 1.75;
+            font-weight: 300;
+            margin: 0;
+        }
+
+        /* ===== GRAND FINALE CTA BANNER (IMAGE 1, 4, 5 STYLE) ===== */
+        .cta-banner {
+            position: relative;
+            background: radial-gradient(circle at 50% 100%, rgba(217, 119, 6, 0.18), rgba(12, 10, 8, 0.98) 65%);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: var(--r-xl, 24px);
+            padding: 6rem 2rem;
+            text-align: center;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            margin: 3rem 0;
+        }
+
+        .cta-giant-title {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(2.8rem, 6.5vw, 5.2rem);
+            font-weight: 900;
+            line-height: 1.02;
+            letter-spacing: -0.04em;
+            color: #ffffff;
+            margin: 1.25rem 0 1.5rem;
+        }
+
+        .cta-giant-title .hl-gradient {
+            background: linear-gradient(135deg, #ffffff 30%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-style: italic;
+        }
+
+        .cta-sub {
+            font-size: 1.05rem;
+            color: var(--text-2);
+            max-width: 540px;
+            margin: 0 auto 2.75rem;
+            line-height: 1.75;
+            font-weight: 300;
+        }
+
+        .cta-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary-large {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #ffffff;
+            color: #10100e !important;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+            padding: 0.95rem 2.25rem;
+            border-radius: 999px;
+            text-decoration: none;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 8px 30px rgba(255,255,255,0.25);
+        }
+
+        .btn-primary-large:hover {
+            transform: translateY(-2px) scale(1.02);
+            background: var(--accent);
+            color: #ffffff !important;
+            box-shadow: 0 12px 35px rgba(217, 119, 6, 0.45);
+        }
+
+        .btn-ghost-large {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: var(--text-1);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 600;
+            padding: 0.95rem 2rem;
+            border-radius: 999px;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .btn-ghost-large:hover {
+            border-color: #ffffff;
+            background: rgba(255,255,255,0.08);
+            transform: translateY(-2px);
+        }
+
+        /* Running Bottom Marquee Strip */
+        .footer-marquee-strip {
+            width: 100%;
+            overflow: hidden;
+            background: #080806;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 0.9rem 0;
+            display: flex;
+            user-select: none;
+        }
+
+        .footer-marquee-track {
+            display: flex;
+            align-items: center;
+            width: max-content;
+            animation: marqueeScroll 22s linear infinite;
+        }
+
+        .footer-marquee-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0 1.5rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            white-space: nowrap;
+        }
+
+        .footer-marquee-item span.star {
+            color: var(--accent);
+            font-size: 1rem;
+        }
+
 
         /* ===== EMBEDDED INTERACTIVE TIMELINE STAGE ===== */
         .stage-timeline-container {
@@ -2364,7 +2593,7 @@
             <h2 class="section-title">Prinsip &amp;<br>Filosofi Kerja.</h2>
             
             <div class="about-quote">
-                <span class="about-quote-mark">“</span>Teknologi yang bagus bukan yang paling rumit, melainkan yang paling tepat memecahkan masalah nyata.
+                “Membangun sistem yang menghubungkan <span class="accent-word">dunia fisik</span> ke ekosistem digital — terukur, aman, dan efisien.”
             </div>
 
             <div style="color: var(--text-2); font-size: 0.92rem; line-height: 1.8; font-weight: 300;">
@@ -2372,11 +2601,16 @@
                     Halo, saya <strong>Syarif Ahsani Taqwim</strong>. Saya bekerja di persimpangan antara <span style="color: var(--accent); font-weight: 500;">Full-Stack Development</span>, <span style="color: var(--accent); font-weight: 500;">Internet of Things (IoT)</span>, dan <span style="color: var(--accent); font-weight: 500;">IT Infrastructure</span>.
                 </p>
                 <p>
-                    Fokus utama saya adalah merancang dan mengimplementasikan sistem yang tangguh, efisien, dan langsung memberikan dampak nyata bagi performa operasional serta kebutuhan digital modern.
+                    Fokus utama saya adalah merancang dan mengimplementasikan arsitektur teknologi yang tangguh, efisien, dan langsung memberikan dampak operasional nyata bagi bisnis maupun instansi.
                 </p>
             </div>
-        </div>
 
+            <div class="about-meta-pills">
+                <div class="about-meta-pill"><span class="dot"></span> Full-Stack &amp; IoT</div>
+                <div class="about-meta-pill"><span class="dot"></span> Tulungagung, Jawa Timur</div>
+                <div class="about-meta-pill"><span class="dot"></span> End-to-End Architecture</div>
+            </div>
+        </div>
 
         <div class="about-features fade-up">
             <div class="about-card">
@@ -2385,17 +2619,17 @@
                     <span>End-to-End System Integration</span>
                 </div>
                 <div class="about-card-desc">
-                    Merancang dari level sirkuit perangkat keras fisik, firmware IoT, hingga backend API dan interface web modern dalam satu ekosistem sinkron.
+                    Merancang dari sirkuit perangkat keras fisik, firmware IoT, hingga backend API dan interface modern dalam satu ekosistem terpadu.
                 </div>
             </div>
 
             <div class="about-card">
                 <div class="about-card-title">
                     <span class="badge-num">02</span>
-                    <span>Reliability &amp; High Performance</span>
+                    <span>Reliability &amp; Low-Latency</span>
                 </div>
                 <div class="about-card-desc">
-                    Setiap arsitektur kode dan server dibangun dengan standar keamanan teruji, low-latency, serta kemudahan pemeliharaan jangka panjang.
+                    Setiap arsitektur kode dan server dibangun dengan standar keamanan teruji, performa tinggi, serta kemudahan pemeliharaan jangka panjang.
                 </div>
             </div>
 
@@ -2405,90 +2639,137 @@
                     <span>Pragmatic &amp; User-Centric</span>
                 </div>
                 <div class="about-card-desc">
-                    Mengutamakan kegunaan praktis agar teknologi canggih dapat dioperasikan secara intuitif dan nyaman oleh pengguna.
+                    Mengutamakan kegunaan praktis agar sistem canggih tetap intuitif dan mudah dioperasikan oleh pengguna akhir.
                 </div>
             </div>
         </div>
     </div>
-</section>
 
+    <!-- 4-Phases Workflow Grid (Inspired by Metacci Image 3) -->
+    <div class="process-header-wrap fade-up">
+        <div class="section-label">
+            <span class="section-num">METODOLOGI</span>
+            <span class="section-tag-txt">4 Tahap Pengerjaan</span>
+        </div>
+        <h3 style="font-family: 'Inter', sans-serif; font-size: clamp(1.4rem, 2.5vw, 1.85rem); font-weight: 800; letter-spacing: -0.025em; color: var(--text-1); margin-top: 0.4rem;">
+            Empat fase terstruktur, hasil terukur.
+        </h3>
+    </div>
+
+    <div class="process-grid fade-up">
+        <div class="process-card">
+            <div class="process-card-num">01 / ANALYZE</div>
+            <div class="process-card-title">Analisis Masalah</div>
+            <div class="process-card-desc">Membedah alur kerja bisnis, kebutuhan fungsional pengguna, serta spesifikasi perangkat keras yang dibutuhkan.</div>
+        </div>
+        <div class="process-card">
+            <div class="process-card-num">02 / ARCHITECT</div>
+            <div class="process-card-title">Desain Arsitektur</div>
+            <div class="process-card-desc">Merancang skema basis data, arsitektur REST API, topologi jaringan, serta skematik sirkuit mikrokontroler.</div>
+        </div>
+        <div class="process-card">
+            <div class="process-card-num">03 / BUILD &amp; WIRE</div>
+            <div class="process-card-title">Implementasi &amp; Koding</div>
+            <div class="process-card-desc">Menulis kode terstruktur, flashing firmware perangkat IoT, perakitan modul sensor, dan integrasi antar-sistem.</div>
+        </div>
+        <div class="process-card">
+            <div class="process-card-num">04 / DEPLOY &amp; SCALE</div>
+            <div class="process-card-title">Deployment &amp; QC</div>
+            <div class="process-card-desc">Deployment ke server cloud/fisik, pengujian latency &amp; beban di lapangan, serta serah terima dokumentasi lengkap.</div>
+        </div>
+    </div>
+</section>
 
 <div class="section-rule"></div>
 
-<!-- Skills -->
+<!-- Skills / Tech Sets -->
 <section class="site-section" id="skills">
     <div class="section-label fade-up">
         <span class="section-num">02</span>
-        <span class="section-tag-txt">Keahlian</span>
+        <span class="section-tag-txt">Area Keahlian</span>
     </div>
-    <h2 class="section-title fade-up">Area<br>Kompetensi.</h2>
-    <p class="section-sub fade-up" style="margin-bottom: 2.5rem;">Dari kode di cloud sampai sinyal di papan sirkuit.</p>
+    <h2 class="section-title fade-up">Spesialisasi &amp;<br>Ekosistem Teknis.</h2>
+    <p class="section-sub fade-up" style="margin-bottom: 1.5rem;">Penguasaan menyeluruh dari papan sirkuit mikrokontroler hingga arsitektur cloud server.</p>
 
-    <div class="bento-grid fade-up">
-        <!-- Card 1: col 1–2, row 1 (wide) -->
-        <div class="bento-card wide">
-            <div class="bento-glyph">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="3" width="20" height="13" rx="2"/>
-                    <line x1="12" y1="16" x2="12" y2="20"/>
-                    <line x1="8" y1="20" x2="16" y2="20"/>
-                    <path d="M8 8l-2 2 2 2"/>
-                    <path d="M16 8l2 2-2 2"/>
-                    <line x1="13" y1="7" x2="11" y2="13"/>
-                </svg>
+    <div class="skills-system-grid fade-up">
+        <!-- 01 Web & Mobile -->
+        <div class="skills-system-card">
+            <div class="skills-card-header">
+                <span class="skills-card-index">01 / SOFTWARE</span>
+                <span class="skills-card-category">Web &amp; Mobile</span>
             </div>
-            <div class="bento-eyebrow">Software</div>
-            <h3>Full-Stack &amp; Mobile Development</h3>
-            <p>PHP/Laravel untuk backend yang solid. JavaScript di sisi klien. Mobile development untuk Android &amp; iOS. Dari skema database sampai halaman yang nyaman dipakai orang awam.</p>
+            <h3>Full-Stack &amp; Mobile App</h3>
+            <p>Pengembangan web interaktif skala instansi, API backend tangguh, dan aplikasi mobile dengan sinkronisasi real-time.</p>
+            <div class="skills-chips-wrap">
+                <span class="skill-tag-chip">PHP</span>
+                <span class="skill-tag-chip">Laravel</span>
+                <span class="skill-tag-chip">JavaScript</span>
+                <span class="skill-tag-chip">Next.js</span>
+                <span class="skill-tag-chip">Golang</span>
+                <span class="skill-tag-chip">Flutter</span>
+                <span class="skill-tag-chip">Kotlin</span>
+                <span class="skill-tag-chip">REST API</span>
+                <span class="skill-tag-chip">WebSocket</span>
+            </div>
         </div>
-        <!-- Card 2: col 3, row 1–2 (tall) -->
-        <div class="bento-card tall">
-            <div class="bento-glyph">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="5" y="5" width="14" height="14" rx="2"/>
-                    <path d="M9 9h6v6H9z"/>
-                    <path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/>
-                </svg>
+
+        <!-- 02 IoT & Hardware -->
+        <div class="skills-system-card">
+            <div class="skills-card-header">
+                <span class="skills-card-index">02 / EMBEDDED</span>
+                <span class="skills-card-category">IoT &amp; Hardware</span>
             </div>
-            <div class="bento-eyebrow">IoT</div>
-            <h3>Internet of Things</h3>
-            <p>Perancangan perangkat keras cerdas: ESP32, ESP8266, Arduino. Integrasi sensor (RFID, ultrasonik, GPS NEO-6M, load cell HX711) ke dashboard yang bisa dimonitor real-time lewat web.</p>
+            <h3>Internet of Things (IoT)</h3>
+            <p>Perancangan perangkat cerdas terintegrasi, akuisisi data sensor, automasi aktuator, dan protokol komunikasi IoT.</p>
+            <div class="skills-chips-wrap">
+                <span class="skill-tag-chip">ESP32</span>
+                <span class="skill-tag-chip">ESP8266</span>
+                <span class="skill-tag-chip">Arduino</span>
+                <span class="skill-tag-chip">RFID &amp; NFC</span>
+                <span class="skill-tag-chip">HX711 Load Cell</span>
+                <span class="skill-tag-chip">MQTT Protocol</span>
+                <span class="skill-tag-chip">C / C++</span>
+                <span class="skill-tag-chip">GPS NEO-6M</span>
+            </div>
         </div>
-        <!-- Card 3: col 1, row 2 -->
-        <div class="bento-card">
-            <div class="bento-glyph">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="2" width="20" height="6" rx="1"/>
-                    <rect x="2" y="9" width="20" height="6" rx="1"/>
-                    <rect x="2" y="16" width="20" height="6" rx="1"/>
-                    <circle cx="6" cy="5" r="1" fill="currentColor"/>
-                    <circle cx="10" cy="5" r="1" fill="currentColor"/>
-                    <circle cx="6" cy="12" r="1" fill="currentColor"/>
-                    <circle cx="10" cy="12" r="1" fill="currentColor"/>
-                    <circle cx="6" cy="19" r="1" fill="currentColor"/>
-                    <circle cx="10" cy="19" r="1" fill="currentColor"/>
-                </svg>
+
+        <!-- 03 Cloud & DevOps -->
+        <div class="skills-system-card">
+            <div class="skills-card-header">
+                <span class="skills-card-index">03 / INFRASTRUCTURE</span>
+                <span class="skills-card-category">DevOps &amp; Cloud</span>
             </div>
-            <div class="bento-eyebrow">Infrastructure</div>
-            <h3>IT Infra &amp; DevOps</h3>
-            <p>SysAdmin Linux, Docker, Vercel &amp; Cloudflare. Pengelolaan home server dan enterprise server dari nol.</p>
+            <h3>Cloud &amp; SysAdmin</h3>
+            <p>Konfigurasi server Linux fisik &amp; cloud, isolasi container Docker, optimasi web server, dan automasi deployment.</p>
+            <div class="skills-chips-wrap">
+                <span class="skill-tag-chip">Linux SysAdmin</span>
+                <span class="skill-tag-chip">Docker</span>
+                <span class="skill-tag-chip">aaPanel</span>
+                <span class="skill-tag-chip">Cloudflare D1 &amp; R2</span>
+                <span class="skill-tag-chip">Nginx</span>
+                <span class="skill-tag-chip">Vercel</span>
+                <span class="skill-tag-chip">CI / CD</span>
+                <span class="skill-tag-chip">MySQL &amp; SQLite</span>
+            </div>
         </div>
-        <!-- Card 4: col 2, row 2 -->
-        <div class="bento-card">
-            <div class="bento-glyph">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="3"/>
-                    <circle cx="12" cy="4" r="2.5"/>
-                    <circle cx="4" cy="18" r="2.5"/>
-                    <circle cx="20" cy="18" r="2.5"/>
-                    <line x1="12" y1="6.5" x2="12" y2="9"/>
-                    <line x1="5.7" y1="16.3" x2="9.8" y2="13.7"/>
-                    <line x1="18.3" y1="16.3" x2="14.2" y2="13.7"/>
-                </svg>
+
+        <!-- 04 Networking & Security -->
+        <div class="skills-system-card">
+            <div class="skills-card-header">
+                <span class="skills-card-index">04 / NETWORK</span>
+                <span class="skills-card-category">Networking &amp; Telecom</span>
             </div>
-            <div class="bento-eyebrow">Networking</div>
             <h3>Enterprise Networking</h3>
-            <p>Cisco &amp; MikroTik, DHCP/DNS/Firewall, VoIP, CCTV, dan keamanan jaringan perusahaan skala menengah.</p>
+            <p>Pembangunan topologi jaringan LAN/WAN kantor, manajemen bandwidth MikroTik/Cisco, server VoIP, dan integrasi CCTV.</p>
+            <div class="skills-chips-wrap">
+                <span class="skill-tag-chip">MikroTik RouterOS</span>
+                <span class="skill-tag-chip">Cisco Packet Tracer</span>
+                <span class="skill-tag-chip">DNS &amp; DHCP</span>
+                <span class="skill-tag-chip">Firewall / NAT</span>
+                <span class="skill-tag-chip">VoIP Server</span>
+                <span class="skill-tag-chip">CCTV IP Network</span>
+                <span class="skill-tag-chip">LAN / WAN</span>
+            </div>
         </div>
     </div>
 </section>
@@ -2499,11 +2780,10 @@
 <section class="site-section" id="timeline">
     <div class="section-label fade-up">
         <span class="section-num">03</span>
-        <span class="section-tag-txt">Portfolio</span>
+        <span class="section-tag-txt">Portfolio &amp; Rekam Jejak</span>
     </div>
     <h2 class="section-title fade-up">Timeline<br>Proyek.</h2>
-    <p class="section-sub fade-up" style="margin-bottom: 2rem;">Rekam jejak pekerjaan yang telah dikerjakan, secara kronologis. Geser kanvas atau gunakan kontrol navigasi untuk menjelajah.</p>
-
+    <p class="section-sub fade-up" style="margin-bottom: 2rem;">Rekam jejak pekerjaan yang telah dirancang &amp; diimplementasikan secara kronologis. Geser kanvas untuk menjelajah.</p>
 
     @if($projects->isEmpty())
         <div class="timeline-empty fade-up">
@@ -2607,11 +2887,11 @@
 <section class="site-section" id="certificates">
     <div class="section-label fade-up">
         <span class="section-num">04</span>
-        <span class="section-tag-txt">Sertifikat</span>
+        <span class="section-tag-txt">Kredensial</span>
     </div>
 
     <h2 class="section-title fade-up">Pencapaian<br>&amp; Sertifikasi.</h2>
-    <p class="section-sub fade-up" style="margin-bottom: 2.5rem;">Bukti belajar yang tersertifikasi.</p>
+    <p class="section-sub fade-up" style="margin-bottom: 2.5rem;">Bukti kompetensi tersertifikasi dan keikutsertaan program profesional.</p>
 
     <div class="certs-grid fade-up">
         @if($certificates->isEmpty())
@@ -2667,11 +2947,11 @@
     @endif
 </section>
 
-<!-- Clients -->
+<!-- Clients & Partners -->
 @if($clients->isNotEmpty())
 <div class="clients-section">
     <div class="clients-inner">
-        <div class="clients-lbl">Telah Bekerja Sama Dengan</div>
+        <div class="clients-lbl">Telah Bekerja Sama &amp; Dipercaya Oleh</div>
         <div class="clients-grid">
             @foreach($clients as $client)
             <div class="client-item">
@@ -2684,6 +2964,104 @@
 </div>
 @endif
 
+<div class="section-rule"></div>
+
+<!-- FAQ Accordion (Image 3 Metacci Style) -->
+<section class="site-section" id="faq">
+    <div class="section-label fade-up" style="justify-content: center;">
+        <span class="section-num">05</span>
+        <span class="section-tag-txt">Tanya Jawab</span>
+    </div>
+    <h2 class="section-title fade-up" style="text-align: center;">Hal yang Sering<br>Ditanyakan.</h2>
+    <p class="section-sub fade-up" style="text-align: center; margin: 0 auto 2.5rem;">Informasi praktis seputar alur kerja, integrasi sistem, dan kolaborasi teknis.</p>
+
+    <div class="faq-wrap fade-up">
+        <div class="faq-item">
+            <button class="faq-btn" type="button">
+                <span>Bagaimana alur pengerjaan proyek IoT &amp; Web?</span>
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content">
+                <p>Alur kerja disusun dalam 4 tahap: analisis kebutuhan &amp; pemetaan masalah, perancangan skema data &amp; skematik IoT, implementasi kode/firmware, hingga tahap deployment dan uji beban di lingkungan produksi.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-btn" type="button">
+                <span>Apakah bisa kustomisasi integrasi perangkat keras fisik?</span>
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content">
+                <p>Ya, tentu. Saya berpengalaman mengintegrasikan mikrokontroler (ESP32, Arduino, RFID, sensor suhu, load cell HX711) langsung ke server database cloud, API WhatsApp gateway, dan antarmuka web secara real-time.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-btn" type="button">
+                <span>Bagaimana dengan keamanan data dan pemeliharaan sistem?</span>
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content">
+                <p>Setiap baris kode dan topologi server dikembangkan dengan standar keamanan ketat (enkripsi HTTPS/TLS, validasi input, sanitasi database) serta dokumentasi API terstruktur untuk memudahkan pemeliharaan jangka panjang.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-btn" type="button">
+                <span>Bagaimana cara mulai berkonsultasi mengenai proyek?</span>
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content">
+                <p>Anda dapat langsung menghubungi saya melalui WhatsApp di +62 878-4294-9212 atau email ke syarifahsanit@gmail.com untuk mendiskusikan kebutuhan spesifikasi teknis dan estimasi pengerjaan.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Grand Finale CTA (Image 1, 4, 5 Style) -->
+<div class="site-section" id="contact" style="padding-bottom: 2rem;">
+    <div class="cta-banner fade-up">
+        <div class="section-label" style="justify-content: center;">
+            <span class="section-num">NEXT STEP</span>
+            <span class="section-tag-txt">KOLABORASI TEKNIS</span>
+        </div>
+        <h2 class="cta-giant-title">
+            Let's craft the<br>
+            <span class="hl-gradient">next system.</span>
+        </h2>
+        <p class="cta-sub">
+            Punya ide proyek, kebutuhan otomasi perangkat cerdas, atau sistem web terintegrasi? Mari wujudkan bersama solusi yang benar-benar bekerja.
+        </p>
+        <div class="cta-buttons">
+            <a href="https://wa.me/6287842949212" target="_blank" rel="noopener" class="btn-primary-large">
+                <span>Mulai Diskusi di WhatsApp</span>
+                <span>→</span>
+            </a>
+            <a href="mailto:syarifahsanit@gmail.com" class="btn-ghost-large">
+                <span>syarifahsanit@gmail.com</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Running Bottom Marquee Strip -->
+<div class="footer-marquee-strip">
+    <div class="footer-marquee-track">
+        <div class="footer-marquee-item">LET'S CONNECT <span class="star">★</span></div>
+        <div class="footer-marquee-item">DISCUSS PROJECT <span class="star">★</span></div>
+        <div class="footer-marquee-item">EMBEDDED IOT <span class="star">★</span></div>
+        <div class="footer-marquee-item">FULL-STACK WEB <span class="star">★</span></div>
+        <div class="footer-marquee-item">IT INFRASTRUCTURE <span class="star">★</span></div>
+        <div class="footer-marquee-item">AUTOMATION <span class="star">★</span></div>
+        <div class="footer-marquee-item">LET'S CONNECT <span class="star">★</span></div>
+        <div class="footer-marquee-item">DISCUSS PROJECT <span class="star">★</span></div>
+        <div class="footer-marquee-item">EMBEDDED IOT <span class="star">★</span></div>
+        <div class="footer-marquee-item">FULL-STACK WEB <span class="star">★</span></div>
+        <div class="footer-marquee-item">IT INFRASTRUCTURE <span class="star">★</span></div>
+        <div class="footer-marquee-item">AUTOMATION <span class="star">★</span></div>
+    </div>
+</div>
+
 <!-- Footer -->
 <footer>
     <div class="footer-inner">
@@ -2693,12 +3071,14 @@
             <img class="logo-icon" src="/logosat-white.svg" alt="SAT logo mark" width="14" height="14">
         </div>
         <div class="footer-links">
-            <a href="mailto:syarifahsanit@gmail.com">syarifahsanit@gmail.com</a>
+            <a href="https://wa.me/6287842949212" target="_blank" rel="noopener">WhatsApp</a>
+            <a href="mailto:syarifahsanit@gmail.com">Email</a>
             <a href="https://instagram.com/syariif.at" target="_blank" rel="noopener">@syariif.at</a>
         </div>
-        <div class="footer-copy">© {{ date('Y') }} Syarif Ahsani Taqwim</div>
+        <div class="footer-copy">© {{ date('Y') }} Syarif Ahsani Taqwim &bull; Tulungagung, ID</div>
     </div>
 </footer>
+
 
 <!-- Modal -->
 <div class="modal-overlay" id="certModal" onclick="closeModal()">
@@ -3150,7 +3530,7 @@
     })();
 
 
-    // Modal
+    // Certificate Modal Lightbox
     function openModal(imgSrc) {
         document.getElementById('modalImg').src = imgSrc;
         document.getElementById('certModal').classList.add('active');
@@ -3164,8 +3544,27 @@
 
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
+    // ===== FAQ ACCORDION TOGGLE =====
+    (function() {
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const btn = item.querySelector('.faq-btn');
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    const isOpen = item.classList.contains('open');
+                    faqItems.forEach(other => other.classList.remove('open'));
+                    if (!isOpen) {
+                        item.classList.add('open');
+                    }
+                });
+            }
+        });
+    })();
+
     // ===== AI CHAT WIDGET =====
     const aiChatToggle = document.getElementById('aiChatToggle');
+
+
     const aiChatBox    = document.getElementById('aiChatBox');
     const aiChatClose  = document.getElementById('aiChatClose');
     const aiChatBody   = document.getElementById('aiChatBody');
