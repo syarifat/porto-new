@@ -227,6 +227,24 @@
 
         h1.hero-name .dim { color: var(--text-3); }
 
+        .hero-line-wrap {
+            display: block;
+            overflow: hidden;
+            padding-bottom: 0.08em;
+        }
+
+        .hero-line-inner {
+            display: block;
+            transform: translateY(115%);
+            opacity: 0;
+            filter: blur(8px);
+            animation: heroLineRise 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hero-line-1 { animation-delay: 2.05s; }
+        .hero-line-2 { animation-delay: 2.18s; }
+        .hero-line-3 { animation-delay: 2.30s; }
+
         .hero-desc {
             font-size: 0.98rem;
             color: var(--text-2);
@@ -236,7 +254,47 @@
             margin-bottom: 2.25rem;
         }
 
+        .hero-desc.hero-anim-desc {
+            opacity: 0;
+            transform: translateY(18px);
+            filter: blur(6px);
+            animation: heroFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 2.45s forwards;
+        }
+
+        .hero-actions.hero-anim-actions {
+            opacity: 0;
+            transform: translateY(18px);
+            animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 2.58s forwards;
+        }
+
+        @keyframes heroLineRise {
+            0% {
+                transform: translateY(115%);
+                opacity: 0;
+                filter: blur(8px);
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+                filter: blur(0px);
+            }
+        }
+
+        @keyframes heroFadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(18px);
+                filter: blur(6px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0px);
+            }
+        }
+
         /* 3D Globe Container */
+
         .hero-globe-wrap {
             position: relative;
             width: 100%;
@@ -2117,20 +2175,21 @@
 <section id="hero">
     <div class="hero-inner">
 
-        <!-- Left: Statement Headline -->
+        <!-- Left: Statement Headline with Cinematic Animation -->
         <div>
             <h1 class="hero-name">
-                Full-Stack Developer<br>
-                <span class="dim">&amp; IoT Engineer.</span>
+                <span class="hero-line-wrap"><span class="hero-line-inner hero-line-1">Full-Stack</span></span>
+                <span class="hero-line-wrap"><span class="hero-line-inner hero-line-2">Developer</span></span>
+                <span class="hero-line-wrap"><span class="hero-line-inner hero-line-3 dim">&amp; IoT Engineer.</span></span>
             </h1>
-            <p class="hero-desc">
+            <p class="hero-desc hero-anim-desc">
                 Membangun sistem end-to-end yang benar-benar berjalan — dari infrastruktur server fisik, firmware IoT terdistribusi, hingga interface web &amp; mobile modern.
             </p>
-            <div class="hero-actions">
+            <div class="hero-actions hero-anim-actions">
                 <a href="#timeline" class="btn-primary" id="view-projects-btn">Lihat Proyek</a>
-                <a href="https://wa.me/6287842949212" target="_blank" rel="noopener" class="btn-ghost" id="contact-btn">Hubungi Saya →</a>
             </div>
         </div>
+
 
         <!-- Right: 3D Interactive Globe -->
         <div class="hero-globe-wrap" id="heroGlobeWrap">
