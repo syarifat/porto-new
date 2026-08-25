@@ -571,69 +571,138 @@
             line-height: 1.78;
         }
 
-        /* ===== ABOUT ===== */
+        /* ===== INFINITE STATS MARQUEE RIBBON ===== */
+        .stats-marquee-wrap {
+            width: 100%;
+            overflow: hidden;
+            background: #0f0f0c;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            padding: 1.15rem 0;
+            display: flex;
+            user-select: none;
+            position: relative;
+        }
+
+        .stats-marquee-track {
+            display: flex;
+            align-items: center;
+            width: max-content;
+            animation: marqueeScroll 26s linear infinite;
+        }
+
+        .stats-marquee-wrap:hover .stats-marquee-track {
+            animation-play-state: paused;
+        }
+
+        .stats-marquee-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0 2.25rem;
+            font-family: 'DM Sans', 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text-2);
+            white-space: nowrap;
+            border-right: 1px solid rgba(255,255,255,0.12);
+            transition: color 0.2s ease;
+        }
+
+        .stats-marquee-item:hover {
+            color: var(--text-1);
+        }
+
+        .stats-marquee-val {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            color: var(--text-1);
+            font-size: 1.05rem;
+            letter-spacing: -0.02em;
+        }
+
+        .stats-marquee-val.accent {
+            color: var(--accent);
+        }
+
+        @keyframes marqueeScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ===== ABOUT SECTION EDITORIAL ===== */
         .about-layout {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6rem;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 4.5rem;
             align-items: start;
         }
 
-        .about-body {
-            margin-top: 2.5rem;
+        .about-quote {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+            font-weight: 600;
+            line-height: 1.38;
+            letter-spacing: -0.025em;
+            color: var(--text-1);
+            margin-top: 1.75rem;
+            margin-bottom: 2rem;
+            position: relative;
         }
 
-        .about-body p {
+        .about-quote-mark {
+            font-size: 2.4rem;
+            line-height: 0;
+            color: var(--accent);
+            display: inline-block;
+            margin-right: 0.2rem;
+            vertical-align: -0.3rem;
+        }
+
+        .about-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .about-card {
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: var(--r-md);
+            padding: 1.5rem 1.75rem;
+            transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+        }
+
+        .about-card:hover {
+            border-color: rgba(255,255,255,0.18);
+            background: rgba(255,255,255,0.04);
+            transform: translateY(-2px);
+        }
+
+        .about-card-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: var(--text-1);
+            margin-bottom: 0.45rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .about-card-title span.badge-num {
+            font-size: 0.72rem;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .about-card-desc {
+            font-size: 0.88rem;
             color: var(--text-2);
-            margin-bottom: 1rem;
-            line-height: 1.82;
-            font-size: 0.93rem;
+            line-height: 1.7;
             font-weight: 300;
         }
 
-        .about-body strong { color: var(--text-1); font-weight: 500; }
-        .about-body .hl { color: var(--accent); font-weight: 500; }
-
-        /* Stats — collapsed border grid */
-        .stats-block {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            border: 1px solid var(--border);
-        }
-
-        .stat-item {
-            padding: 1.75rem;
-            transition: background 0.2s;
-        }
-
-        .stat-item:hover { background: var(--surface); }
-
-        .stat-item:nth-child(2) { border-left: 1px solid var(--border); }
-        .stat-item:nth-child(3) { border-top: 1px solid var(--border); }
-        .stat-item:nth-child(4) { border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
-
-        .stat-num {
-            font-family: 'Inter', sans-serif;
-            font-size: 3.25rem;
-            font-weight: 800;
-            letter-spacing: -0.05em;
-            color: var(--text-1);
-            line-height: 1;
-            margin-bottom: 0.3rem;
-        }
-
-        .stat-num sup {
-            font-size: 1.3rem;
-            color: var(--accent);
-            vertical-align: super;
-        }
-
-        .stat-lbl {
-            font-size: 0.7rem;
-            color: var(--text-3);
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-        }
 
         /* ===== SKILLS — BENTO ===== */
         .bento-grid {
@@ -2217,53 +2286,131 @@
     </div>
 </section>
 
+<!-- Infinite Running Stats Marquee Ribbon -->
+<div class="stats-marquee-wrap">
+    <div class="stats-marquee-track">
+        <!-- Set 1 -->
+        <div class="stats-marquee-item">
+            <span class="stats-marquee-val accent">{{ $projects->count() }}+</span>
+            <span>Proyek Selesai</span>
+        </div>
+        <div class="stats-marquee-item">
+            <span class="stats-marquee-val">{{ $clients->count() }}+</span>
+            <span>Klien Puas &amp; Mitra</span>
+        </div>
+        <div class="stats-marquee-item">
+            <span class="stats-marquee-val accent">4+</span>
+            <span>Bidang Keahlian Utama</span>
+        </div>
+        <div class="stats-marquee-item">
+            <span class="stats-marquee-val">{{ $certificates->count() }}+</span>
+            <span>Sertifikasi Kompetensi</span>
+        </div>
+        <div class="stats-marquee-item">
+            <span class="stats-marquee-val accent">Founder</span>
+            <span>SAT Project &amp; Engineering</span>
+        </div>
+        <div class="stats-marquee-item">
+            <span class="stats-marquee-val">Full-Stack</span>
+            <span>Hardware &amp; Cloud Integrator</span>
+        </div>
+        <div class="stats-marquee-item">
+            <span class="stats-marquee-val accent">ID</span>
+            <span>Tulungagung, Jawa Timur</span>
+        </div>
+
+        <!-- Set 2 (Seamless Infinite Duplicate) -->
+        <div class="stats-marquee-item">
+            <span class="stats-marquee-val accent">{{ $projects->count() }}+</span>
+            <span>Proyek Selesai</span>
+        </div>
+        <div class="stats-marquee-item">
+            <span class="stats-marquee-val">{{ $clients->count() }}+</span>
+            <span>Klien Puas &amp; Mitra</span>
+        </div>
+        <div class="stats-marquee-item">
+            <span class="stats-marquee-val accent">4+</span>
+            <span>Bidang Keahlian Utama</span>
+        </div>
+        <div class="stats-marquee-item">
+            <span class="stats-marquee-val">{{ $certificates->count() }}+</span>
+            <span>Sertifikasi Kompetensi</span>
+        </div>
+        <div class="stats-marquee-item">
+            <span class="stats-marquee-val accent">Founder</span>
+            <span>SAT Project &amp; Engineering</span>
+        </div>
+        <div class="stats-marquee-item">
+            <span class="stats-marquee-val">Full-Stack</span>
+            <span>Hardware &amp; Cloud Integrator</span>
+        </div>
+        <div class="stats-marquee-item">
+            <span class="stats-marquee-val accent">ID</span>
+            <span>Tulungagung, Jawa Timur</span>
+        </div>
+    </div>
+</div>
+
 <div class="section-rule"></div>
 
 <!-- About -->
 <section class="site-section" id="about">
-
     <div class="about-layout">
-        <div>
-            <div class="section-label fade-up">
+        <div class="fade-up">
+            <div class="section-label">
                 <span class="section-num">01</span>
                 <span class="section-tag-txt">Tentang Saya</span>
             </div>
-            <h2 class="section-title fade-up">Siapa<br>saya.</h2>
-            <div class="about-body fade-up">
-                <p>
-                    Halo, saya <strong>Syarif</strong>. Bagi saya, teknologi yang bagus bukan yang paling canggih. Tapi yang paling relevan dengan masalah yang ada.
+            <h2 class="section-title">Prinsip &amp;<br>Filosofi Kerja.</h2>
+            
+            <div class="about-quote">
+                <span class="about-quote-mark">“</span>Teknologi yang bagus bukan yang paling rumit, melainkan yang paling tepat memecahkan masalah nyata.
+            </div>
+
+            <div style="color: var(--text-2); font-size: 0.92rem; line-height: 1.8; font-weight: 300;">
+                <p style="margin-bottom: 0.85rem;">
+                    Halo, saya <strong>Syarif Ahsani Taqwim</strong>. Saya bekerja di persimpangan antara <span style="color: var(--accent); font-weight: 500;">Full-Stack Development</span>, <span style="color: var(--accent); font-weight: 500;">Internet of Things (IoT)</span>, dan <span style="color: var(--accent); font-weight: 500;">IT Infrastructure</span>.
                 </p>
                 <p>
-                    Saya bekerja di persimpangan antara <span class="hl">Full-Stack Development</span>, <span class="hl">Mobile Development</span>, dan <span class="hl">Internet of Things</span>. Senang membangun sistem yang menghubungkan dunia fisik ke ekosistem digital.
-                </p>
-                <p>
-                    Sebagai <strong>Founder SAT Project</strong>, saya mengelola dan mengimplementasikan solusi end-to-end: dari otomatisasi cerdas, manajemen server, sampai infrastruktur IT perusahaan.
-                </p>
-                <p>
-                    Kalau ada masalah teknis yang perlu dipecahkan, saya tertarik untuk mendengarnya.
+                    Sebagai Founder <strong>SAT Project</strong>, fokus saya adalah menghadirkan sistem yang tangguh dan langsung berdampak nyata bagi operasional maupun efisiensi kebutuhan digital.
                 </p>
             </div>
         </div>
-        <div class="stats-block fade-up">
-            <div class="stat-item">
-                <div class="stat-num">{{ $projects->count() }}<sup>+</sup></div>
-                <div class="stat-lbl">Proyek Selesai</div>
+
+        <div class="about-features fade-up">
+            <div class="about-card">
+                <div class="about-card-title">
+                    <span class="badge-num">01</span>
+                    <span>End-to-End System Integration</span>
+                </div>
+                <div class="about-card-desc">
+                    Merancang dari level sirkuit perangkat keras fisik, firmware IoT, hingga backend API dan interface web modern dalam satu ekosistem sinkron.
+                </div>
             </div>
-            <div class="stat-item">
-                <div class="stat-num">{{ $clients->count() }}<sup>+</sup></div>
-                <div class="stat-lbl">Klien Puas</div>
+
+            <div class="about-card">
+                <div class="about-card-title">
+                    <span class="badge-num">02</span>
+                    <span>Reliability &amp; High Performance</span>
+                </div>
+                <div class="about-card-desc">
+                    Setiap arsitektur kode dan server dibangun dengan standar keamanan teruji, low-latency, serta kemudahan pemeliharaan jangka panjang.
+                </div>
             </div>
-            <div class="stat-item">
-                <div class="stat-num">4<sup>+</sup></div>
-                <div class="stat-lbl">Bidang Keahlian</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-num">{{ $certificates->count() }}<sup>+</sup></div>
-                <div class="stat-lbl">Sertifikat</div>
+
+            <div class="about-card">
+                <div class="about-card-title">
+                    <span class="badge-num">03</span>
+                    <span>Pragmatic &amp; User-Centric</span>
+                </div>
+                <div class="about-card-desc">
+                    Mengutamakan kegunaan praktis agar teknologi canggih dapat dioperasikan secara intuitif dan nyaman oleh pengguna.
+                </div>
             </div>
         </div>
     </div>
 </section>
+
 
 <div class="section-rule"></div>
 
