@@ -2489,9 +2489,10 @@
                 <span class="hero-line-wrap"><span class="hero-line-inner hero-line-3 dim">&amp; IoT Engineer.</span></span>
             </h1>
             <p class="hero-desc hero-anim-desc">
-                Membangun sistem end-to-end yang benar-benar berjalan — dari infrastruktur server fisik, firmware IoT terdistribusi, hingga interface web &amp; mobile modern.
+                Membangun sistem end-to-end yang benar-benar berjalan, mulai dari infrastruktur server fisik, firmware IoT terdistribusi, hingga interface web &amp; mobile modern.
             </p>
         </div>
+
 
 
 
@@ -2593,8 +2594,9 @@
             <h2 class="section-title">Prinsip &amp;<br>Filosofi Kerja.</h2>
             
             <div class="about-quote">
-                “Membangun sistem yang menghubungkan <span class="accent-word">dunia fisik</span> ke ekosistem digital — terukur, aman, dan efisien.”
+                “Membangun sistem yang menghubungkan <span class="accent-word">dunia fisik</span> ke ekosistem digital secara terukur, aman, dan efisien.”
             </div>
+
 
             <div style="color: var(--text-2); font-size: 0.92rem; line-height: 1.8; font-weight: 300;">
                 <p style="margin-bottom: 0.85rem;">
