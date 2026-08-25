@@ -238,20 +238,35 @@
             transform: translateY(115%);
             opacity: 0;
             filter: blur(8px);
-            transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-                        opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-                        filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 0.75s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
+        /* Entering / Visible State (Slides up from bottom) */
         #hero.animate-in .hero-line-inner {
             transform: translateY(0);
             opacity: 1;
             filter: blur(0px);
         }
 
-        #hero.animate-in .hero-line-1 { transition-delay: 0.1s; }
-        #hero.animate-in .hero-line-2 { transition-delay: 0.22s; }
-        #hero.animate-in .hero-line-3 { transition-delay: 0.34s; }
+        #hero.animate-in .hero-line-1 { transition-delay: 0.08s; }
+        #hero.animate-in .hero-line-2 { transition-delay: 0.20s; }
+        #hero.animate-in .hero-line-3 { transition-delay: 0.32s; }
+
+        /* Exiting State (Slides up out of view to top) */
+        #hero.animate-out .hero-line-inner {
+            transform: translateY(-120%);
+            opacity: 0;
+            filter: blur(8px);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        #hero.animate-out .hero-line-1 { transition-delay: 0s; }
+        #hero.animate-out .hero-line-2 { transition-delay: 0.06s; }
+        #hero.animate-out .hero-line-3 { transition-delay: 0.12s; }
 
         .hero-desc {
             font-size: 0.98rem;
@@ -259,36 +274,33 @@
             line-height: 1.75;
             max-width: 480px;
             font-weight: 300;
-            margin-bottom: 2.25rem;
+            margin-bottom: 0;
             opacity: 0;
-            transform: translateY(18px);
+            transform: translateY(20px);
             filter: blur(6px);
-            transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-                        opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-                        filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 0.75s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         #hero.animate-in .hero-desc {
             opacity: 1;
             transform: translateY(0);
             filter: blur(0px);
-            transition-delay: 0.46s;
+            transition-delay: 0.42s;
         }
 
-        .hero-actions {
+        #hero.animate-out .hero-desc {
             opacity: 0;
-            transform: translateY(18px);
-            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                        opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        #hero.animate-in .hero-actions {
-            opacity: 1;
-            transform: translateY(0);
-            transition-delay: 0.58s;
+            transform: translateY(-20px);
+            filter: blur(6px);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition-delay: 0.04s;
         }
 
         /* 3D Globe Container */
+
 
 
         .hero-globe-wrap {
@@ -2181,10 +2193,8 @@
             <p class="hero-desc hero-anim-desc">
                 Membangun sistem end-to-end yang benar-benar berjalan — dari infrastruktur server fisik, firmware IoT terdistribusi, hingga interface web &amp; mobile modern.
             </p>
-            <div class="hero-actions hero-anim-actions">
-                <a href="#timeline" class="btn-primary" id="view-projects-btn">Lihat Proyek</a>
-            </div>
         </div>
+
 
 
         <!-- Right: 3D Interactive Globe -->
@@ -2640,31 +2650,42 @@
         }, 3800);
     })();
 
-    // ===== HERO ANIMATION RE-TRIGGER ON SCROLL =====
+    // ===== HERO ANIMATION ENTER FROM BOTTOM & EXIT TO TOP ON SCROLL =====
     (function() {
         const hero = document.getElementById('hero');
         if (!hero) return;
 
         let hasLoaded = false;
+        let isInView = true;
+
         setTimeout(() => { hasLoaded = true; }, 2100);
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    if (hasLoaded) {
+        function updateHeroScroll() {
+            if (!hasLoaded) return;
+            const heroRect = hero.getBoundingClientRect();
+            if (heroRect.bottom > 140 && heroRect.top < window.innerHeight * 0.85) {
+                if (!isInView) {
+                    isInView = true;
+                    hero.classList.remove('animate-out');
+                    requestAnimationFrame(() => {
                         hero.classList.add('animate-in');
-                    }
-                } else {
-                    hero.classList.remove('animate-in');
+                    });
                 }
-            });
-        }, { threshold: 0.2 });
+            } else {
+                if (isInView) {
+                    isInView = false;
+                    hero.classList.remove('animate-in');
+                    hero.classList.add('animate-out');
+                }
+            }
+        }
 
-        observer.observe(hero);
+        window.addEventListener('scroll', updateHeroScroll, { passive: true });
     })();
 
     // Hamburger
     const hamburger = document.getElementById('hamburger');
+
 
     const navLinks  = document.getElementById('navLinks');
     hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
