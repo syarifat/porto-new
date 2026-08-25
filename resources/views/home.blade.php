@@ -34,12 +34,13 @@
     <!-- Structured Data: Schema.org (JSON-LD) for Google Rich Snippets -->
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "Person",
+      "@@context": "https://schema.org",
+      "@@type": "Person",
       "name": "Syarif Ahsani Taqwim",
       "alternateName": ["Syarif", "SAT"],
       "url": "https://portfolio.satcloud.tech",
       "jobTitle": "Full-Stack Developer & IoT Engineer",
+
       "description": "Full-Stack Developer, IoT Engineer, and IT Infrastructure Specialist based in Tulungagung, East Java, Indonesia.",
       "sameAs": [
         "https://instagram.com/syariif.at",
