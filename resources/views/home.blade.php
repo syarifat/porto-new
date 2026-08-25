@@ -1583,7 +1583,29 @@
             display: none !important;
         }
 
+        .btn-timeline-full {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+            border: 1px solid var(--accent-border);
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            background: var(--accent-dim);
+            transition: all 0.2s;
+            letter-spacing: 0.01em;
+        }
+        .btn-timeline-full:hover {
+            background: rgba(217,119,6,0.15);
+            border-color: rgba(217,119,6,0.4);
+            transform: translateY(-1px);
+        }
+
         .btn-load-more {
+
             position: relative;
             display: inline-flex;
             align-items: center;
@@ -1957,7 +1979,14 @@
         <span class="section-tag-txt">Portfolio</span>
     </div>
     <h2 class="section-title fade-up">Timeline<br>Proyek.</h2>
-    <p class="section-sub fade-up" style="margin-bottom: 3rem;">Rekam jejak pekerjaan yang telah dikerjakan, secara kronologis.</p>
+    <p class="section-sub fade-up" style="margin-bottom: 1.5rem;">Rekam jejak pekerjaan yang telah dikerjakan, secara kronologis.</p>
+    <div class="fade-up" style="margin-bottom: 2.5rem;">
+        <a href="{{ route('projects.timeline') }}" class="btn-timeline-full">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Lihat Timeline Interaktif
+        </a>
+    </div>
+
 
     @if($projects->isEmpty())
         <div class="timeline-empty fade-up">

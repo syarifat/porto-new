@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Route;
 // Landing page
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+// Project Timeline page
+Route::get('/proyek', [HomeController::class, 'timeline'])->name('projects.timeline');
+
+
 // AI Chat API
 Route::post('/api/chat', [AIChatController::class, 'chat'])->name('api.chat');
 
