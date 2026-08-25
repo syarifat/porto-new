@@ -2957,21 +2957,38 @@
         sendAiMessage();
     };
 
-    // ===== 3D INTERACTIVE TECH GLOBE =====
+    // ===== 3D INTERACTIVE TECH GLOBE (METACCI STYLE) =====
     (function() {
         const canvas = document.getElementById('hero-globe-canvas');
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
 
         const TECH_TAGS = [
-            'Full-Stack', 'IoT', 'ESP32', 'Laravel', 'PHP', 'Golang',
-            'Docker', 'DevOps', 'Linux', 'Cisco', 'Cloudflare', 'Next.js',
-            'REST API', 'MySQL', 'MQTT', 'WebSocket', 'Microservices',
-            'Hardware', 'SysAdmin', 'Firmware', 'Python', 'Networking'
+            '--color-primary', '--space-md', '--font-heading', '-verbose',
+            '--incognito', '--port-8080', '-semi-bold', '-center',
+            '--shadow-sm', '--radius-full', '--opacity-90', '--bg-surface',
+            '--z-index-nav', '--line-height-tight', '--color-text-muted',
+            '-w-full', '-h-screen', '-flex-col', '-items-center', '-justify-between',
+            '--font-mono', '--transition-ease', '-p-4', '-gap-6', '-rounded-xl',
+            '--accent-amber', '--blur-md', '--env-prod', '--debug-mode',
+            '-text-sm', '-font-bold', '-backdrop-blur', '-tracking-wide',
+            '--border-subtle', '--card-elevation', '--container-max',
+            '-grid-cols-3', '-overflow-hidden', '--transform-gpu',
+            '--api-version-v2', '--jwt-secret', '--db-pool-size', '-scale-105',
+            '--socket-timeout', '--cors-allow', '-relative', '-absolute',
+            '--color-surface-raised', '--font-size-body-sm', '-cursor-pointer',
+            '--active-state', '--filter-drop-shadow', '-translate-y-2',
+            '--mqtt-broker', '--firmware-v1.4', '--packet-size', '--baud-115200',
+            '--pin-mode-output', '--gpio-14', '--i2c-address', '--wifi-ssid',
+            '--docker-compose', '--k8s-pod', '--nginx-reverse-proxy', '--ssl-strict',
+            '--route-api', '--middleware-auth', '--rate-limit-60', '--cache-ttl',
+            '-select-none', '-transition-all', '--duration-300', '--ease-out',
+            '-top-0', '-left-1/2', '-bg-opacity-80', '--glow-radius',
+            '-text-xs', '-hover:underline', '-group-hover', '--dark-mode'
         ];
 
         let width, height, cx, cy, radius;
-        const totalPoints = 90;
+        const totalPoints = 95;
         const points = [];
 
         // Fibonacci sphere point distribution
@@ -2983,65 +3000,64 @@
             const x = Math.cos(theta) * radiusAtY;
             const z = Math.sin(theta) * radiusAtY;
 
+            // Most points are prefix tags (~82 tags), only a few are pure dots (~13 dots)
+            const isTag = i < TECH_TAGS.length;
             points.push({
                 x, y, z,
-                tag: i < TECH_TAGS.length ? TECH_TAGS[i] : null,
-                isAccent: i % 4 === 0
+                tag: isTag ? TECH_TAGS[i] : null,
+                isAccent: i % 5 === 0
             });
         }
 
-        let rotX = 0.15;
+        let rotX = 0.12;
         let rotY = 0;
         let velX = 0;
-        let velY = 0.0035; // Default spin to the right
+        let velY = 0.0009; // Super slow, cinematic rightward spin
         let targetVelX = 0;
-        let targetVelY = 0.0035;
+        let targetVelY = 0.0009;
 
         function resize() {
             const rect = canvas.getBoundingClientRect();
             const dpr  = window.devicePixelRatio || 1;
-            width      = rect.width || 420;
+            width      = rect.width || 440;
             height     = rect.height || 440;
             canvas.width  = width * dpr;
             canvas.height = height * dpr;
             ctx.scale(dpr, dpr);
             cx = width / 2;
             cy = height / 2;
-            radius = Math.min(width, height) * 0.42;
+            radius = Math.min(width, height) * 0.44;
         }
         resize();
         window.addEventListener('resize', resize);
 
         // Mouse tracking across hero container
         const heroSection = document.getElementById('hero');
-        let mouseInside = false;
 
         function onMouseMove(e) {
             const rect = canvas.getBoundingClientRect();
             const mx = e.clientX - (rect.left + cx);
             const my = e.clientY - (rect.top + cy);
 
-            // Responsive tilt & spin matching mouse position in all 4 directions
-            targetVelY = (mx / (width * 0.5)) * 0.016 + 0.003;
-            targetVelX = -(my / (height * 0.5)) * 0.016;
+            // Gentle and smooth tilt matching mouse position in 4 directions
+            targetVelY = (mx / (width * 0.5)) * 0.0045 + 0.0009;
+            targetVelX = -(my / (height * 0.5)) * 0.0045;
         }
 
         if (heroSection) {
             heroSection.addEventListener('mousemove', onMouseMove);
-            heroSection.addEventListener('mouseenter', () => { mouseInside = true; });
             heroSection.addEventListener('mouseleave', () => {
-                mouseInside = false;
                 targetVelX = 0;
-                targetVelY = 0.0035; // Resume smooth right spin
+                targetVelY = 0.0009; // Resume super slow spin
             });
         }
 
         function render() {
             ctx.clearRect(0, 0, width, height);
 
-            // Inertia smoothing (lerp)
-            velX += (targetVelX - velX) * 0.06;
-            velY += (targetVelY - velY) * 0.06;
+            // Silky smooth inertia (lerp)
+            velX += (targetVelX - velX) * 0.035;
+            velY += (targetVelY - velY) * 0.035;
             rotX += velX;
             rotY += velY;
 
@@ -3068,7 +3084,7 @@
                 const z2 = -x0 * sinY + z1 * cosY;
 
                 // Perspective projection
-                const fov = 380;
+                const fov = 400;
                 const scale = fov / (fov + z2);
                 const px = cx + x2 * scale;
                 const py = cy + y1 * scale;
@@ -3088,7 +3104,7 @@
             // 1. Draw subtle mesh lines between close points
             for (let i = 0; i < projected.length; i++) {
                 const p1 = projected[i];
-                if (p1.depth < 0.2) continue; // Skip lines in the far back
+                if (p1.depth < 0.28) continue; // Skip lines in the far back
 
                 for (let j = i + 1; j < projected.length; j++) {
                     const p2 = projected[j];
@@ -3096,46 +3112,42 @@
                     const dy = p1.py - p2.py;
                     const dist = Math.sqrt(dx * dx + dy * dy);
 
-                    if (dist < 55) {
-                        const alpha = (1 - dist / 55) * p1.depth * 0.15;
+                    if (dist < 46) {
+                        const alpha = (1 - dist / 46) * p1.depth * 0.12;
                         ctx.beginPath();
                         ctx.moveTo(p1.px, p1.py);
                         ctx.lineTo(p2.px, p2.py);
-                        ctx.strokeStyle = `rgba(217, 119, 6, ${alpha.toFixed(3)})`;
-                        ctx.lineWidth = 0.8;
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha.toFixed(3)})`;
+                        ctx.lineWidth = 0.6;
                         ctx.stroke();
                     }
                 }
             }
 
-            // 2. Draw nodes and tags
+            // 2. Draw prefix tokens and dots
             for (let i = 0; i < projected.length; i++) {
                 const p = projected[i];
-                const d = Math.max(0.05, Math.min(1, p.depth));
+                const d = Math.max(0.04, Math.min(1, p.depth));
 
                 if (p.tag) {
-                    // Tech keyword node
-                    const fontSize = Math.round(9 + d * 3.5);
-                    ctx.font = `${p.isAccent ? '600' : '500'} ${fontSize}px 'Inter', sans-serif`;
+                    // Prefix code token
+                    const fontSize = Math.round(7.5 + d * 3.5);
+                    ctx.font = `${p.isAccent ? '600' : '400'} ${fontSize}px 'DM Sans', 'Inter', monospace, sans-serif`;
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
 
                     if (p.isAccent) {
-                        ctx.fillStyle = `rgba(245, 158, 11, ${(d * 0.95).toFixed(2)})`;
+                        ctx.fillStyle = `rgba(217, 119, 6, ${(d * 0.9).toFixed(2)})`;
                     } else {
-                        ctx.fillStyle = `rgba(220, 218, 212, ${(d * 0.85).toFixed(2)})`;
+                        ctx.fillStyle = `rgba(200, 198, 190, ${(d * 0.72).toFixed(2)})`;
                     }
                     ctx.fillText(p.tag, p.px, p.py);
                 } else {
-                    // Particle dot
-                    const r = 0.8 + d * 1.8;
+                    // Dot particle
+                    const r = 0.7 + d * 1.4;
                     ctx.beginPath();
                     ctx.arc(p.px, p.py, r, 0, Math.PI * 2);
-                    if (p.isAccent && d > 0.4) {
-                        ctx.fillStyle = `rgba(217, 119, 6, ${(d * 0.7).toFixed(2)})`;
-                    } else {
-                        ctx.fillStyle = `rgba(255, 255, 255, ${(d * 0.45).toFixed(2)})`;
-                    }
+                    ctx.fillStyle = `rgba(255, 255, 255, ${(d * 0.35).toFixed(2)})`;
                     ctx.fill();
                 }
             }
@@ -3145,6 +3157,7 @@
 
         render();
     })();
+
 
     // ===== CANVAS DOT RIPPLE =====
     (function() {
