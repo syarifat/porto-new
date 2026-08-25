@@ -1379,59 +1379,46 @@
 
         .proj-modal-close {
             position: absolute;
-            top: 0.85rem;
-            right: 0.85rem;
-            width: 28px;
-            height: 28px;
-            background: rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.1);
+            top: 1.25rem;
+            right: 1.25rem;
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            color: #fff;
-            font-size: 0.8rem;
-            transition: background 0.2s;
+            color: var(--text-2);
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
             z-index: 10;
         }
 
-        .proj-modal-close:hover { background: rgba(0,0,0,0.8); }
-
-        .proj-modal-hero {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: var(--r-lg) var(--r-lg) 0 0;
-            display: block;
-            background: linear-gradient(135deg, var(--surface-2), rgba(217,119,6,0.1));
+        .proj-modal-close:hover {
+            background: var(--accent);
+            color: #10100e;
+            border-color: var(--accent);
         }
 
-        .proj-modal-hero-ph {
-            width: 100%;
-            height: 140px;
-            background: linear-gradient(135deg, var(--surface-2) 0%, rgba(217,119,6,0.08) 100%);
-            border-radius: var(--r-lg) var(--r-lg) 0 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            letter-spacing: -0.02em;
+        .proj-modal-body {
+            padding: 2.25rem 2.25rem 2rem;
         }
-
-        .proj-modal-body { padding: 1.5rem; }
 
         .proj-modal-title {
             font-family: 'Inter', sans-serif;
-            font-size: 1.05rem;
+            font-size: 1.35rem;
             font-weight: 800;
             color: var(--text-1);
-            line-height: 1.3;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.2rem;
+            line-height: 1.25;
+            letter-spacing: -0.025em;
+            margin-bottom: 0.35rem;
+            padding-right: 2rem;
         }
 
         .proj-modal-meta {
+
             font-size: 0.72rem;
             color: var(--text-3);
             margin-bottom: 0.8rem;
@@ -2865,8 +2852,6 @@
 <div class="proj-modal-overlay" id="projModal" onclick="if(event.target===this)closeProjModal()">
     <div class="proj-modal-box">
         <button class="proj-modal-close" onclick="closeProjModal()">&#10005;</button>
-        <img id="pm-hero" class="proj-modal-hero" alt="" style="display:none;">
-        <div id="pm-hero-ph" class="proj-modal-hero-ph">&#128193;</div>
         <div class="proj-modal-body">
             <div id="pm-title" class="proj-modal-title"></div>
             <div id="pm-meta" class="proj-modal-meta"></div>
@@ -2882,6 +2867,7 @@
         </div>
     </div>
 </div>
+
 
 <div class="section-rule"></div>
 
@@ -3433,21 +3419,11 @@
         const data = (typeof PROJ_DATA !== 'undefined') ? PROJ_DATA.find(p => p.id == id) : null;
         if (!data) return;
 
-        const modal   = document.getElementById('projModal');
-        const heroImg = document.getElementById('pm-hero');
-        const heroPh  = document.getElementById('pm-hero-ph');
-
-        if (data.partner_logo) {
-            heroImg.src = data.partner_logo;
-            heroImg.style.display = 'block';
-            heroPh.style.display  = 'none';
-        } else {
-            heroImg.style.display = 'none';
-            heroPh.style.display  = 'flex';
-        }
+        const modal = document.getElementById('projModal');
 
         document.getElementById('pm-title').textContent = data.title;
         document.getElementById('pm-meta').textContent  = data.date;
+
 
         const partnerWrap = document.getElementById('pm-partner');
         const partnerLogo = document.getElementById('pm-logo');
