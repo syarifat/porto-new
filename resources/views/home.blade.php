@@ -579,198 +579,272 @@
 
         .chip:hover { border-color: var(--border-hover); color: var(--text-1); }
 
-        /* ===== TIMELINE — Maps Dot Style ===== */
-        .timeline-wrap {
+        /* ===== PROJECT MAP — Constellation Scatter ===== */
+        .proj-map-outer {
             position: relative;
-            padding-left: 2.5rem;
         }
 
-        .t-line {
-            position: absolute;
-            left: 7px;
-            top: 8px;
-            bottom: 8px;
-            width: 1px;
-            background: linear-gradient(to bottom, var(--accent), rgba(217,119,6,0.1));
-        }
-
-        .project-entry {
+        .proj-map {
             position: relative;
-            margin-bottom: 0;
-            opacity: 0;
-            transform: translateY(12px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            width: 100%;
+            min-height: 480px;
+            /* height overridden by JS */
         }
 
-        .project-entry.visible { opacity: 1; transform: translateY(0); }
-        .project-entry.hidden-chunk { display: none !important; }
-
-        /* Dot marker */
-        .proj-dot {
+        .proj-map-svg {
             position: absolute;
-            left: -2.5rem;
-            top: 1.05rem;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            background: var(--surface);
-            border: 2px solid var(--border);
-            transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .proj-pin {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            gap: 9px;
             cursor: pointer;
+            z-index: 2;
+            transform: translateY(-50%);
+            transition: opacity 0.3s ease;
+        }
+
+        .proj-pin.label-left { flex-direction: row-reverse; text-align: right; }
+        .proj-pin.hidden-chunk { display: none !important; }
+
+        .proj-pin-dot {
+            flex-shrink: 0;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--surface-2);
+            border: 2px solid rgba(255,255,255,0.12);
+            transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), border-color 0.25s, box-shadow 0.25s;
+            position: relative;
             z-index: 1;
         }
 
-        .proj-dot::after {
+        .proj-pin-dot::after {
             content: '';
             position: absolute;
             inset: 3px;
             border-radius: 50%;
             background: var(--text-3);
-            transition: background 0.25s ease;
+            transition: background 0.2s;
         }
 
-        .project-entry.active .proj-dot,
-        .proj-dot:hover {
+        .proj-pin:hover .proj-pin-dot {
             border-color: var(--accent);
-            transform: scale(1.2);
+            transform: scale(1.45);
+            box-shadow: 0 0 14px rgba(217,119,6,0.45);
         }
 
-        .project-entry.active .proj-dot::after,
-        .proj-dot:hover::after {
-            background: var(--accent);
-        }
+        .proj-pin:hover .proj-pin-dot::after { background: var(--accent); }
 
-        /* ongoing pulse */
-        .proj-dot.ongoing-dot {
+        /* ongoing: amber + pulse ring */
+        .proj-pin-dot.ongoing {
             border-color: var(--accent);
         }
-        .proj-dot.ongoing-dot::after { background: var(--accent); }
-        .proj-dot.ongoing-dot::before {
+        .proj-pin-dot.ongoing::after { background: var(--accent); }
+        .proj-pin-dot.ongoing::before {
             content: '';
             position: absolute;
-            inset: -4px;
+            inset: -5px;
             border-radius: 50%;
-            border: 1px solid rgba(217,119,6,0.4);
-            animation: dotPulse 2s infinite;
+            border: 1.5px solid rgba(217,119,6,0.5);
+            animation: mapPulse 2s infinite;
         }
 
-        @keyframes dotPulse {
-            0%,100% { opacity: 0.5; transform: scale(1); }
-            50%      { opacity: 0; transform: scale(1.6); }
+        @keyframes mapPulse {
+            0%,100% { opacity: 0.6; transform: scale(1); }
+            50%      { opacity: 0;   transform: scale(2.2); }
         }
 
-        /* Summary row (always visible) */
-        .proj-summary {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.85rem 0;
-            cursor: pointer;
-            user-select: none;
-        }
+        .proj-pin-label { max-width: 180px; }
 
-        .proj-summary-info { flex: 1; min-width: 0; }
-
-        .proj-title {
+        .proj-pin-name {
             font-family: 'Inter', sans-serif;
-            font-size: 0.92rem;
+            font-size: 0.8rem;
             font-weight: 700;
-            letter-spacing: -0.02em;
             color: var(--text-1);
+            line-height: 1.25;
             transition: color 0.2s;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        .proj-summary:hover .proj-title,
-        .project-entry.active .proj-title { color: var(--accent); }
+        .proj-pin:hover .proj-pin-name { color: var(--accent); }
 
-        .proj-date {
-            font-size: 0.68rem;
+        .proj-pin-date {
+            font-size: 0.63rem;
             color: var(--text-3);
-            margin-top: 0.1rem;
-        }
-
-        .proj-toggle-icon {
-            color: var(--text-3);
-            flex-shrink: 0;
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s;
-        }
-
-        .project-entry.active .proj-toggle-icon {
-            transform: rotate(180deg);
-            color: var(--accent);
-        }
-
-        /* Detail panel */
-        .proj-detail {
-            overflow: hidden;
-            max-height: 0;
-            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .proj-detail.open { max-height: 600px; }
-
-        .proj-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-left: 2px solid var(--accent);
-            border-radius: 0 var(--r-lg) var(--r-lg) 0;
-            padding: 1.25rem 1.4rem;
-            margin-bottom: 0.75rem;
-            margin-left: 0.25rem;
-        }
-
-        .proj-partner {
-            font-size: 0.76rem;
-            color: var(--text-3);
-            margin-bottom: 0.6rem;
-        }
-
-        .proj-partner strong { color: var(--text-2); font-weight: 500; }
-
-        .proj-desc {
-            font-size: 0.83rem;
-            color: var(--text-2);
-            line-height: 1.72;
-            font-weight: 300;
-            margin-bottom: 0.875rem;
-        }
-
-        .proj-chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.3rem;
-        }
-
-        .status-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            font-size: 0.65rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            padding: 0.18rem 0.55rem;
-            border-radius: 3px;
-        }
-
-        .status-chip.completed {
-            background: rgba(74,124,89,0.12);
-            color: var(--green-text);
-            border: 1px solid rgba(74,124,89,0.22);
-        }
-
-        .status-chip.ongoing {
-            background: var(--accent-dim);
-            color: var(--accent);
-            border: 1px solid var(--accent-border);
+            margin-top: 1px;
         }
 
         .timeline-empty {
             padding: 4rem 0;
             color: var(--text-3);
             font-size: 0.875rem;
+        }
+
+        /* ===== PROJECT MODAL ===== */
+        .proj-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.72);
+            backdrop-filter: blur(10px);
+            z-index: 9000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+
+        .proj-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .proj-modal-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            max-width: 560px;
+            width: 100%;
+            max-height: 88vh;
+            overflow-y: auto;
+            transform: scale(0.94) translateY(16px);
+            transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+            position: relative;
+        }
+
+        .proj-modal-overlay.active .proj-modal-box {
+            transform: scale(1) translateY(0);
+        }
+
+        .proj-modal-close {
+            position: absolute;
+            top: 0.85rem;
+            right: 0.85rem;
+            width: 28px;
+            height: 28px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #fff;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+            z-index: 10;
+        }
+
+        .proj-modal-close:hover { background: rgba(0,0,0,0.8); }
+
+        .proj-modal-hero {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: var(--r-lg) var(--r-lg) 0 0;
+            display: block;
+            background: linear-gradient(135deg, var(--surface-2), rgba(217,119,6,0.1));
+        }
+
+        .proj-modal-hero-ph {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(135deg, var(--surface-2) 0%, rgba(217,119,6,0.08) 100%);
+            border-radius: var(--r-lg) var(--r-lg) 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            letter-spacing: -0.02em;
+        }
+
+        .proj-modal-body { padding: 1.5rem; }
+
+        .proj-modal-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text-1);
+            line-height: 1.3;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.2rem;
+        }
+
+        .proj-modal-meta {
+            font-size: 0.72rem;
+            color: var(--text-3);
+            margin-bottom: 0.8rem;
+        }
+
+        .proj-modal-partner {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+            padding: 0.6rem 0.8rem;
+            background: var(--surface-2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .proj-modal-partner-logo {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            border-radius: 6px;
+            background: #fff;
+            padding: 2px;
+            flex-shrink: 0;
+        }
+
+        .proj-modal-partner-name {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-2);
+        }
+
+        .proj-modal-partner-lbl {
+            font-size: 0.68rem;
+            color: var(--text-3);
+        }
+
+        .proj-modal-desc {
+            font-size: 0.83rem;
+            color: var(--text-2);
+            line-height: 1.72;
+            margin-bottom: 1.25rem;
+        }
+
+        .proj-modal-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+
+        .proj-map-more { text-align: center; margin-top: 1.5rem; }
+
+        /* Mobile: vertical list fallback */
+        @media (max-width: 600px) {
+            .proj-map { min-height: unset !important; }
+            .proj-pin {
+                position: static !important;
+                transform: none !important;
+                padding: 0.8rem 0;
+                border-bottom: 1px solid var(--border);
+            }
+            .proj-pin.label-left { flex-direction: row; text-align: left; }
         }
 
 
@@ -1890,66 +1964,72 @@
             <p>Belum ada proyek yang ditambahkan.</p>
         </div>
     @else
-        <div class="timeline-wrap">
-            <div class="t-line"></div>
-            @foreach($projects as $index => $project)
-            <div class="project-entry @if($index >= 3) hidden-chunk @endif" id="proj-entry-{{ $project->id }}">
-                <div class="proj-dot {{ $project->status === 'ongoing' ? 'ongoing-dot' : '' }}"></div>
-                <div class="proj-summary" onclick="toggleProject({{ $project->id }})">
-                    <div class="proj-summary-info">
-                        <div class="proj-title">{{ $project->title }}</div>
-                        <div class="proj-date">
-                            {{ $project->start_date->format('M Y') }}
-                            @if($project->end_date)
-                                &ndash; {{ $project->end_date->format('M Y') }}
-                            @else
-                                &ndash; Sekarang
-                            @endif
-                            @if($project->partner_name)
-                                &nbsp;&middot;&nbsp;{{ $project->partner_name }}
-                            @endif
-                        </div>
-                    </div>
-                    <svg class="proj-toggle-icon" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                        <polyline points="6 9 12 15 18 9"/>
-                    </svg>
-                </div>
-                <div class="proj-detail" id="proj-detail-{{ $project->id }}">
-                    <div class="proj-card">
-                        @if($project->partner_name)
-                        <div class="proj-partner">Mitra: <strong>{{ $project->partner_name }}</strong></div>
-                        @endif
-                        <p class="proj-desc">{{ $project->description }}</p>
-                        <div class="proj-chips">
-                            <span class="status-chip {{ $project->status }}">
-                                @if($project->status === 'completed') &#10003; Selesai @else &middot; Berlangsung @endif
-                            </span>
-                            @if($project->category)
-                                <span class="chip">{{ $project->category }}</span>
-                            @endif
-                            @if($project->tech_stack)
-                                @foreach(explode(',', $project->tech_stack) as $tech)
-                                    <span class="chip">{{ trim($tech) }}</span>
-                                @endforeach
-                            @endif
-                        </div>
+        {{-- Embed project data for JS modal --}}
+        <script>
+        const PROJ_DATA = @json($projects->map(fn($p) => [
+            'id'           => $p->id,
+            'title'        => $p->title,
+            'description'  => $p->description,
+            'date'         => $p->start_date->format('M Y') . ($p->end_date ? ' – ' . $p->end_date->format('M Y') : ' – Sekarang'),
+            'partner_name' => $p->partner_name,
+            'partner_logo' => $p->partner_logo ? asset('storage/' . $p->partner_logo) : null,
+            'tech_stack'   => $p->tech_stack ? array_map('trim', explode(',', $p->tech_stack)) : [],
+            'category'     => $p->category,
+            'status'       => $p->status,
+        ]));
+        </script>
+
+        <div class="proj-map-outer fade-up">
+            <div class="proj-map" id="proj-map">
+                <svg class="proj-map-svg" id="proj-map-svg"></svg>
+                @foreach($projects as $index => $project)
+                <div class="proj-pin {{ $index >= 6 ? 'hidden-chunk' : '' }}"
+                     data-id="{{ $project->id }}"
+                     onclick="openProjModal({{ $project->id }})">
+                    <div class="proj-pin-dot {{ $project->status === 'ongoing' ? 'ongoing' : '' }}"></div>
+                    <div class="proj-pin-label">
+                        <div class="proj-pin-name">{{ $project->title }}</div>
+                        <div class="proj-pin-date">{{ $project->start_date->format('M Y') }}</div>
                     </div>
                 </div>
+                @endforeach
             </div>
-            @endforeach
         </div>
-        @if($projects->count() > 3)
-            <div class="load-more-wrap fade-up" style="text-align: center; margin-top: 3rem;">
-                <button id="btn-load-more" class="btn-load-more" aria-label="Tampilkan Lebih Banyak Proyek">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="7 13 12 18 17 13"></polyline>
-                        <polyline points="7 6 12 11 17 6"></polyline>
-                    </svg>
-                </button>
-            </div>
+
+        @if($projects->count() > 6)
+        <div class="proj-map-more fade-up">
+            <button id="btn-load-more" class="btn-load-more" aria-label="Tampilkan Lebih Banyak Proyek">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="7 13 12 18 17 13"></polyline>
+                    <polyline points="7 6 12 11 17 6"></polyline>
+                </svg>
+            </button>
+        </div>
         @endif
     @endif
 </section>
+
+{{-- Project Modal --}}
+<div class="proj-modal-overlay" id="projModal" onclick="if(event.target===this)closeProjModal()">
+    <div class="proj-modal-box">
+        <button class="proj-modal-close" onclick="closeProjModal()">&#10005;</button>
+        <img id="pm-hero" class="proj-modal-hero" alt="" style="display:none;">
+        <div id="pm-hero-ph" class="proj-modal-hero-ph">🗂️</div>
+        <div class="proj-modal-body">
+            <div id="pm-title" class="proj-modal-title"></div>
+            <div id="pm-meta" class="proj-modal-meta"></div>
+            <div id="pm-partner" class="proj-modal-partner" style="display:none;">
+                <img id="pm-logo" class="proj-modal-partner-logo" alt="" style="display:none;">
+                <div>
+                    <div class="proj-modal-partner-lbl">Mitra</div>
+                    <div id="pm-partner-name" class="proj-modal-partner-name"></div>
+                </div>
+            </div>
+            <p id="pm-desc" class="proj-modal-desc"></p>
+            <div id="pm-chips" class="proj-modal-chips"></div>
+        </div>
+    </div>
+</div>
 
 <div class="section-rule"></div>
 
@@ -2122,49 +2202,181 @@
 
     document.querySelectorAll('.fade-up, .project-entry').forEach(el => observer.observe(el));
 
-    // Timeline dot toggle
-    function toggleProject(id) {
-        const entry  = document.getElementById('proj-entry-' + id);
-        const detail = document.getElementById('proj-detail-' + id);
-        if (!entry || !detail) return;
+    // ===== Project constellation scatter =====
+    const SCATTER_POS = [
+        [10, 55],  [62, 40],  [38, 130], [80, 110],
+        [20, 200], [55, 185], [82, 265], [12, 280],
+        [48, 340], [78, 320], [25, 400], [65, 380],
+        [88, 440], [15, 455], [50, 510], [72, 490],
+        [30, 560], [60, 545], [85, 600], [18, 615],
+    ];
 
-        const isOpen = entry.classList.contains('active');
+    function scatterPins() {
+        const map = document.getElementById('proj-map');
+        if (!map || window.innerWidth <= 600) return;
 
-        // Close all open entries first
-        document.querySelectorAll('.project-entry.active').forEach(el => {
-            el.classList.remove('active');
-            el.querySelector('.proj-detail').classList.remove('open');
+        const pins = Array.from(map.querySelectorAll('.proj-pin:not(.hidden-chunk)'));
+        let maxBottom = 0;
+
+        pins.forEach((pin, i) => {
+            const pos   = SCATTER_POS[i % SCATTER_POS.length];
+            const leftP = pos[0];
+            const topPx = pos[1];
+
+            pin.style.left = leftP + '%';
+            pin.style.top  = topPx + 'px';
+
+            // Label direction
+            if (leftP > 58) {
+                pin.classList.add('label-left');
+            } else {
+                pin.classList.remove('label-left');
+            }
+
+            maxBottom = Math.max(maxBottom, topPx + 60);
         });
 
-        // If it was closed, open it
-        if (!isOpen) {
-            entry.classList.add('active');
-            detail.classList.add('open');
+        map.style.minHeight = (maxBottom + 48) + 'px';
+
+        // Draw faint connecting lines via SVG
+        drawMapLines(map, pins);
+    }
+
+    function drawMapLines(map, pins) {
+        const svg = document.getElementById('proj-map-svg');
+        if (!svg) return;
+        svg.innerHTML = '';
+
+        const rect = map.getBoundingClientRect();
+
+        for (let i = 0; i < pins.length - 1; i++) {
+            const a = pins[i].getBoundingClientRect();
+            const b = pins[i+1].getBoundingClientRect();
+
+            const x1 = a.left + 7 - rect.left;
+            const y1 = a.top  + 7 - rect.top;
+            const x2 = b.left + 7 - rect.left;
+            const y2 = b.top  + 7 - rect.top;
+
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+            line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+            line.setAttribute('stroke', 'rgba(217,119,6,0.12)');
+            line.setAttribute('stroke-width', '1');
+            line.setAttribute('stroke-dasharray', '4 6');
+            svg.appendChild(line);
         }
     }
+
+    // Run scatter on load + resize
+    document.addEventListener('DOMContentLoaded', scatterPins);
+    window.addEventListener('resize', scatterPins);
+
+    // ===== Project modal =====
+    function openProjModal(id) {
+        const data = (typeof PROJ_DATA !== 'undefined') ? PROJ_DATA.find(p => p.id == id) : null;
+        if (!data) return;
+
+        const modal = document.getElementById('projModal');
+        const heroImg = document.getElementById('pm-hero');
+        const heroPh  = document.getElementById('pm-hero-ph');
+
+        // Hero: partner logo as banner, or placeholder
+        if (data.partner_logo) {
+            heroImg.src = data.partner_logo;
+            heroImg.style.display = 'block';
+            heroPh.style.display  = 'none';
+        } else {
+            heroImg.style.display = 'none';
+            heroPh.style.display  = 'flex';
+        }
+
+        document.getElementById('pm-title').textContent = data.title;
+        document.getElementById('pm-meta').textContent  = data.date;
+
+        const partnerWrap = document.getElementById('pm-partner');
+        const partnerLogo = document.getElementById('pm-logo');
+        const partnerName = document.getElementById('pm-partner-name');
+
+        if (data.partner_name) {
+            partnerWrap.style.display = 'flex';
+            partnerName.textContent   = data.partner_name;
+            if (data.partner_logo) {
+                partnerLogo.src          = data.partner_logo;
+                partnerLogo.style.display = 'block';
+            } else {
+                partnerLogo.style.display = 'none';
+            }
+        } else {
+            partnerWrap.style.display = 'none';
+        }
+
+        document.getElementById('pm-desc').textContent = data.description;
+
+        // Chips
+        const chipsEl = document.getElementById('pm-chips');
+        chipsEl.innerHTML = '';
+
+        const statusChip = document.createElement('span');
+        statusChip.className = 'status-chip ' + data.status;
+        statusChip.textContent = data.status === 'completed' ? '✓ Selesai' : '· Berlangsung';
+        chipsEl.appendChild(statusChip);
+
+        if (data.category) {
+            const c = document.createElement('span');
+            c.className = 'chip'; c.textContent = data.category;
+            chipsEl.appendChild(c);
+        }
+
+        (data.tech_stack || []).forEach(t => {
+            const c = document.createElement('span');
+            c.className = 'chip'; c.textContent = t;
+            chipsEl.appendChild(c);
+        });
+
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeProjModal() {
+        document.getElementById('projModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Close proj modal on Escape
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+            closeProjModal();
+            closeModal(); // cert modal
+        }
+    });
 
     // Load More Projects Pagination
     (function() {
         const btnLoadMore = document.getElementById('btn-load-more');
         if (btnLoadMore) {
             btnLoadMore.addEventListener('click', () => {
-                const hiddenProjects = document.querySelectorAll('.project-entry.hidden-chunk');
-                const chunkSize = 3;
+                const hiddenProjects = document.querySelectorAll('.proj-pin.hidden-chunk');
+                const chunkSize = 6;
                 const showCount = Math.min(chunkSize, hiddenProjects.length);
                 for (let i = 0; i < showCount; i++) {
                     hiddenProjects[i].classList.remove('hidden-chunk');
                 }
-                const remainingHidden = document.querySelectorAll('.project-entry.hidden-chunk');
+                scatterPins();
+                const remainingHidden = document.querySelectorAll('.proj-pin.hidden-chunk');
                 if (remainingHidden.length === 0) {
-                    btnLoadMore.closest('.load-more-wrap').style.display = 'none';
+                    const wrap = btnLoadMore.closest('.proj-map-more');
+                    if (wrap) wrap.style.display = 'none';
                 }
             });
-            const totalHidden = document.querySelectorAll('.project-entry.hidden-chunk');
+            const totalHidden = document.querySelectorAll('.proj-pin.hidden-chunk');
             if (totalHidden.length === 0) {
-                btnLoadMore.closest('.load-more-wrap').style.display = 'none';
+                const wrap = btnLoadMore.closest('.proj-map-more');
+                if (wrap) wrap.style.display = 'none';
             }
         }
     })();
+
 
     // Load More Certificates Pagination
     (function() {
