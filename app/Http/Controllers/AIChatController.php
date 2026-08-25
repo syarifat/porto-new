@@ -59,7 +59,7 @@ Kamu boleh menggunakan emoji yang relevan secara hemat untuk memperjelas jawaban
 == BIODATA SYARIF AHSANI TAQWIM ==
 - Nama Lengkap  : Syarif Ahsani Taqwim (biasa dipanggil "Syarif" atau "SAT")
 - Peran Utama   : Full-Stack Developer, IoT Engineer, IT Infrastructure & DevOps Specialist
-- Jabatan       : Founder & Lead Developer — SAT Project
+- Jabatan       : Full-Stack Developer & IoT Engineer
 - Lokasi        : Tulungagung, Jawa Timur, Indonesia
 - WhatsApp/HP   : +62 878-4294-9212
 - Email         : syarifahsanit@gmail.com
@@ -67,7 +67,7 @@ Kamu boleh menggunakan emoji yang relevan secara hemat untuk memperjelas jawaban
 - Portfolio     : portfolio.satcloud.tech
 
 == TENTANG SYARIF ==
-Syarif adalah seorang Web Master & Full-Stack Developer dengan pengalaman mengelola platform web dari skala sekolah hingga organisasi besar. Terbiasa menangani CMS, tata kelola konten, optimasi server, pengembangan REST API untuk aplikasi mobile, serta integrasi payment gateway dan WhatsApp gateway untuk otomasi alur sistem. Berfokus pada performa web yang cepat, aman, dan efisien.
+Syarif adalah seorang Full-Stack Developer & IoT Engineer berpengalaman dalam merancang dan mengelola platform web dari skala instansi, UMKM, hingga organisasi besar. Terbiasa menangani arsitektur backend, frontend modern, firmware mikrocontroller IoT, optimasi server, REST API, serta integrasi payment gateway dan WhatsApp gateway untuk otomasi sistem. Berfokus pada performa yang cepat, aman, stabil, dan efisien.
 
 == PENDIDIKAN ==
 1. SMK SORE Tulungagung — Jurusan Teknik Komputer dan Jaringan (TKJ) [2020–2023]
@@ -77,8 +77,9 @@ Syarif adalah seorang Web Master & Full-Stack Developer dengan pengalaman mengel
    Berfokus pada pengembangan sistem web full-stack, tata kelola basis data, arsitektur jaringan & server, serta pemrograman proyek teknologi terintegrasi.
 
 == PENGALAMAN KERJA & PROYEK UTAMA ==
-- 2025–Sekarang | SAT Project — Founder & Lead Web Developer
-  Memimpin tim dalam merancang dan mengembangkan berbagai proyek platform web. Bertanggung jawab atas manajemen proyek, pengembangan arsitektur sistem, pemeliharaan server, serta integrasi REST API dan database.
+- 2025–Sekarang | Software & IoT Developer (Independent Consultant / Freelance)
+  Merancang dan mengembangkan berbagai proyek platform web, firmware IoT, serta sistem otomatisasi. Bertanggung jawab atas pengembangan arsitektur sistem, pemeliharaan server, serta integrasi REST API dan database.
+
 
 - 2025 | PC GP ANSOR Tulungagung — Full-Stack Developer
   Mengembangkan platform web untuk tata kelola administrasi dan penerbitan anggota organisasi secara terpusat. Mengimplementasikan sistem alur kerja moderasi data multi-level serta pengelolaan basis data yang terstruktur.
@@ -92,23 +93,15 @@ Syarif adalah seorang Web Master & Full-Stack Developer dengan pengalaman mengel
 - 2026 | SMK SORE Tulungagung — Full-Stack & IoT Systems Developer
   Merancang sistem absensi web yang terintegrasi langsung dengan perangkat IoT Fingerprint dan WhatsApp gateway. Mengagregasi data kehadiran secara real-time dan memicu pengiriman notifikasi otomatis ke orang tua siswa.
 
-== TENTANG SAT PROJECT ==
-SAT Project adalah sebuah startup mandiri yang didirikan oleh Syarif Ahsani Taqwim pada awal 2025. Bergerak di bidang IT Solution dan transformasi digital, dengan fokus membangun ekosistem teknologi terintegrasi.
-
-Target Pasar:
-- UMKM dan bisnis lokal yang ingin go-digital
-- Instansi pendidikan (sekolah, madrasah, pesantren)
-- Organisasi kemasyarakatan dan kepemudaan (IPNU, IPPNU, GP Ansor, dll.)
-- Pemerintahan daerah dan instansi publik
-- Perusahaan yang membutuhkan solusi IT kustom
-
-Layanan Utama SAT Project:
-1. Full-Stack Web Development — Pengembangan website & aplikasi web kustom (profil instansi, CMS, sistem administrasi, dashboard)
-2. Mobile App Development — Aplikasi Android (Kotlin/Flutter) dengan fitur offline-first & sinkronisasi cloud
+== LAYANAN & SPESIALISASI TEKNIS ==
+Syarif menyediakan keahlian dan layanan profesional di bidang IT & Rekayasa Perangkat Lunak:
+1. Full-Stack Web Development — Pengembangan website & aplikasi web kustom (profil instansi, CMS, sistem administrasi, portal, dashboard)
+2. Mobile App Development — Aplikasi Android/iOS (Kotlin & Flutter) dengan fitur offline-first & sinkronisasi cloud
 3. IoT System Integration — Sistem absensi, smart monitoring, dan hardware-software integration berbasis ESP32/Arduino
-4. IT Infrastructure & Networking — Setup server, jaringan LAN/WAN, MikroTik, Cisco, VoIP, CCTV, print server
+4. IT Infrastructure & Networking — Setup server fisik/cloud, jaringan LAN/WAN, MikroTik, Cisco, VoIP, CCTV, print server
 5. Cloud & DevOps — Deployment ke Vercel, Cloudflare, Netlify, aaPanel, Docker
-6. API Integration — WhatsApp Gateway, Payment Gateway, REST API, Firebase FCM, OAuth Google
+6. API & Automation Integration — WhatsApp Gateway, Payment Gateway, REST API, Firebase FCM, OAuth Google
+
 
 IoT Projects yang Pernah Dikerjakan:
 - SiPredi — Sistem Presensi RFID berbasis web real-time

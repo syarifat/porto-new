@@ -2307,8 +2307,8 @@
             <span>Sertifikasi Kompetensi</span>
         </div>
         <div class="stats-marquee-item">
-            <span class="stats-marquee-val accent">Founder</span>
-            <span>SAT Project &amp; Engineering</span>
+            <span class="stats-marquee-val accent">IoT</span>
+            <span>Embedded &amp; Cloud Network</span>
         </div>
         <div class="stats-marquee-item">
             <span class="stats-marquee-val">Full-Stack</span>
@@ -2337,8 +2337,8 @@
             <span>Sertifikasi Kompetensi</span>
         </div>
         <div class="stats-marquee-item">
-            <span class="stats-marquee-val accent">Founder</span>
-            <span>SAT Project &amp; Engineering</span>
+            <span class="stats-marquee-val accent">IoT</span>
+            <span>Embedded &amp; Cloud Network</span>
         </div>
         <div class="stats-marquee-item">
             <span class="stats-marquee-val">Full-Stack</span>
@@ -2372,10 +2372,11 @@
                     Halo, saya <strong>Syarif Ahsani Taqwim</strong>. Saya bekerja di persimpangan antara <span style="color: var(--accent); font-weight: 500;">Full-Stack Development</span>, <span style="color: var(--accent); font-weight: 500;">Internet of Things (IoT)</span>, dan <span style="color: var(--accent); font-weight: 500;">IT Infrastructure</span>.
                 </p>
                 <p>
-                    Sebagai Founder <strong>SAT Project</strong>, fokus saya adalah menghadirkan sistem yang tangguh dan langsung berdampak nyata bagi operasional maupun efisiensi kebutuhan digital.
+                    Fokus utama saya adalah merancang dan mengimplementasikan sistem yang tangguh, efisien, dan langsung memberikan dampak nyata bagi performa operasional serta kebutuhan digital modern.
                 </p>
             </div>
         </div>
+
 
         <div class="about-features fade-up">
             <div class="about-card">
