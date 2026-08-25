@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login | SAT Portfolio</title>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('logosat-color.svg') }}">
+    <link rel="alternate icon" href="{{ asset('favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ asset('logosat-color.svg') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
