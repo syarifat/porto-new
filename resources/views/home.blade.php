@@ -2192,75 +2192,115 @@
 
     document.querySelectorAll('.fade-up, .project-entry').forEach(el => observer.observe(el));
 
-    // ===== Project constellation scatter =====
-    const SCATTER_POS = [
-        [10, 55],  [62, 40],  [38, 130], [80, 110],
-        [20, 200], [55, 185], [82, 265], [12, 280],
-        [48, 340], [78, 320], [25, 400], [65, 380],
-        [88, 440], [15, 455], [50, 510], [72, 490],
-        [30, 560], [60, 545], [85, 600], [18, 615],
-    ];
+    // ===== Project serpentine map =====
+    // 4 columns, snake L→R then R→L then L→R ...
+    const COLS   = [11, 37, 63, 88]; // left% for each column
+    const ROW_H  = 110;              // px between rows
+    const ROW_Y0 = 55;               // top offset px
+
+    function buildSnakePos(count) {
+        const pos = [];
+        for (let i = 0; i < count; i++) {
+            const row = Math.floor(i / COLS.length);
+            const col = i % COLS.length;
+            const leftToRight = row % 2 === 0;
+            const colIdx = leftToRight ? col : (COLS.length - 1 - col);
+            pos.push({ left: COLS[colIdx], top: ROW_Y0 + row * ROW_H });
+        }
+        return pos;
+    }
 
     function scatterPins() {
         const map = document.getElementById('proj-map');
-        if (!map || window.innerWidth <= 600) return;
+        if (!map) return;
 
+        const isMobile = window.innerWidth <= 600;
         const pins = Array.from(map.querySelectorAll('.proj-pin:not(.hidden-chunk)'));
+        if (pins.length === 0) return;
+
+        if (isMobile) {
+            // Reset to static flow on mobile
+            pins.forEach(pin => { pin.style.left = ''; pin.style.top = ''; });
+            map.style.minHeight = '';
+            return;
+        }
+
+        const snakePos = buildSnakePos(pins.length);
         let maxBottom = 0;
 
         pins.forEach((pin, i) => {
-            const pos   = SCATTER_POS[i % SCATTER_POS.length];
-            const leftP = pos[0];
-            const topPx = pos[1];
+            const p = snakePos[i];
+            pin.style.left = p.left + '%';
+            pin.style.top  = p.top  + 'px';
 
-            pin.style.left = leftP + '%';
-            pin.style.top  = topPx + 'px';
-
-            // Label direction
-            if (leftP > 58) {
+            // Label: goes left if column is on the right half
+            if (p.left > 55) {
                 pin.classList.add('label-left');
             } else {
                 pin.classList.remove('label-left');
             }
 
-            maxBottom = Math.max(maxBottom, topPx + 60);
+            maxBottom = Math.max(maxBottom, p.top + 60);
         });
 
         map.style.minHeight = (maxBottom + 48) + 'px';
 
-        // Draw faint connecting lines via SVG
-        drawMapLines(map, pins);
+        drawSnakePath(map, pins, snakePos);
     }
 
-    function drawMapLines(map, pins) {
+    function drawSnakePath(map, pins, snakePos) {
         const svg = document.getElementById('proj-map-svg');
-        if (!svg) return;
+        if (!svg || pins.length < 2) return;
         svg.innerHTML = '';
 
-        const rect = map.getBoundingClientRect();
+        const W = map.getBoundingClientRect().width;
 
-        for (let i = 0; i < pins.length - 1; i++) {
-            const a = pins[i].getBoundingClientRect();
-            const b = pins[i+1].getBoundingClientRect();
+        // Convert left% to absolute px (+ 7 to center on dot)
+        const pts = snakePos.map(p => ({
+            x: p.left / 100 * W + 7,
+            y: p.top,
+        }));
 
-            const x1 = a.left + 7 - rect.left;
-            const y1 = a.top  + 7 - rect.top;
-            const x2 = b.left + 7 - rect.left;
-            const y2 = b.top  + 7 - rect.top;
+        // Oval extension for U-turns (how far the bezier arm extends sideways)
+        const ext = Math.min(W * 0.1, 72);
 
-            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-            line.setAttribute('x1', x1); line.setAttribute('y1', y1);
-            line.setAttribute('x2', x2); line.setAttribute('y2', y2);
-            line.setAttribute('stroke', 'rgba(217,119,6,0.12)');
-            line.setAttribute('stroke-width', '1');
-            line.setAttribute('stroke-dasharray', '4 6');
-            svg.appendChild(line);
+        let d = `M ${pts[0].x} ${pts[0].y}`;
+
+        for (let i = 0; i < pts.length - 1; i++) {
+            const cur = pts[i];
+            const nxt = pts[i + 1];
+            const sameRow = Math.abs(cur.y - nxt.y) < 10;
+
+            if (sameRow) {
+                // Straight horizontal with slight ease
+                const dx = nxt.x - cur.x;
+                d += ` C ${cur.x + dx * 0.35} ${cur.y} ${nxt.x - dx * 0.35} ${nxt.y} ${nxt.x} ${nxt.y}`;
+            } else {
+                // U-turn: elongated oval bend
+                // If current dot is on the RIGHT side, bulge further right
+                const onRight = cur.x > W * 0.5;
+                if (onRight) {
+                    d += ` C ${cur.x + ext} ${cur.y} ${nxt.x + ext} ${nxt.y} ${nxt.x} ${nxt.y}`;
+                } else {
+                    d += ` C ${cur.x - ext} ${cur.y} ${nxt.x - ext} ${nxt.y} ${nxt.x} ${nxt.y}`;
+                }
+            }
         }
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', d);
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke', 'rgba(217,119,6,0.22)');
+        path.setAttribute('stroke-width', '1.5');
+        path.setAttribute('stroke-dasharray', '5 8');
+        path.setAttribute('stroke-linecap', 'round');
+        svg.appendChild(path);
     }
 
-    // Run scatter on load + resize
+    // Run on load + resize
     document.addEventListener('DOMContentLoaded', scatterPins);
     window.addEventListener('resize', scatterPins);
+
 
     // ===== Project modal =====
     function openProjModal(id) {
