@@ -3091,9 +3091,9 @@
         let rotX = 0.12;
         let rotY = 0;
         let velX = 0;
-        let velY = 0.00075; // Super slow, continuous rightward rotation
+        let velY = 0.00032; // Ultra-slow, majestic continuous spin
         let targetVelX = 0;
-        let targetVelY = 0.00075;
+        let targetVelY = 0.00032;
 
         function resize() {
             const rect = canvas.getBoundingClientRect();
@@ -3119,15 +3119,15 @@
             const my = e.clientY - (rect.top + cy);
 
             // Gentle and smooth tilt matching mouse position in 4 directions
-            targetVelY = (mx / (width * 0.5)) * 0.0035 + 0.00075;
-            targetVelX = -(my / (height * 0.5)) * 0.0035;
+            targetVelY = (mx / (width * 0.5)) * 0.0018 + 0.00032;
+            targetVelX = -(my / (height * 0.5)) * 0.0018;
         }
 
         if (heroSection) {
             heroSection.addEventListener('mousemove', onMouseMove);
             heroSection.addEventListener('mouseleave', () => {
                 targetVelX = 0;
-                targetVelY = 0.00075; // Resume super slow spin
+                targetVelY = 0.00032; // Resume ultra-slow spin
             });
         }
 
@@ -3135,8 +3135,8 @@
             ctx.clearRect(0, 0, width, height);
 
             // Silky smooth inertia (lerp)
-            velX += (targetVelX - velX) * 0.035;
-            velY += (targetVelY - velY) * 0.035;
+            velX += (targetVelX - velX) * 0.025;
+            velY += (targetVelY - velY) * 0.025;
             rotX += velX;
             rotY += velY;
 
@@ -3266,7 +3266,8 @@
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
 
-            const time = ts * 0.0014;
+            // Slow, calming fluid wave speed
+            const time = ts * 0.00045;
 
             for (let r = 0; r < rows; r++) {
                 const y = r * CELL_H + CELL_H / 2;
@@ -3275,11 +3276,11 @@
                     const x = c * CELL_W + CELL_W / 2;
 
                     // Multi-harmonic flowing wave field
-                    const w1 = Math.sin(c * 0.055 + r * 0.042 + time * 1.2);
-                    const w2 = Math.cos(c * 0.038 - r * 0.052 + time * 0.85);
-                    const w3 = Math.sin((c + r) * 0.032 - time * 0.95);
+                    const w1 = Math.sin(c * 0.055 + r * 0.042 + time * 0.85);
+                    const w2 = Math.cos(c * 0.038 - r * 0.052 + time * 0.65);
+                    const w3 = Math.sin((c + r) * 0.032 - time * 0.7);
 
-                    let wave = (w1 + w2 + w3) / 3; // Normalized approx -1 to 1
+                    let wave = (w1 + w2 + w3) / 3;
 
                     // Mouse ripple influence
                     if (isHovered) {
@@ -3288,8 +3289,8 @@
                         const dist = Math.sqrt(dx * dx + dy * dy);
                         if (dist < 260) {
                             const falloff = (1 - dist / 260);
-                            const ripple = Math.sin(dist * 0.06 - time * 4.0) * falloff;
-                            wave += ripple * 0.75;
+                            const ripple = Math.sin(dist * 0.06 - time * 2.8) * falloff;
+                            wave += ripple * 0.65;
                         }
                     }
 
@@ -3302,15 +3303,12 @@
 
                     // Fiery ember & crimson color palette
                     if (norm > 0.68) {
-                        // Radiant fiery amber / highlight
                         const a = 0.65 + norm * 0.35;
                         ctx.fillStyle = `rgba(251, 146, 60, ${a.toFixed(2)})`;
                     } else if (norm > 0.38) {
-                        // Deep burnt orange
                         const a = 0.35 + norm * 0.45;
                         ctx.fillStyle = `rgba(217, 72, 15, ${a.toFixed(2)})`;
                     } else {
-                        // Dark cinnabar maroon
                         const a = 0.12 + norm * 0.28;
                         ctx.fillStyle = `rgba(138, 30, 10, ${a.toFixed(2)})`;
                     }
@@ -3324,6 +3322,7 @@
 
         requestAnimationFrame(draw);
     })();
+
 
     // ===== CANVAS DOT RIPPLE =====
 
