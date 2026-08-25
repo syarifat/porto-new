@@ -1817,10 +1817,125 @@
             0%, 100% { transform: translateY(-2px); }
             50% { transform: translateY(2px); }
         }
+        /* ===== INTRO WAVE CURTAIN PRELOADER ===== */
+        #intro-curtain {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: #0f0f0d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: all;
+            user-select: none;
+            transition: opacity 0.8s cubic-bezier(0.77, 0, 0.175, 1), transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), visibility 0.8s ease;
+        }
+
+        #intro-curtain.hide {
+            opacity: 0;
+            transform: scale(1.04);
+            pointer-events: none;
+            visibility: hidden;
+        }
+
+        .intro-name-wrap {
+            overflow: hidden;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .intro-name {
+            font-family: 'DM Sans', 'Inter', sans-serif;
+            font-size: clamp(1.4rem, 4vw, 2.4rem);
+            font-weight: 500;
+            letter-spacing: -0.03em;
+            color: #d1cfc7;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.45em;
+        }
+
+        .intro-word {
+            display: inline-flex;
+            white-space: nowrap;
+        }
+
+        .intro-char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(140%) rotate(4deg);
+            filter: blur(8px);
+            animation: waveRise 1.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: calc(var(--char-index, 0) * 0.042s);
+        }
+
+        .intro-char.intro-dot {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        @keyframes waveRise {
+            0% {
+                opacity: 0;
+                transform: translateY(140%) rotate(6deg) scale(0.92);
+                filter: blur(10px);
+            }
+            45% {
+                opacity: 0.95;
+                transform: translateY(-16%) rotate(-2deg) scale(1.03);
+                filter: blur(0px);
+            }
+            70% {
+                transform: translateY(5%) rotate(1deg) scale(0.99);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0%) rotate(0deg) scale(1);
+                filter: blur(0px);
+            }
+        }
     </style>
+
 </head>
 <body>
+<!-- Intro Wave Curtain Preloader -->
+<div id="intro-curtain">
+    <div class="intro-name-wrap">
+        <div class="intro-name" id="introName">
+            <span class="intro-word">
+                <span class="intro-char" style="--char-index: 0">s</span>
+                <span class="intro-char" style="--char-index: 1">y</span>
+                <span class="intro-char" style="--char-index: 2">a</span>
+                <span class="intro-char" style="--char-index: 3">r</span>
+                <span class="intro-char" style="--char-index: 4">i</span>
+                <span class="intro-char" style="--char-index: 5">f</span>
+            </span>
+            <span class="intro-word">
+                <span class="intro-char" style="--char-index: 6">a</span>
+                <span class="intro-char" style="--char-index: 7">h</span>
+                <span class="intro-char" style="--char-index: 8">s</span>
+                <span class="intro-char" style="--char-index: 9">a</span>
+                <span class="intro-char" style="--char-index: 10">n</span>
+                <span class="intro-char" style="--char-index: 11">i</span>
+            </span>
+            <span class="intro-word">
+                <span class="intro-char" style="--char-index: 12">t</span>
+                <span class="intro-char" style="--char-index: 13">a</span>
+                <span class="intro-char" style="--char-index: 14">q</span>
+                <span class="intro-char" style="--char-index: 15">w</span>
+                <span class="intro-char" style="--char-index: 16">i</span>
+                <span class="intro-char" style="--char-index: 17">m</span>
+                <span class="intro-char intro-dot" style="--char-index: 18">.</span>
+            </span>
+        </div>
+    </div>
+</div>
+
 <canvas id="dot-canvas" aria-hidden="true"></canvas>
+
 
 <!-- Navbar -->
 <nav id="navbar">
@@ -2386,6 +2501,40 @@
 </div>
 
 <script>
+    // ===== INTRO PRELOADER WAVE =====
+    (function() {
+        const curtain = document.getElementById('intro-curtain');
+        if (!curtain) return;
+
+        document.body.style.overflow = 'hidden';
+
+        const finishIntro = () => {
+            setTimeout(() => {
+                curtain.classList.add('hide');
+                document.body.style.overflow = '';
+                setTimeout(() => {
+                    if (curtain && curtain.parentNode) {
+                        curtain.parentNode.removeChild(curtain);
+                    }
+                }, 900);
+            }, 2000);
+        };
+
+        if (document.readyState === 'complete') {
+            finishIntro();
+        } else {
+            window.addEventListener('load', finishIntro);
+        }
+
+        // Safety fallback
+        setTimeout(() => {
+            if (curtain && !curtain.classList.contains('hide')) {
+                curtain.classList.add('hide');
+                document.body.style.overflow = '';
+            }
+        }, 3800);
+    })();
+
     // Hamburger
     const hamburger = document.getElementById('hamburger');
     const navLinks  = document.getElementById('navLinks');
