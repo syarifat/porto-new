@@ -2131,13 +2131,7 @@
         <span class="section-tag-txt">Portfolio</span>
     </div>
     <h2 class="section-title fade-up">Timeline<br>Proyek.</h2>
-    <p class="section-sub fade-up" style="margin-bottom: 1.5rem;">Rekam jejak pekerjaan yang telah dikerjakan, secara kronologis.</p>
-    <div class="fade-up" style="margin-bottom: 2.5rem;">
-        <a href="{{ route('projects.timeline') }}" class="btn-timeline-full">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            Lihat Timeline Interaktif
-        </a>
-    </div>
+    <p class="section-sub fade-up" style="margin-bottom: 2rem;">Rekam jejak pekerjaan yang telah dikerjakan, secara kronologis. Geser kanvas atau gunakan kontrol navigasi untuk menjelajah.</p>
 
 
     @if($projects->isEmpty())
