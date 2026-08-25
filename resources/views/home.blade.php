@@ -258,20 +258,81 @@
         }
 
 
-        .avail-badge {
-            display: inline-flex;
+        /* ===== MANIFESTO / STATEMENT BANNER WITH ASCII MATRIX ===== */
+        .statement-section {
+            position: relative;
+            width: 100%;
+            min-height: 560px;
+            display: flex;
             align-items: center;
-            gap: 0.5rem;
-            background: rgba(77,124,89,0.1);
-            border: 1px solid rgba(77,124,89,0.22);
-            padding: 0.35rem 0.85rem;
-            border-radius: var(--r);
-            font-size: 0.72rem;
-            font-weight: 500;
-            color: var(--green-text);
-            width: fit-content;
-            letter-spacing: 0.03em;
+            justify-content: center;
+            background: #0d0907;
+            overflow: hidden;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 4rem 1.5rem;
         }
+
+        #ascii-matrix-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            pointer-events: auto;
+        }
+
+        .statement-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .statement-line {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(3.2rem, 7.5vw, 6.8rem);
+            font-weight: 800;
+            line-height: 1.02;
+            letter-spacing: -0.04em;
+            color: #ffffff;
+            margin: 0;
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        .statement-line.dim {
+            color: rgba(255, 255, 255, 0.42);
+        }
+
+        .statement-sym {
+            font-family: 'Inter', monospace, sans-serif;
+            font-weight: 500;
+            display: inline-block;
+            margin-left: 0.1em;
+        }
+
+        .sym-amber {
+            color: #f59e0b;
+            text-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .sym-coral {
+            color: #ea580c;
+            text-shadow: 0 0 20px rgba(234, 88, 12, 0.5);
+        }
+
+        .sym-dim {
+            font-size: 0.48em;
+            vertical-align: top;
+            color: rgba(255, 255, 255, 0.35);
+            margin-left: 0.2em;
+        }
+
 
         .hero-roles {
             display: flex;
@@ -2081,10 +2142,21 @@
 </section>
 
 
+<!-- Manifesto Statement Banner with Dynamic ASCII Matrix Wave -->
+<section class="statement-section" id="manifesto">
+    <canvas id="ascii-matrix-canvas" aria-hidden="true"></canvas>
+    <div class="statement-content fade-up">
+        <h2 class="statement-line">Build Real <span class="statement-sym sym-amber">*</span></h2>
+        <h2 class="statement-line">Connect All <span class="statement-sym sym-coral">#</span></h2>
+        <h2 class="statement-line dim">Make It Work <span class="statement-sym sym-dim">™</span></h2>
+    </div>
+</section>
+
 <div class="section-rule"></div>
 
 <!-- About -->
 <section class="site-section" id="about">
+
     <div class="about-layout">
         <div>
             <div class="section-label fade-up">
@@ -3143,9 +3215,118 @@
         render();
     })();
 
+    // ===== DYNAMIC ASCII MATRIX WAVE BANNER =====
+    (function() {
+        const canvas = document.getElementById('ascii-matrix-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
 
+        // Character set with density mapping from dark to bright
+        const CHARS = ['.', '+', '^', '*', '$', '#', '@'];
+        const CELL_W = 12.5; // Column width
+        const CELL_H = 15.5; // Row height
+
+        let width, height, cols, rows;
+        let mouseX = -9999, mouseY = -9999;
+        let isHovered = false;
+
+        function resize() {
+            const rect = canvas.getBoundingClientRect();
+            const dpr  = window.devicePixelRatio || 1;
+            width      = rect.width || window.innerWidth;
+            height     = rect.height || 560;
+            canvas.width  = width * dpr;
+            canvas.height = height * dpr;
+            ctx.scale(dpr, dpr);
+            cols = Math.ceil(width / CELL_W) + 1;
+            rows = Math.ceil(height / CELL_H) + 1;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        const bannerSection = document.getElementById('manifesto');
+        if (bannerSection) {
+            bannerSection.addEventListener('mousemove', e => {
+                const rect = canvas.getBoundingClientRect();
+                mouseX = e.clientX - rect.left;
+                mouseY = e.clientY - rect.top;
+                isHovered = true;
+            });
+            bannerSection.addEventListener('mouseleave', () => {
+                mouseX = -9999;
+                mouseY = -9999;
+                isHovered = false;
+            });
+        }
+
+        function draw(ts) {
+            ctx.clearRect(0, 0, width, height);
+
+            ctx.font = '600 10.5px monospace, "Courier New", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            const time = ts * 0.0014;
+
+            for (let r = 0; r < rows; r++) {
+                const y = r * CELL_H + CELL_H / 2;
+
+                for (let c = 0; c < cols; c++) {
+                    const x = c * CELL_W + CELL_W / 2;
+
+                    // Multi-harmonic flowing wave field
+                    const w1 = Math.sin(c * 0.055 + r * 0.042 + time * 1.2);
+                    const w2 = Math.cos(c * 0.038 - r * 0.052 + time * 0.85);
+                    const w3 = Math.sin((c + r) * 0.032 - time * 0.95);
+
+                    let wave = (w1 + w2 + w3) / 3; // Normalized approx -1 to 1
+
+                    // Mouse ripple influence
+                    if (isHovered) {
+                        const dx = x - mouseX;
+                        const dy = y - mouseY;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 260) {
+                            const falloff = (1 - dist / 260);
+                            const ripple = Math.sin(dist * 0.06 - time * 4.0) * falloff;
+                            wave += ripple * 0.75;
+                        }
+                    }
+
+                    // Normalize to 0 .. 1
+                    const norm = Math.max(0, Math.min(1, (wave + 1) / 2));
+
+                    // Pick character from set
+                    const charIdx = Math.floor(norm * (CHARS.length - 1));
+                    const char = CHARS[charIdx];
+
+                    // Fiery ember & crimson color palette
+                    if (norm > 0.68) {
+                        // Radiant fiery amber / highlight
+                        const a = 0.65 + norm * 0.35;
+                        ctx.fillStyle = `rgba(251, 146, 60, ${a.toFixed(2)})`;
+                    } else if (norm > 0.38) {
+                        // Deep burnt orange
+                        const a = 0.35 + norm * 0.45;
+                        ctx.fillStyle = `rgba(217, 72, 15, ${a.toFixed(2)})`;
+                    } else {
+                        // Dark cinnabar maroon
+                        const a = 0.12 + norm * 0.28;
+                        ctx.fillStyle = `rgba(138, 30, 10, ${a.toFixed(2)})`;
+                    }
+
+                    ctx.fillText(char, x, y);
+                }
+            }
+
+            requestAnimationFrame(draw);
+        }
+
+        requestAnimationFrame(draw);
+    })();
 
     // ===== CANVAS DOT RIPPLE =====
+
     (function() {
         const canvas = document.getElementById('dot-canvas');
         if (!canvas) return;
