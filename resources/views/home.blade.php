@@ -3,14 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Syarif Ahsani Taqwim, Full-Stack Developer, IoT Engineer, dan IT Infrastructure Specialist. Membangun sistem end-to-end yang benar-benar berjalan.">
+    <title>Syarif Ahsani Taqwim — Full-Stack Developer &amp; IoT Engineer</title>
+    <meta name="description" content="Portofolio resmi Syarif Ahsani Taqwim, Full-Stack Developer, IoT Engineer, dan IT Infrastructure Specialist. Membangun sistem web, hardware IoT cerdas, dan infrastruktur cloud terintegrasi.">
+    <meta name="keywords" content="Syarif Ahsani Taqwim, Syarif, SAT, Full-Stack Developer, IoT Engineer, Laravel, PHP, Next.js, ESP32, Arduino, DevOps, Tulungagung, Portofolio Developer">
+    <meta name="author" content="Syarif Ahsani Taqwim">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Syarif Ahsani Taqwim</title>
+
+    <!-- Google Search Console Verification Tag -->
+    @if(env('GOOGLE_SITE_VERIFICATION'))
+    <meta name="google-site-verification" content="{{ env('GOOGLE_SITE_VERIFICATION') }}" />
+    @endif
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="Syarif Ahsani Taqwim — Full-Stack Developer &amp; IoT Engineer">
+    <meta property="og:description" content="Membangun sistem terintegrasi: dari sirkuit fisik mikrokontroler IoT hingga backend cloud dan antarmuka web modern.">
+    <meta property="og:site_name" content="Syarif Ahsani Taqwim Portfolio">
+    <meta property="og:locale" content="id_ID">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Syarif Ahsani Taqwim — Full-Stack Developer &amp; IoT Engineer">
+    <meta name="twitter:description" content="Membangun sistem terintegrasi: dari sirkuit fisik mikrokontroler IoT hingga backend cloud dan antarmuka web modern.">
+
+    <!-- Structured Data: Schema.org (JSON-LD) for Google Rich Snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Syarif Ahsani Taqwim",
+      "alternateName": ["Syarif", "SAT"],
+      "url": "https://portfolio.satcloud.tech",
+      "jobTitle": "Full-Stack Developer & IoT Engineer",
+      "description": "Full-Stack Developer, IoT Engineer, and IT Infrastructure Specialist based in Tulungagung, East Java, Indonesia.",
+      "sameAs": [
+        "https://instagram.com/syariif.at",
+        "https://github.com/syarifahsanit"
+      ],
+      "knowsAbout": [
+        "Full-Stack Web Development",
+        "Internet of Things",
+        "Embedded Systems",
+        "Laravel",
+        "PHP",
+        "Next.js",
+        "ESP32",
+        "Cloud Infrastructure",
+        "Linux SysAdmin"
+      ]
+    }
+    </script>
 
     <!-- Google Fonts: Inter + DM Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
 
     <style>
         /* ===== TOKENS ===== */
