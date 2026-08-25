@@ -1470,15 +1470,84 @@
         }
 
 
-        /* ===== CERTIFICATES ===== */
-        /* ===== CERTIFICATES — Premium Grid Cards ===== */
-        .certs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 1rem;
+        /* ===== CERTIFICATES SLIDER (4 CARDS PER VIEW) ===== */
+        .certs-header-row {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .certs-nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .certs-nav-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-1);
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .certs-nav-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #10100e;
+            transform: scale(1.06);
+        }
+
+        .certs-slider-wrap {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            padding-bottom: 0.5rem;
+        }
+
+        .certs-slider-track {
+            display: flex;
+            gap: 1.25rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            padding: 0.5rem 0.25rem 1rem;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(217,119,6,0.35) transparent;
+        }
+
+        .certs-slider-track::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        .certs-slider-track::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.03);
+            border-radius: 999px;
+        }
+
+        .certs-slider-track::-webkit-scrollbar-thumb {
+            background: rgba(217,119,6,0.35);
+            border-radius: 999px;
+        }
+
+        .certs-slider-track::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
         }
 
         .cert-card {
+            flex: 0 0 calc((100% - 3 * 1.25rem) / 4);
+            min-width: 255px;
+            scroll-snap-align: start;
             position: relative;
             background: var(--surface);
             border: 1px solid var(--border);
@@ -1488,15 +1557,27 @@
             transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
+            user-select: none;
         }
 
-        .cert-card:hover {
-            border-color: rgba(217,119,6,0.4);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(217,119,6,0.15);
+        @media (max-width: 1100px) {
+            .cert-card {
+                flex: 0 0 calc((100% - 2 * 1.25rem) / 3);
+            }
         }
 
-        .cert-card.hidden-cert { display: none !important; }
+        @media (max-width: 768px) {
+            .cert-card {
+                flex: 0 0 calc((100% - 1.25rem) / 2);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cert-card {
+                flex: 0 0 85%;
+            }
+        }
+
 
         .cert-img-wrap {
             position: relative;
@@ -2873,67 +2954,73 @@
 
 <!-- Certificates -->
 <section class="site-section" id="certificates">
-    <div class="section-label fade-up">
-        <span class="section-num">04</span>
-        <span class="section-tag-txt">Kredensial</span>
-    </div>
-
-    <h2 class="section-title fade-up">Pencapaian<br>&amp; Sertifikasi.</h2>
-    <p class="section-sub fade-up" style="margin-bottom: 2.5rem;">Bukti kompetensi tersertifikasi dan keikutsertaan program profesional.</p>
-
-    <div class="certs-grid fade-up">
-        @if($certificates->isEmpty())
-            <div class="certs-empty">
-                <p>Belum ada sertifikat yang ditambahkan.</p>
+    <div class="certs-header-row fade-up">
+        <div>
+            <div class="section-label">
+                <span class="section-num">04</span>
+                <span class="section-tag-txt">Kredensial</span>
             </div>
-        @else
-            @foreach($certificates as $i => $cert)
-            <div class="cert-card {{ $i >= 5 ? 'hidden-cert' : '' }}" onclick="openModal('{{ $cert->image_url }}')" id="cert-{{ $cert->id }}">
-                <div class="cert-img-wrap">
-                    <span class="cert-rank">#{{ $i + 1 }}</span>
-                    <div class="cert-view-btn">
-                        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                    </div>
-                    <img
-                        src="{{ $cert->image_url }}"
-                        alt="{{ $cert->title }}"
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                    >
-                    <div class="cert-img-ph">🏆</div>
-                </div>
-                <div class="cert-body">
-                    <div class="cert-name">{{ $cert->title }}</div>
-                    @if($cert->issued_by)
-                        <div class="cert-issuer">{{ $cert->issued_by }}</div>
-                    @endif
-                    <div class="cert-meta">
-                        @if($cert->issued_date)
-                            <span class="cert-date">{{ $cert->issued_date->format('d M Y') }}</span>
-                        @endif
-                        @if($cert->credential_url)
-                            <a href="{{ $cert->credential_url }}" target="_blank" rel="noopener" class="cert-cred-badge" onclick="event.stopPropagation()">
-                                <svg width="9" height="9" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                                Verifikasi
-                            </a>
-                        @endif
-                    </div>
-                </div>
-            </div>
-            @endforeach
+            <h2 class="section-title" style="margin-bottom: 0.5rem;">Pencapaian<br>&amp; Sertifikasi.</h2>
+            <p class="section-sub">Bukti kompetensi tersertifikasi dan keikutsertaan program profesional.</p>
+        </div>
+
+        @if($certificates->count() > 1)
+        <div class="certs-nav-controls">
+            <button type="button" class="certs-nav-btn" id="certSlideLeft" aria-label="Geser Kiri">
+                <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button type="button" class="certs-nav-btn" id="certSlideRight" aria-label="Geser Kanan">
+                <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+        </div>
         @endif
     </div>
 
-    @if($certificates->count() > 5)
-    <div class="cert-load-wrap fade-up">
-        <button id="btn-load-certs" class="btn-load-more" aria-label="Tampilkan Lebih Banyak Sertifikat">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="7 13 12 18 17 13"></polyline>
-                <polyline points="7 6 12 11 17 6"></polyline>
-            </svg>
-        </button>
-    </div>
+    @if($certificates->isEmpty())
+        <div class="certs-empty fade-up">
+            <p>Belum ada sertifikat yang ditambahkan.</p>
+        </div>
+    @else
+        <div class="certs-slider-wrap fade-up">
+            <div class="certs-slider-track" id="certsTrack">
+                @foreach($certificates as $i => $cert)
+                <div class="cert-card" onclick="openModal('{{ $cert->image_url }}')" id="cert-{{ $cert->id }}">
+                    <div class="cert-img-wrap">
+                        <span class="cert-rank">#{{ $i + 1 }}</span>
+                        <div class="cert-view-btn">
+                            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                        </div>
+                        <img
+                            src="{{ $cert->image_url }}"
+                            alt="{{ $cert->title }}"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                        >
+                        <div class="cert-img-ph">🏆</div>
+                    </div>
+                    <div class="cert-body">
+                        <div class="cert-name">{{ $cert->title }}</div>
+                        @if($cert->issued_by)
+                            <div class="cert-issuer">{{ $cert->issued_by }}</div>
+                        @endif
+                        <div class="cert-meta">
+                            @if($cert->issued_date)
+                                <span class="cert-date">{{ $cert->issued_date->format('d M Y') }}</span>
+                            @endif
+                            @if($cert->credential_url)
+                                <a href="{{ $cert->credential_url }}" target="_blank" rel="noopener" class="cert-cred-badge" onclick="event.stopPropagation()">
+                                    <svg width="9" height="9" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                    Verifikasi
+                                </a>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
     @endif
 </section>
+
 
 <!-- Clients & Partners -->
 @if($clients->isNotEmpty())
@@ -3484,31 +3571,55 @@
 
 
 
-    // Load More Certificates Pagination
+    // ===== CERTIFICATES HORIZONTAL SLIDER CONTROLLER =====
     (function() {
-        const btnLoadCerts = document.getElementById('btn-load-certs');
-        if (btnLoadCerts) {
-            btnLoadCerts.addEventListener('click', () => {
-                const hiddenCerts = document.querySelectorAll('.cert-card.hidden-cert');
-                const chunkSize = 5;
-                const showCount = Math.min(chunkSize, hiddenCerts.length);
-                for (let i = 0; i < showCount; i++) {
-                    hiddenCerts[i].classList.remove('hidden-cert');
-                }
-                const remainingHidden = document.querySelectorAll('.cert-card.hidden-cert');
-                if (remainingHidden.length === 0) {
-                    btnLoadCerts.closest('.cert-load-wrap').style.display = 'none';
-                }
+        const track = document.getElementById('certsTrack');
+        const btnL  = document.getElementById('certSlideLeft');
+        const btnR  = document.getElementById('certSlideRight');
+        if (!track) return;
+
+        const getScrollAmount = () => {
+            const firstCard = track.querySelector('.cert-card');
+            return firstCard ? (firstCard.offsetWidth + 20) : 280;
+        };
+
+        if (btnL) {
+            btnL.addEventListener('click', () => {
+                track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
             });
-            const totalHidden = document.querySelectorAll('.cert-card.hidden-cert');
-            if (totalHidden.length === 0) {
-                btnLoadCerts.closest('.cert-load-wrap').style.display = 'none';
-            }
         }
+
+        if (btnR) {
+            btnR.addEventListener('click', () => {
+                track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+            });
+        }
+
+        // Drag to scroll
+        let isDown = false;
+        let startX, scrollLeft;
+
+        track.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX - track.offsetLeft;
+            scrollLeft = track.scrollLeft;
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDown = false;
+        });
+
+        track.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - track.offsetLeft;
+            const walk = (x - startX) * 1.5;
+            track.scrollLeft = scrollLeft - walk;
+        });
     })();
 
-
     // Certificate Modal Lightbox
+
     function openModal(imgSrc) {
         document.getElementById('modalImg').src = imgSrc;
         document.getElementById('certModal').classList.add('active');
