@@ -1966,17 +1966,7 @@
     @else
         {{-- Embed project data for JS modal --}}
         <script>
-        const PROJ_DATA = @json($projects->map(fn($p) => [
-            'id'           => $p->id,
-            'title'        => $p->title,
-            'description'  => $p->description,
-            'date'         => $p->start_date->format('M Y') . ($p->end_date ? ' – ' . $p->end_date->format('M Y') : ' – Sekarang'),
-            'partner_name' => $p->partner_name,
-            'partner_logo' => $p->partner_logo ? asset('storage/' . $p->partner_logo) : null,
-            'tech_stack'   => $p->tech_stack ? array_map('trim', explode(',', $p->tech_stack)) : [],
-            'category'     => $p->category,
-            'status'       => $p->status,
-        ]));
+        const PROJ_DATA = @json($projectsJson);
         </script>
 
         <div class="proj-map-outer fade-up">
