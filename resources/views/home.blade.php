@@ -51,47 +51,94 @@
         ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb { background: var(--text-3); border-radius: 2px; }
 
-        /* ===== NAVBAR ===== */
+        /* ===== FLOATING CAPSULE NAVBAR ===== */
         nav {
             position: fixed;
-            top: 0;
-            width: 100%;
+            top: 1.15rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 2.5rem);
+            max-width: 960px;
             z-index: 1000;
-            padding: 1.1rem 2.5rem;
-            background: rgba(15,15,13,0.92);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--border);
-            transition: border-color 0.3s;
+            padding: 0.45rem 0.6rem 0.45rem 1.25rem;
+            background: rgba(20, 20, 18, 0.82);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 999px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .nav-container {
-            max-width: 1180px;
-            margin: 0 auto;
+            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .nav-logo {
+        /* Morphing Logo */
+        .nav-logo-wrap {
+            display: flex;
+            align-items: center;
+            height: 36px;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            min-width: 80px;
+        }
+
+        .nav-logo-state {
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
-            font-family: 'Inter', sans-serif;
-            font-size: 1.05rem;
-            font-weight: 800;
+            font-family: 'DM Sans', 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
             color: var(--text-1);
-            text-decoration: none;
-            letter-spacing: -0.02em;
+            letter-spacing: 0.08em;
+            position: absolute;
+            left: 0;
+            transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.65s ease, filter 0.65s ease;
+            white-space: nowrap;
         }
 
-        .nav-logo .logo-dot  { color: var(--accent); }
-        .nav-logo .logo-x    { color: var(--text-3); font-weight: 400; font-size: 0.8rem; margin: 0 0.1rem; }
-        .nav-logo .logo-icon { width: 18px; height: 18px; display: block; flex-shrink: 0; opacity: 0.85; }
+        .nav-logo-state.initials {
+            letter-spacing: 0.22em;
+            font-weight: 700;
+            font-size: 0.84rem;
+        }
+
+        .nav-logo-state.fullname {
+            letter-spacing: -0.01em;
+            font-weight: 600;
+            font-size: 0.88rem;
+        }
+
+        .nav-logo-state.active {
+            transform: translateY(0);
+            opacity: 1;
+            filter: blur(0px);
+            pointer-events: auto;
+        }
+
+        .nav-logo-state.exit-up {
+            transform: translateY(-130%);
+            opacity: 0;
+            filter: blur(4px);
+            pointer-events: none;
+        }
+
+        .nav-logo-state.enter-down {
+            transform: translateY(130%);
+            opacity: 0;
+            filter: blur(4px);
+            pointer-events: none;
+        }
 
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: 2rem;
             list-style: none;
             align-items: center;
         }
@@ -99,33 +146,57 @@
         .nav-links a {
             color: var(--text-2);
             text-decoration: none;
-            font-size: 0.75rem;
+            font-size: 0.78rem;
             font-weight: 500;
-            letter-spacing: 0.07em;
-            text-transform: uppercase;
+            letter-spacing: 0.02em;
             transition: color 0.2s;
         }
 
-        .nav-links a:hover { color: var(--text-1); }
+        .nav-links a:hover {
+            color: var(--text-1);
+        }
+
+        /* Pill CTA */
+        .nav-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: #f0eee6;
+            color: #121210 !important;
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 0.42rem 1rem;
+            border-radius: 999px;
+            text-decoration: none;
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .nav-cta:hover {
+            transform: scale(1.04);
+            background: #ffffff;
+            box-shadow: 0 4px 16px rgba(255,255,255,0.25);
+        }
 
         .nav-hamburger {
             display: none;
             flex-direction: column;
             gap: 5px;
             cursor: pointer;
-            padding: 4px;
+            padding: 6px;
             background: none;
             border: none;
         }
 
         .nav-hamburger span {
             display: block;
-            width: 20px;
+            width: 18px;
             height: 1.5px;
             background: var(--text-2);
             border-radius: 1px;
             transition: all 0.3s;
         }
+
 
         /* ===== HERO ===== */
         #hero {
@@ -1644,24 +1715,33 @@
 
         @media (max-width: 768px) {
             /* Nav */
-            nav { padding: 1rem 1.5rem; }
+            nav {
+                top: 0.75rem;
+                width: calc(100% - 1.5rem);
+                padding: 0.35rem 0.5rem 0.35rem 1rem;
+            }
 
             .nav-links {
                 display: none;
                 position: absolute;
-                top: 100%;
+                top: calc(100% + 0.6rem);
                 left: 0;
                 right: 0;
-                background: rgba(15,15,13,0.98);
+                background: rgba(20,20,18,0.96);
+                backdrop-filter: blur(16px);
                 flex-direction: column;
                 gap: 0;
-                border-bottom: 1px solid var(--border);
+                border: 1px solid var(--border);
+                border-radius: 16px;
+                overflow: hidden;
+                box-shadow: 0 12px 30px rgba(0,0,0,0.6);
             }
 
-            .nav-links li              { border-bottom: 1px solid var(--border); }
-            .nav-links a               { display: block; padding: 0.9rem 1.5rem; letter-spacing: 0.05em; }
+            .nav-links li              { border-bottom: 1px solid var(--border); width: 100%; }
+            .nav-links a               { display: block; padding: 0.85rem 1.25rem; font-size: 0.85rem; }
             .nav-links.open            { display: flex; }
             .nav-hamburger             { display: flex; }
+            .nav-cta                   { display: none; }
 
             /* Hero */
             #hero                      { padding: 6rem 1.5rem 4rem; }
@@ -1937,17 +2017,20 @@
 <canvas id="dot-canvas" aria-hidden="true"></canvas>
 
 
-<!-- Navbar -->
+<!-- Floating Capsule Navbar -->
 <nav id="navbar">
     <div class="nav-container">
-        <a href="#hero" class="nav-logo">
-            SAT<span class="logo-dot">.</span>
-            <span class="logo-x">×</span>
-            <img class="logo-icon" src="/logosat-white.svg" alt="SAT logo mark" width="18" height="18">
+        <!-- Morphing Logo (rotates every 10 seconds) -->
+        <a href="#hero" class="nav-logo-wrap" id="navLogoWrap" aria-label="Beranda">
+            <span class="nav-logo-state initials active" id="navLogoInitials">
+                S A T
+            </span>
+            <span class="nav-logo-state fullname enter-down" id="navLogoFullname">
+                Syarif Ahsani Taqwim
+            </span>
         </a>
-        <button class="nav-hamburger" id="hamburger" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
+
+        <!-- Links -->
         <ul class="nav-links" id="navLinks">
             <li><a href="#about">Tentang</a></li>
             <li><a href="#skills">Keahlian</a></li>
@@ -1955,8 +2038,19 @@
             <li><a href="#timeline">Proyek</a></li>
             <li><a href="#certificates">Sertifikat</a></li>
         </ul>
+
+        <!-- Right Pill CTA -->
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <a href="https://wa.me/6285748057117" target="_blank" rel="noopener" class="nav-cta">
+                Kontak <span style="font-family: sans-serif; font-size: 0.85em;">→</span>
+            </a>
+            <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
     </div>
 </nav>
+
 
 <!-- Hero -->
 <section id="hero">
@@ -2540,6 +2634,40 @@
     const navLinks  = document.getElementById('navLinks');
     hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
     navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    // ===== 10-SECOND MORPHING NAVBAR LOGO TICKER =====
+    (function() {
+        const initials = document.getElementById('navLogoInitials');
+        const fullname = document.getElementById('navLogoFullname');
+        if (!initials || !fullname) return;
+
+        let showingInitials = true;
+
+        setInterval(() => {
+            if (showingInitials) {
+                // initials exit up, fullname enters from bottom
+                initials.classList.remove('active', 'enter-down');
+                initials.classList.add('exit-up');
+
+                fullname.classList.remove('exit-up');
+                fullname.classList.add('enter-down');
+                void fullname.offsetWidth; // Force reflow
+                fullname.classList.remove('enter-down');
+                fullname.classList.add('active');
+            } else {
+                // fullname exits up, initials enters from bottom
+                fullname.classList.remove('active', 'enter-down');
+                fullname.classList.add('exit-up');
+
+                initials.classList.remove('exit-up');
+                initials.classList.add('enter-down');
+                void initials.offsetWidth; // Force reflow
+                initials.classList.remove('enter-down');
+                initials.classList.add('active');
+            }
+            showingInitials = !showingInitials;
+        }, 10000);
+    })();
 
     // Scroll animations
     const observer = new IntersectionObserver((entries) => {
