@@ -2957,38 +2957,43 @@
         sendAiMessage();
     };
 
-    // ===== 3D INTERACTIVE TECH GLOBE (METACCI STYLE) =====
+    // ===== 3D INTERACTIVE TECH GLOBE (METACCI DENSE MICRO-TOKENS) =====
     (function() {
         const canvas = document.getElementById('hero-globe-canvas');
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
 
-        const TECH_TAGS = [
-            '--color-primary', '--space-md', '--font-heading', '-verbose',
-            '--incognito', '--port-8080', '-semi-bold', '-center',
-            '--shadow-sm', '--radius-full', '--opacity-90', '--bg-surface',
-            '--z-index-nav', '--line-height-tight', '--color-text-muted',
-            '-w-full', '-h-screen', '-flex-col', '-items-center', '-justify-between',
-            '--font-mono', '--transition-ease', '-p-4', '-gap-6', '-rounded-xl',
-            '--accent-amber', '--blur-md', '--env-prod', '--debug-mode',
-            '-text-sm', '-font-bold', '-backdrop-blur', '-tracking-wide',
-            '--border-subtle', '--card-elevation', '--container-max',
-            '-grid-cols-3', '-overflow-hidden', '--transform-gpu',
+        const TOKEN_POOL = [
+            '--color-background-canvas', '--color-text-inverse', '--color-text-muted',
+            '--breakpoint-lg', '--easing-emphasized', '--z-index-modal', '--z-index-nav',
+            '--radius-sm', '--radius-md', '--radius-full', '--space-sm', '--space-md', '--space-xs',
+            '--font-weight-medium', '--font-weight-semibold', '--font-weight-bold',
+            '--font-size-body-sm', '--font-size-body-md', '--font-size-heading-md',
+            '--font-size-heading-lg', '--font-size-display-xl', '--color-surface-default',
+            '--color-surface-raised', '--color-border-subtle', '--color-border-default',
+            '--color-text-primary', '--color-text-secondary', '--shadow-sm', '--shadow-md',
+            '--shadow-lg', '--line-height-tight', '--line-height-default', '--letter-spacing-tight',
+            '--container-max-width', '--color-accent-emphasis', '-verbose', '--incognito',
+            '--port-8080', '-semi-bold', '-center', '-w-full', '-h-screen', '-flex-col',
+            '-items-center', '-justify-between', '--font-mono', '--transition-ease',
+            '-p-4', '-gap-6', '-rounded-xl', '--accent-amber', '--blur-md', '--env-prod',
+            '--debug-mode', '-text-sm', '-backdrop-blur', '-tracking-wide', '--transform-gpu',
             '--api-version-v2', '--jwt-secret', '--db-pool-size', '-scale-105',
-            '--socket-timeout', '--cors-allow', '-relative', '-absolute',
-            '--color-surface-raised', '--font-size-body-sm', '-cursor-pointer',
-            '--active-state', '--filter-drop-shadow', '-translate-y-2',
-            '--mqtt-broker', '--firmware-v1.4', '--packet-size', '--baud-115200',
-            '--pin-mode-output', '--gpio-14', '--i2c-address', '--wifi-ssid',
-            '--docker-compose', '--k8s-pod', '--nginx-reverse-proxy', '--ssl-strict',
-            '--route-api', '--middleware-auth', '--rate-limit-60', '--cache-ttl',
-            '-select-none', '-transition-all', '--duration-300', '--ease-out',
-            '-top-0', '-left-1/2', '-bg-opacity-80', '--glow-radius',
-            '-text-xs', '-hover:underline', '-group-hover', '--dark-mode'
+            '--socket-timeout', '--cors-allow', '-relative', '-absolute', '-cursor-pointer',
+            '--active-state', '--filter-drop-shadow', '-translate-y-2', '--mqtt-broker',
+            '--firmware-v1.4', '--packet-size', '--baud-115200', '--pin-mode-output',
+            '--gpio-14', '--i2c-address', '--wifi-ssid', '--docker-compose', '--k8s-pod',
+            '--nginx-reverse-proxy', '--ssl-strict', '--route-api', '--middleware-auth',
+            '--rate-limit-60', '--cache-ttl', '-select-none', '-transition-all',
+            '--duration-300', '--ease-out', '-top-0', '-left-1/2', '-bg-opacity-80',
+            '--glow-radius', '-text-xs', '-hover:underline', '-group-hover', '--dark-mode',
+            '--flex-shrink-0', '--grid-cols-4', '--overflow-hidden', '--outline-none',
+            '--pointer-events-auto', '--user-select-none', '--whitespace-nowrap',
+            '--aspect-ratio-1', '--scroll-smooth', '--backdrop-filter', '--scale-hover'
         ];
 
         let width, height, cx, cy, radius;
-        const totalPoints = 95;
+        const totalPoints = 220; // High density cloud
         const points = [];
 
         // Fibonacci sphere point distribution
@@ -3000,33 +3005,35 @@
             const x = Math.cos(theta) * radiusAtY;
             const z = Math.sin(theta) * radiusAtY;
 
-            // Most points are prefix tags (~82 tags), only a few are pure dots (~13 dots)
-            const isTag = i < TECH_TAGS.length;
+            // 88% are micro-token texts, 12% are subtle dots
+            const isDot = i % 8 === 0;
+            const tagText = isDot ? null : TOKEN_POOL[i % TOKEN_POOL.length];
+
             points.push({
                 x, y, z,
-                tag: isTag ? TECH_TAGS[i] : null,
-                isAccent: i % 5 === 0
+                tag: tagText,
+                isAccent: i % 9 === 0
             });
         }
 
         let rotX = 0.12;
         let rotY = 0;
         let velX = 0;
-        let velY = 0.0009; // Super slow, cinematic rightward spin
+        let velY = 0.00075; // Super slow, continuous rightward rotation
         let targetVelX = 0;
-        let targetVelY = 0.0009;
+        let targetVelY = 0.00075;
 
         function resize() {
             const rect = canvas.getBoundingClientRect();
             const dpr  = window.devicePixelRatio || 1;
-            width      = rect.width || 440;
+            width      = rect.width || 460;
             height     = rect.height || 440;
             canvas.width  = width * dpr;
             canvas.height = height * dpr;
             ctx.scale(dpr, dpr);
             cx = width / 2;
             cy = height / 2;
-            radius = Math.min(width, height) * 0.44;
+            radius = Math.min(width, height) * 0.45;
         }
         resize();
         window.addEventListener('resize', resize);
@@ -3040,15 +3047,15 @@
             const my = e.clientY - (rect.top + cy);
 
             // Gentle and smooth tilt matching mouse position in 4 directions
-            targetVelY = (mx / (width * 0.5)) * 0.0045 + 0.0009;
-            targetVelX = -(my / (height * 0.5)) * 0.0045;
+            targetVelY = (mx / (width * 0.5)) * 0.0035 + 0.00075;
+            targetVelX = -(my / (height * 0.5)) * 0.0035;
         }
 
         if (heroSection) {
             heroSection.addEventListener('mousemove', onMouseMove);
             heroSection.addEventListener('mouseleave', () => {
                 targetVelX = 0;
-                targetVelY = 0.0009; // Resume super slow spin
+                targetVelY = 0.00075; // Resume super slow spin
             });
         }
 
@@ -3084,7 +3091,7 @@
                 const z2 = -x0 * sinY + z1 * cosY;
 
                 // Perspective projection
-                const fov = 400;
+                const fov = 420;
                 const scale = fov / (fov + z2);
                 const px = cx + x2 * scale;
                 const py = cy + y1 * scale;
@@ -3101,53 +3108,31 @@
             // Sort by depth (render back points first)
             projected.sort((a, b) => a.z - b.z);
 
-            // 1. Draw subtle mesh lines between close points
-            for (let i = 0; i < projected.length; i++) {
-                const p1 = projected[i];
-                if (p1.depth < 0.28) continue; // Skip lines in the far back
-
-                for (let j = i + 1; j < projected.length; j++) {
-                    const p2 = projected[j];
-                    const dx = p1.px - p2.px;
-                    const dy = p1.py - p2.py;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    if (dist < 46) {
-                        const alpha = (1 - dist / 46) * p1.depth * 0.12;
-                        ctx.beginPath();
-                        ctx.moveTo(p1.px, p1.py);
-                        ctx.lineTo(p2.px, p2.py);
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha.toFixed(3)})`;
-                        ctx.lineWidth = 0.6;
-                        ctx.stroke();
-                    }
-                }
-            }
-
-            // 2. Draw prefix tokens and dots
+            // Draw micro prefix tokens and subtle dots
             for (let i = 0; i < projected.length; i++) {
                 const p = projected[i];
                 const d = Math.max(0.04, Math.min(1, p.depth));
 
                 if (p.tag) {
-                    // Prefix code token
-                    const fontSize = Math.round(7.5 + d * 3.5);
-                    ctx.font = `${p.isAccent ? '600' : '400'} ${fontSize}px 'DM Sans', 'Inter', monospace, sans-serif`;
+                    // Tiny micro-token text (4.5px - 8.5px)
+                    const fontSize = (4.5 + d * 4.0).toFixed(1);
+                    ctx.font = `${p.isAccent ? '600' : '400'} ${fontSize}px 'DM Sans', 'Inter', -apple-system, sans-serif`;
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
 
                     if (p.isAccent) {
-                        ctx.fillStyle = `rgba(217, 119, 6, ${(d * 0.9).toFixed(2)})`;
+                        ctx.fillStyle = `rgba(217, 119, 6, ${(d * 0.85).toFixed(2)})`;
                     } else {
-                        ctx.fillStyle = `rgba(200, 198, 190, ${(d * 0.72).toFixed(2)})`;
+                        // Soft white/zinc fading into distance
+                        ctx.fillStyle = `rgba(215, 213, 205, ${(d * 0.72).toFixed(2)})`;
                     }
                     ctx.fillText(p.tag, p.px, p.py);
                 } else {
-                    // Dot particle
-                    const r = 0.7 + d * 1.4;
+                    // Micro dot particle
+                    const r = 0.5 + d * 1.0;
                     ctx.beginPath();
                     ctx.arc(p.px, p.py, r, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(255, 255, 255, ${(d * 0.35).toFixed(2)})`;
+                    ctx.fillStyle = `rgba(255, 255, 255, ${(d * 0.28).toFixed(2)})`;
                     ctx.fill();
                 }
             }
@@ -3157,6 +3142,7 @@
 
         render();
     })();
+
 
 
     // ===== CANVAS DOT RIPPLE =====
