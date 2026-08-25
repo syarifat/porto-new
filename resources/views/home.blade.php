@@ -54,39 +54,38 @@
         /* ===== FLOATING CAPSULE NAVBAR ===== */
         nav {
             position: fixed;
-            top: 1.15rem;
+            top: 1.25rem;
             left: 50%;
             transform: translateX(-50%);
-            width: calc(100% - 2.5rem);
-            max-width: 960px;
+            width: max-content;
+            max-width: calc(100vw - 2rem);
             z-index: 1000;
-            padding: 0.45rem 0.6rem 0.45rem 1.25rem;
-            background: rgba(20, 20, 18, 0.82);
+            padding: 0.35rem 0.45rem 0.35rem 1.25rem;
+            background: rgba(22, 22, 19, 0.82);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255,255,255,0.09);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 999px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .nav-container {
-            width: 100%;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 2.25rem;
         }
 
         /* Morphing Logo */
         .nav-logo-wrap {
             display: flex;
             align-items: center;
-            height: 36px;
+            height: 34px;
             position: relative;
             overflow: hidden;
             text-decoration: none;
             flex-shrink: 0;
-            min-width: 180px;
+            width: 160px;
         }
 
         .nav-logo-state {
@@ -102,7 +101,7 @@
         }
 
         .nav-logo-state.initials {
-            letter-spacing: 0.08em;
+            letter-spacing: 0.1em;
             font-weight: 700;
         }
 
@@ -134,18 +133,17 @@
 
         .nav-links {
             display: flex;
-            gap: 1.8rem;
+            gap: 1.4rem;
             list-style: none;
             align-items: center;
         }
-
 
         .nav-links a {
             color: var(--text-2);
             text-decoration: none;
             font-size: 0.78rem;
             font-weight: 500;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.01em;
             transition: color 0.2s;
         }
 
@@ -158,15 +156,16 @@
             display: inline-flex;
             align-items: center;
             gap: 0.35rem;
-            background: #f0eee6;
+            background: #ededec;
             color: #121210 !important;
             font-size: 0.78rem;
             font-weight: 600;
-            padding: 0.42rem 1rem;
+            padding: 0.42rem 1.15rem;
             border-radius: 999px;
             text-decoration: none;
             transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
             white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .nav-cta:hover {
@@ -193,6 +192,7 @@
             border-radius: 1px;
             transition: all 0.3s;
         }
+
 
 
         /* ===== HERO ===== */
@@ -1715,7 +1715,19 @@
             nav {
                 top: 0.75rem;
                 width: calc(100% - 1.5rem);
+                max-width: 100%;
                 padding: 0.35rem 0.5rem 0.35rem 1rem;
+            }
+
+            .nav-container {
+                width: 100%;
+                justify-content: space-between;
+                gap: 0;
+            }
+
+            .nav-logo-wrap {
+                width: auto;
+                max-width: 170px;
             }
 
             .nav-links {
@@ -1733,6 +1745,7 @@
                 overflow: hidden;
                 box-shadow: 0 12px 30px rgba(0,0,0,0.6);
             }
+
 
             .nav-links li              { border-bottom: 1px solid var(--border); width: 100%; }
             .nav-links a               { display: block; padding: 0.85rem 1.25rem; font-size: 0.85rem; }
@@ -2038,7 +2051,7 @@
 
         <!-- Right Pill CTA -->
         <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <a href="https://wa.me/6285748057117" target="_blank" rel="noopener" class="nav-cta">
+            <a href="https://wa.me/6287842949212" target="_blank" rel="noopener" class="nav-cta">
                 Kontak <span style="font-family: sans-serif; font-size: 0.85em;">→</span>
             </a>
             <button class="nav-hamburger" id="hamburger" aria-label="Menu">
