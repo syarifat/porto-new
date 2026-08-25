@@ -200,8 +200,9 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 7rem 2.5rem 5rem;
+            padding: 7.5rem 2.5rem 5rem;
             position: relative;
+            overflow: hidden;
         }
 
         .hero-inner {
@@ -209,64 +210,53 @@
             margin: 0 auto;
             width: 100%;
             display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 5rem;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 3.5rem;
             align-items: center;
-        }
-
-        .hero-eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-size: 0.72rem;
-            font-weight: 500;
-            letter-spacing: 0.09em;
-            text-transform: uppercase;
-            color: var(--text-3);
-            margin-bottom: 2rem;
-        }
-
-        .hero-eyebrow::before {
-            content: '';
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            background: var(--green);
-            border-radius: 50%;
-            animation: blink 2.8s ease-in-out infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.2; }
         }
 
         h1.hero-name {
             font-family: 'Inter', sans-serif;
-            font-size: clamp(3.4rem, 6.5vw, 6.5rem);
+            font-size: clamp(2.4rem, 5.2vw, 4.4rem);
             font-weight: 800;
-            line-height: 0.93;
-            letter-spacing: -0.04em;
+            line-height: 1.08;
+            letter-spacing: -0.035em;
             color: var(--text-1);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         h1.hero-name .dim { color: var(--text-3); }
 
         .hero-desc {
-            font-size: 1rem;
+            font-size: 0.98rem;
             color: var(--text-2);
-            line-height: 1.78;
-            max-width: 460px;
+            line-height: 1.75;
+            max-width: 480px;
             font-weight: 300;
+            margin-bottom: 2.25rem;
         }
 
-        /* Right column */
-        .hero-right {
+        /* 3D Globe Container */
+        .hero-globe-wrap {
+            position: relative;
+            width: 100%;
+            height: 440px;
             display: flex;
-            flex-direction: column;
-            gap: 1.75rem;
+            align-items: center;
+            justify-content: center;
         }
+
+        #hero-globe-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            cursor: grab;
+        }
+
+        #hero-globe-canvas:active {
+            cursor: grabbing;
+        }
+
 
         .avail-badge {
             display: inline-flex;
@@ -2066,53 +2056,30 @@
 <section id="hero">
     <div class="hero-inner">
 
-        <!-- Left: big name -->
+        <!-- Left: Statement Headline -->
         <div>
             <h1 class="hero-name">
-                Syarif<br>
-                Ahsani<br>
-                <span class="dim">Taqwim</span>
+                Full-Stack Developer<br>
+                <span class="dim">&amp; IoT Engineer.</span>
             </h1>
             <p class="hero-desc">
-                Saya bangun hal-hal yang benar-benar berjalan. Dari server fisik, rangkaian IoT, sampai interface yang nyaman dipakai orang.
+                Membangun sistem end-to-end yang benar-benar berjalan — dari infrastruktur server fisik, firmware IoT terdistribusi, hingga interface web &amp; mobile modern.
             </p>
-        </div>
-
-        <!-- Right: info & CTA -->
-        <div class="hero-right">
-            <div class="hero-roles">
-                <div class="role-row">Full-Stack Developer</div>
-                <div class="role-row">IoT Engineer</div>
-                <div class="role-row">IT Infrastructure &amp; DevOps</div>
-            </div>
-
-            <div class="hero-meta">
-                <div class="meta-row">
-                    <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    Tulungagung, Jawa Timur
-                </div>
-                <div class="meta-row">
-                    <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                    <a href="mailto:syarifahsanit@gmail.com" id="email-link">syarifahsanit@gmail.com</a>
-                </div>
-                <div class="meta-row">
-                    <svg width="11" height="11" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                    <a href="https://instagram.com/syariif.at" target="_blank" rel="noopener" id="instagram-link">@syariif.at</a>
-                </div>
-                <div class="meta-row">
-                    <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/></svg>
-                    +62 878-4294-9212
-                </div>
-            </div>
-
             <div class="hero-actions">
                 <a href="#timeline" class="btn-primary" id="view-projects-btn">Lihat Proyek</a>
-                <a href="mailto:syarifahsanit@gmail.com" class="btn-ghost" id="contact-btn">Hubungi Saya →</a>
+                <a href="https://wa.me/6287842949212" target="_blank" rel="noopener" class="btn-ghost" id="contact-btn">Hubungi Saya →</a>
             </div>
         </div>
+
+        <!-- Right: 3D Interactive Globe -->
+        <div class="hero-globe-wrap" id="heroGlobeWrap">
+            <canvas id="hero-globe-canvas"></canvas>
+        </div>
+
     </div>
     <div class="scroll-hint">Gulir ke bawah</div>
 </section>
+
 
 <div class="section-rule"></div>
 
@@ -2990,14 +2957,204 @@
         sendAiMessage();
     };
 
+    // ===== 3D INTERACTIVE TECH GLOBE =====
+    (function() {
+        const canvas = document.getElementById('hero-globe-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+
+        const TECH_TAGS = [
+            'Full-Stack', 'IoT', 'ESP32', 'Laravel', 'PHP', 'Golang',
+            'Docker', 'DevOps', 'Linux', 'Cisco', 'Cloudflare', 'Next.js',
+            'REST API', 'MySQL', 'MQTT', 'WebSocket', 'Microservices',
+            'Hardware', 'SysAdmin', 'Firmware', 'Python', 'Networking'
+        ];
+
+        let width, height, cx, cy, radius;
+        const totalPoints = 90;
+        const points = [];
+
+        // Fibonacci sphere point distribution
+        const phi = Math.PI * (3 - Math.sqrt(5)); // Golden angle
+        for (let i = 0; i < totalPoints; i++) {
+            const y = 1 - (i / (totalPoints - 1)) * 2; // y goes from 1 to -1
+            const radiusAtY = Math.sqrt(1 - y * y);
+            const theta = phi * i;
+            const x = Math.cos(theta) * radiusAtY;
+            const z = Math.sin(theta) * radiusAtY;
+
+            points.push({
+                x, y, z,
+                tag: i < TECH_TAGS.length ? TECH_TAGS[i] : null,
+                isAccent: i % 4 === 0
+            });
+        }
+
+        let rotX = 0.15;
+        let rotY = 0;
+        let velX = 0;
+        let velY = 0.0035; // Default spin to the right
+        let targetVelX = 0;
+        let targetVelY = 0.0035;
+
+        function resize() {
+            const rect = canvas.getBoundingClientRect();
+            const dpr  = window.devicePixelRatio || 1;
+            width      = rect.width || 420;
+            height     = rect.height || 440;
+            canvas.width  = width * dpr;
+            canvas.height = height * dpr;
+            ctx.scale(dpr, dpr);
+            cx = width / 2;
+            cy = height / 2;
+            radius = Math.min(width, height) * 0.42;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        // Mouse tracking across hero container
+        const heroSection = document.getElementById('hero');
+        let mouseInside = false;
+
+        function onMouseMove(e) {
+            const rect = canvas.getBoundingClientRect();
+            const mx = e.clientX - (rect.left + cx);
+            const my = e.clientY - (rect.top + cy);
+
+            // Responsive tilt & spin matching mouse position in all 4 directions
+            targetVelY = (mx / (width * 0.5)) * 0.016 + 0.003;
+            targetVelX = -(my / (height * 0.5)) * 0.016;
+        }
+
+        if (heroSection) {
+            heroSection.addEventListener('mousemove', onMouseMove);
+            heroSection.addEventListener('mouseenter', () => { mouseInside = true; });
+            heroSection.addEventListener('mouseleave', () => {
+                mouseInside = false;
+                targetVelX = 0;
+                targetVelY = 0.0035; // Resume smooth right spin
+            });
+        }
+
+        function render() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Inertia smoothing (lerp)
+            velX += (targetVelX - velX) * 0.06;
+            velY += (targetVelY - velY) * 0.06;
+            rotX += velX;
+            rotY += velY;
+
+            // Rotation matrices
+            const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
+            const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+
+            const projected = [];
+
+            for (let i = 0; i < points.length; i++) {
+                const p = points[i];
+
+                // 3D coordinates scaled to radius
+                const x0 = p.x * radius;
+                const y0 = p.y * radius;
+                const z0 = p.z * radius;
+
+                // Rotate around X (pitch)
+                const y1 = y0 * cosX - z0 * sinX;
+                const z1 = y0 * sinX + z0 * cosX;
+
+                // Rotate around Y (yaw)
+                const x2 = x0 * cosY + z1 * sinY;
+                const z2 = -x0 * sinY + z1 * cosY;
+
+                // Perspective projection
+                const fov = 380;
+                const scale = fov / (fov + z2);
+                const px = cx + x2 * scale;
+                const py = cy + y1 * scale;
+
+                // Depth factor: 0 (furthest back) to 1 (closest front)
+                const depth = (z2 + radius) / (2 * radius);
+
+                projected.push({
+                    px, py, z: z2, depth, scale,
+                    tag: p.tag, isAccent: p.isAccent
+                });
+            }
+
+            // Sort by depth (render back points first)
+            projected.sort((a, b) => a.z - b.z);
+
+            // 1. Draw subtle mesh lines between close points
+            for (let i = 0; i < projected.length; i++) {
+                const p1 = projected[i];
+                if (p1.depth < 0.2) continue; // Skip lines in the far back
+
+                for (let j = i + 1; j < projected.length; j++) {
+                    const p2 = projected[j];
+                    const dx = p1.px - p2.px;
+                    const dy = p1.py - p2.py;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 55) {
+                        const alpha = (1 - dist / 55) * p1.depth * 0.15;
+                        ctx.beginPath();
+                        ctx.moveTo(p1.px, p1.py);
+                        ctx.lineTo(p2.px, p2.py);
+                        ctx.strokeStyle = `rgba(217, 119, 6, ${alpha.toFixed(3)})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // 2. Draw nodes and tags
+            for (let i = 0; i < projected.length; i++) {
+                const p = projected[i];
+                const d = Math.max(0.05, Math.min(1, p.depth));
+
+                if (p.tag) {
+                    // Tech keyword node
+                    const fontSize = Math.round(9 + d * 3.5);
+                    ctx.font = `${p.isAccent ? '600' : '500'} ${fontSize}px 'Inter', sans-serif`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+
+                    if (p.isAccent) {
+                        ctx.fillStyle = `rgba(245, 158, 11, ${(d * 0.95).toFixed(2)})`;
+                    } else {
+                        ctx.fillStyle = `rgba(220, 218, 212, ${(d * 0.85).toFixed(2)})`;
+                    }
+                    ctx.fillText(p.tag, p.px, p.py);
+                } else {
+                    // Particle dot
+                    const r = 0.8 + d * 1.8;
+                    ctx.beginPath();
+                    ctx.arc(p.px, p.py, r, 0, Math.PI * 2);
+                    if (p.isAccent && d > 0.4) {
+                        ctx.fillStyle = `rgba(217, 119, 6, ${(d * 0.7).toFixed(2)})`;
+                    } else {
+                        ctx.fillStyle = `rgba(255, 255, 255, ${(d * 0.45).toFixed(2)})`;
+                    }
+                    ctx.fill();
+                }
+            }
+
+            requestAnimationFrame(render);
+        }
+
+        render();
+    })();
+
     // ===== CANVAS DOT RIPPLE =====
     (function() {
         const canvas = document.getElementById('dot-canvas');
+        if (!canvas) return;
         const ctx    = canvas.getContext('2d');
-        const S      = 26;        // grid spacing (px)
-        const DOT_R  = 0.85;     // dot radius
-        const WAVE_R = 160;      // ripple influence radius (px)
-        const BASE_A = 0.04;     // base dot opacity
+        const S      = 28;        // grid spacing (px)
+        const DOT_R  = 0.8;       // dot radius
+        const WAVE_R = 150;      // ripple influence radius (px)
+        const BASE_A = 0.035;    // base dot opacity
         let mx = -9999, my = -9999;
 
         function resize() {
@@ -3029,20 +3186,16 @@
                     let ox = 0, oy = 0;
 
                     if (dist < WAVE_R) {
-                        // Quadratic falloff so edge fades smoothly
                         const norm    = dist / WAVE_R;
                         const falloff = (1 - norm) * (1 - norm);
-                        // Phase: rings travel outward over time
                         const phase   = dist * 0.1 - ts * 0.0038;
                         const wave    = Math.sin(phase) * falloff;
 
-                        // Brightness oscillates around base
-                        alpha = BASE_A + wave * 0.20;
-                        alpha = Math.max(0.01, Math.min(0.28, alpha));
+                        alpha = BASE_A + wave * 0.18;
+                        alpha = Math.max(0.01, Math.min(0.24, alpha));
 
-                        // Slight radial displacement — dots push in/out
                         if (dist > 1) {
-                            const push = wave * 2.8;
+                            const push = wave * 2.5;
                             ox = (dx / dist) * push;
                             oy = (dy / dist) * push;
                         }
@@ -3060,6 +3213,7 @@
 
         requestAnimationFrame(draw);
     })();
+
 </script>
 </body>
 </html>
