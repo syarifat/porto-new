@@ -367,9 +367,13 @@
             transition-delay: 0.04s;
         }
 
-        /* Hero GitHub Pill */
+        /* Hero Social Pills (GitHub & Instagram) */
         .hero-actions-wrap {
             margin-top: 1.75rem;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
             opacity: 0;
             transform: translateY(20px);
             filter: blur(6px);
@@ -394,7 +398,7 @@
             transition-delay: 0.02s;
         }
 
-        .hero-github-pill {
+        .hero-social-pill {
             display: inline-flex;
             align-items: center;
             gap: 0.65rem;
@@ -414,19 +418,19 @@
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
         }
 
-        .hero-github-pill svg {
+        .hero-social-pill svg {
             color: var(--text-1);
             transition: transform 0.3s ease, color 0.3s ease;
             flex-shrink: 0;
         }
 
-        .hero-github-pill .gh-arrow {
+        .hero-social-pill .social-arrow {
             color: var(--text-3);
             font-size: 0.9rem;
             transition: transform 0.3s ease, color 0.3s ease;
         }
 
-        .hero-github-pill:hover {
+        .hero-social-pill:hover {
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(217, 119, 6, 0.5);
             color: #ffffff;
@@ -434,15 +438,26 @@
             box-shadow: 0 8px 24px rgba(217, 119, 6, 0.2), 0 0 0 1px rgba(217, 119, 6, 0.25);
         }
 
-        .hero-github-pill:hover svg {
+        .hero-social-pill:hover svg {
             color: var(--accent);
             transform: scale(1.1);
         }
 
-        .hero-github-pill:hover .gh-arrow {
+        .hero-social-pill:hover .social-arrow {
             color: var(--accent);
             transform: translate(2px, -2px);
         }
+
+        .hero-ig-pill:hover {
+            border-color: rgba(225, 48, 108, 0.6);
+            box-shadow: 0 8px 24px rgba(225, 48, 108, 0.2), 0 0 0 1px rgba(225, 48, 108, 0.25);
+        }
+
+        .hero-ig-pill:hover svg,
+        .hero-ig-pill:hover .social-arrow {
+            color: #e1306c;
+        }
+
 
         /* 3D Globe Container */
 
@@ -3067,12 +3082,18 @@
             </p>
 
             <div class="hero-actions-wrap">
-                <a href="https://github.com/syarifat" target="_blank" rel="noopener noreferrer" class="hero-github-pill" aria-label="Kunjungi Profil GitHub Syarif">
+                <a href="https://github.com/syarifat" target="_blank" rel="noopener noreferrer" class="hero-social-pill hero-github-pill" aria-label="Kunjungi Profil GitHub Syarif">
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                     <span class="gh-text">github.com/syarifat</span>
-                    <span class="gh-arrow">↗</span>
+                    <span class="social-arrow">↗</span>
+                </a>
+                <a href="https://instagram.com/syariif.at" target="_blank" rel="noopener noreferrer" class="hero-social-pill hero-ig-pill" aria-label="Kunjungi Profil Instagram Syarif">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                    <span>@syariif.at</span>
+                    <span class="social-arrow">↗</span>
                 </a>
             </div>
+
 
         </div>
 
