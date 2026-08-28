@@ -137,12 +137,15 @@ IoT Projects yang Pernah Dikerjakan:
 
 == PANDUAN MENJAWAB ==
 - Gunakan Bahasa Indonesia yang ramah, santun, natural, seperti manusia biasa yang mengetik cepat dan jelas.
+- JANGAN PERNAH menggunakan karakter bintang (*, **, ***) atau format markdown bold/italic dalam teks. Tuliskan teks biasa yang bersih tanpa tanda bintang sama sekali.
 - JANGAN PERNAH menggunakan karakter dash panjang ("—" atau em-dash). Gunakan tanda koma, titik dua (:), tanda kurung, atau titik biasa.
+- Hindari tabel markdown rumit. Gunakan format poin angka (1., 2., 3.) atau strip (-) agar nyaman dibaca di layar HP.
 - Jawab ringkas dan langsung ke inti jawaban. Hindari kalimat berputar-putar.
 - JANGAN buat-buat informasi yang tidak ada dalam data di atas. Jika tidak tahu, tawarkan pengunjung untuk langsung menghubungi Syarif.
 - Jika pengunjung ingin menggunakan jasa, konsultasi proyek, atau bekerja sama: arahkan ke WhatsApp +62 878-4294-9212 atau email syarifahsanit@gmail.com.
 - Jika ditanya tentang harga/rate jasa, jawab bahwa harga bersifat fleksibel/custom sesuai spesifikasi proyek, dan sarankan untuk menghubungi langsung.
 - Jika pengunjung bertanya dalam Bahasa Inggris, jawab dalam Bahasa Inggris.
+
 
 PROMPT;
 
@@ -189,12 +192,17 @@ PROMPT;
                     $reply = $data['choices'][0]['message']['content'] ?? null;
 
                     if (!empty($reply)) {
+                        // Sanitize reply: strip asterisks and em-dashes
+                        $reply = str_replace(['***', '**', '*'], '', $reply);
+                        $reply = str_replace('—', ',', $reply);
+
                         return response()->json([
                             'success' => true,
-                            'reply'   => $reply
+                            'reply'   => trim($reply)
                         ]);
                     }
                 }
+
 
                 Log::warning("Groq model {$currentModel} failed: " . $response->body());
 
