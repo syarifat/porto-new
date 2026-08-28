@@ -750,7 +750,20 @@
             background: var(--accent);
         }
 
-        /* 4-Phases Workflow Grid (Image 3 Style) */
+        /* ===== ALTERNATING SECTION THEME SYSTEM (OPTION 1) ===== */
+        .section-warm-amber {
+            background: radial-gradient(circle at 85% 15%, rgba(217, 119, 6, 0.08) 0%, rgba(20, 16, 11, 0.85) 45%, rgba(12, 11, 9, 0.98) 100%);
+            border-top: 1px solid rgba(217, 119, 6, 0.12);
+            border-bottom: 1px solid rgba(217, 119, 6, 0.12);
+            position: relative;
+        }
+
+        .section-deep-studio {
+            background: #0b0b09;
+            position: relative;
+        }
+
+        /* 4-Phases Workflow Grid (Warm Amber Cards) */
         .process-header-wrap {
             margin-top: 3.5rem;
             margin-bottom: 2rem;
@@ -763,8 +776,10 @@
         }
 
         .process-card {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.07);
+            background: rgba(26, 21, 15, 0.65);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(217, 119, 6, 0.16);
             border-radius: var(--r-lg);
             padding: 1.75rem 1.4rem;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -774,11 +789,12 @@
         }
 
         .process-card:hover {
-            border-color: rgba(217, 119, 6, 0.4);
-            background: rgba(255,255,255,0.04);
+            border-color: rgba(217, 119, 6, 0.55);
+            background: rgba(36, 28, 18, 0.9);
             transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            box-shadow: 0 14px 35px rgba(217, 119, 6, 0.16), 0 0 0 1px rgba(217, 119, 6, 0.2);
         }
+
 
         .process-card-num {
             font-family: 'Inter', sans-serif;
@@ -924,22 +940,26 @@
         }
 
         .faq-item {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.07);
+            background: rgba(26, 21, 15, 0.65);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(217, 119, 6, 0.15);
             border-radius: var(--r-lg);
             overflow: hidden;
-            transition: border-color 0.25s ease, background 0.25s ease;
+            transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
         }
 
         .faq-item:hover {
-            border-color: rgba(255,255,255,0.15);
-            background: rgba(255,255,255,0.035);
+            border-color: rgba(217, 119, 6, 0.4);
+            background: rgba(36, 28, 18, 0.85);
         }
 
         .faq-item.open {
-            border-color: rgba(217, 119, 6, 0.4);
-            background: rgba(255,255,255,0.035);
+            border-color: var(--accent);
+            background: rgba(36, 28, 18, 0.95);
+            box-shadow: 0 10px 30px rgba(217, 119, 6, 0.15);
         }
+
 
         .faq-btn {
             width: 100%;
@@ -3060,8 +3080,9 @@
 <div class="section-rule"></div>
 
 <!-- About -->
-<section class="site-section" id="about">
+<section class="site-section section-warm-amber" id="about">
     <div class="about-layout">
+
         <div class="fade-up">
             <div class="section-label">
                 <span class="section-num">01</span>
@@ -3123,8 +3144,9 @@
 <div class="section-rule"></div>
 
 <!-- Skills / Tech Sets -->
-<section class="site-section" id="skills">
+<section class="site-section section-deep-studio" id="skills">
     <div class="section-label fade-up">
+
         <span class="section-num">02</span>
         <span class="section-tag-txt">Area Keahlian</span>
     </div>
@@ -3323,8 +3345,9 @@
 <div class="section-rule"></div>
 
 <!-- Certificates -->
-<section class="site-section" id="certificates">
+<section class="site-section section-deep-studio" id="certificates">
     <div class="certs-header-row fade-up">
+
         <div>
             <div class="section-label">
                 <span class="section-num">04</span>
@@ -3412,8 +3435,9 @@
 <div class="section-rule"></div>
 
 <!-- FAQ Accordion (Image 3 Metacci Style) -->
-<section class="site-section" id="faq">
+<section class="site-section section-warm-amber" id="faq">
     <div class="section-label fade-up" style="justify-content: center;">
+
         <span class="section-num">05</span>
         <span class="section-tag-txt">Tanya Jawab</span>
     </div>
