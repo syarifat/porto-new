@@ -166,45 +166,49 @@ PROMPT;
         // Add latest message
         $messages[] = ['role' => 'user', 'content' => $userMessage];
 
-        // Send request to OpenRouter
-        try {
-            $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . $apiKey,
-                'Content-Type'  => 'application/json',
-                'HTTP-Referer'  => config('app.url', 'https://portfolio.satcloud.tech'),
-                'X-Title'       => 'Syarif Portfolio AI',
-            ])
-            ->timeout(50)
-            ->post('https://openrouter.ai/api/v1/chat/completions', [
-                'model'       => $model,
-                'messages'    => $messages,
-                'temperature' => 0.65,
-                'max_tokens'  => 600,
-            ]);
+        // Send request to OpenRouter (Primary model + Free model failover)
+        $modelsToTry = array_unique([$model, 'minimax/minimax-m2.7:free']);
 
-            if ($response->successful()) {
-                $data = $response->json();
-                $reply = $data['choices'][0]['message']['content'] ?? 'Maaf, saya tidak dapat memproses jawaban saat ini.';
-
-                return response()->json([
-                    'success' => true,
-                    'reply'   => $reply
+        foreach ($modelsToTry as $currentModel) {
+            try {
+                $response = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . $apiKey,
+                    'Content-Type'  => 'application/json',
+                    'HTTP-Referer'  => config('app.url', 'https://portfolio.satcloud.tech'),
+                    'X-Title'       => 'Syarif Portfolio AI',
+                ])
+                ->timeout(12)
+                ->post('https://openrouter.ai/api/v1/chat/completions', [
+                    'model'       => $currentModel,
+                    'messages'    => $messages,
+                    'temperature' => 0.65,
+                    'max_tokens'  => 600,
                 ]);
+
+                if ($response->successful()) {
+                    $data = $response->json();
+                    $reply = $data['choices'][0]['message']['content'] ?? null;
+
+                    if (!empty($reply)) {
+                        return response()->json([
+                            'success' => true,
+                            'reply'   => $reply
+                        ]);
+                    }
+                }
+
+                Log::warning("OpenRouter model {$currentModel} failed: " . $response->body());
+
+            } catch (\Throwable $e) {
+                Log::warning("OpenRouter model {$currentModel} exception: " . $e->getMessage());
             }
-
-            Log::error('OpenRouter API Error: ' . $response->body());
-            return response()->json([
-                'success' => false,
-                'error'   => 'Gagal mendapat respons dari OpenRouter. Silakan coba beberapa saat lagi.'
-            ], 500);
-
-        } catch (\Throwable $e) {
-            Log::error('AIChat OpenRouter Exception: ' . $e->getMessage());
-            return response()->json([
-                'success' => false,
-                'error'   => 'Terjadi kesalahan koneksi ke OpenRouter API.'
-            ], 500);
         }
+
+        return response()->json([
+            'success' => false,
+            'error'   => 'Layanan AI OpenRouter sedang mengalami antrean tinggi. Silakan coba sesaat lagi.'
+        ], 500);
+
 
 
 
