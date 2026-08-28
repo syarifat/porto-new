@@ -95,16 +95,24 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
 
         body {
             font-family: 'DM Sans', sans-serif;
             background-color: var(--bg);
             color: var(--text-1);
+            width: 100%;
+            max-width: 100%;
             overflow-x: hidden;
             line-height: 1.65;
             font-size: 15px;
         }
+
 
         /* ===== SCROLLBAR ===== */
         ::-webkit-scrollbar { width: 4px; }
@@ -2244,22 +2252,43 @@
             z-index: 1;
         }
 
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 920px) {
-            .hero-inner        { grid-template-columns: 1fr; gap: 2.5rem; }
-            .about-layout      { grid-template-columns: 1fr; gap: 3rem; }
-            .bento-grid        { grid-template-columns: 1fr 1fr; }
-            .bento-card.wide   { grid-column: span 2; }
-            .bento-card.tall   { grid-row: span 1; }
+        /* ===== FULL MOBILE & TABLET RESPONSIVE SYSTEM ===== */
+        @media (max-width: 1024px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .hero-globe-wrap {
+                height: 380px;
+                max-width: 440px;
+                margin: 0 auto;
+            }
+
+            .about-layout {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+                margin-bottom: 3rem;
+            }
+
+            .process-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .skills-system-grid {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
         }
 
         @media (max-width: 768px) {
-            /* Nav */
+            /* Capsule Nav */
             nav {
-                top: 0.75rem;
-                width: calc(100% - 1.5rem);
+                top: 0.6rem;
+                width: calc(100% - 1.25rem);
                 max-width: 100%;
-                padding: 0.35rem 0.5rem 0.35rem 1rem;
+                padding: 0.35rem 0.6rem 0.35rem 1rem;
             }
 
             .nav-container {
@@ -2269,94 +2298,413 @@
             }
 
             .nav-logo-wrap {
-                width: auto;
-                max-width: 170px;
+                width: 135px;
+                height: 30px;
+            }
+
+            .nav-logo-state {
+                font-size: 0.76rem;
             }
 
             .nav-links {
                 display: none;
                 position: absolute;
-                top: calc(100% + 0.6rem);
+                top: calc(100% + 0.5rem);
                 left: 0;
                 right: 0;
-                background: rgba(20,20,18,0.96);
-                backdrop-filter: blur(16px);
+                background: rgba(18, 18, 15, 0.98);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
                 flex-direction: column;
                 gap: 0;
                 border: 1px solid var(--border);
-                border-radius: 16px;
+                border-radius: 14px;
                 overflow: hidden;
-                box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+                box-shadow: 0 16px 36px rgba(0,0,0,0.7);
             }
 
+            .nav-links li {
+                border-bottom: 1px solid rgba(255,255,255,0.06);
+                width: 100%;
+            }
 
-            .nav-links li              { border-bottom: 1px solid var(--border); width: 100%; }
-            .nav-links a               { display: block; padding: 0.85rem 1.25rem; font-size: 0.85rem; }
-            .nav-links.open            { display: flex; }
-            .nav-hamburger             { display: flex; }
-            .nav-cta                   { display: none; }
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 0.85rem 1.25rem;
+                font-size: 0.85rem;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-hamburger {
+                display: flex;
+            }
+
+            .nav-cta {
+                display: none;
+            }
+
+            /* Sections Padding */
+            .site-section {
+                padding: 3.5rem 1.25rem;
+            }
+
+            .section-rule {
+                margin: 0 1.25rem;
+                width: auto;
+            }
 
             /* Hero */
-            #hero                      { padding: 6rem 1.5rem 4rem; }
-            .scroll-hint               { display: none; }
-            .hero-right                { gap: 1.25rem; }
-            .hero-meta                 { padding-top: 0.75rem; }
-            .meta-row                  { font-size: 0.75rem; word-break: break-all; }
+            #hero {
+                padding: 5.5rem 1.25rem 3rem;
+                min-height: auto;
+            }
 
-            /* Sections */
-            .site-section              { padding: 3.5rem 1.5rem; }
-            .section-rule              { margin: 0 1.5rem; width: auto; }
+            h1.hero-name {
+                font-size: clamp(2.2rem, 8vw, 3.2rem);
+                line-height: 1.08;
+                margin-bottom: 1.25rem;
+            }
 
-            /* About stats */
-            .stats-block               { grid-template-columns: 1fr 1fr; border: none; }
-            .stat-item                 { border: 1px solid var(--border); border-right: none; border-bottom: none; }
-            .stat-item:nth-child(2n)   { border-right: 1px solid var(--border); }
-            .stat-item:nth-child(n+3)  { border-bottom: 1px solid var(--border); }
-            .stat-item:last-child      { border-bottom: 1px solid var(--border); }
-            .stat-num                  { font-size: 2.5rem; }
+            .hero-desc {
+                font-size: 0.88rem;
+                line-height: 1.7;
+                max-width: 100%;
+                text-align: left;
+            }
 
-            /* Bento */
-            .bento-grid                { grid-template-columns: 1fr; }
-            .bento-card.wide           { grid-column: span 1; }
-            .bento-card                { padding: 1.5rem; }
+            .hero-globe-wrap {
+                height: 300px;
+                max-width: 320px;
+                margin: 1rem auto 0;
+            }
 
-            /* Tech table — horizontal scroll on mobile */
-            .tech-wrap                 { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-            .tech-tbl                  { font-size: 0.75rem; min-width: 460px; }
-            .tech-tbl th,
-            .tech-tbl td               { padding: 0.65rem 0.875rem; }
-            .tech-tbl td:first-child   { width: 135px; }
+            /* Statement / ASCII */
+            .statement-section {
+                min-height: 400px;
+                padding: 3rem 1.25rem;
+            }
 
-            /* Timeline */
-            .timeline-wrap             { padding-left: 1.5rem; }
-            .project-entry::before     { left: -1.5rem; }
+            .statement-line {
+                font-size: clamp(2.2rem, 7.5vw, 3.6rem);
+                line-height: 1.1;
+            }
 
-            /* Certs */
-            .certs-grid                { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+            /* Infinite Stats Marquee */
+            .stats-marquee-wrap {
+                padding: 0.85rem 0;
+            }
+
+            .stats-marquee-item {
+                padding: 0 1.25rem;
+                font-size: 0.78rem;
+                gap: 0.5rem;
+            }
+
+            .stats-marquee-val {
+                font-size: 0.95rem;
+            }
+
+            /* Section 01: About & 4-Phases */
+            h2.section-title {
+                font-size: clamp(1.85rem, 6.5vw, 2.6rem);
+                line-height: 1.06;
+                margin-bottom: 0.75rem;
+            }
+
+            .section-sub {
+                font-size: 0.88rem;
+                line-height: 1.65;
+            }
+
+            .about-layout {
+                gap: 1.75rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .about-quote {
+                font-size: 1.25rem;
+                line-height: 1.35;
+                margin-top: 1rem;
+                margin-bottom: 1.25rem;
+            }
+
+            .about-meta-pills {
+                gap: 0.4rem;
+                margin-top: 1.25rem;
+            }
+
+            .about-meta-pill {
+                font-size: 0.7rem;
+                padding: 0.28rem 0.65rem;
+            }
+
+            .process-header-wrap {
+                margin-top: 2.25rem;
+                margin-bottom: 1.25rem;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr;
+                gap: 0.85rem;
+            }
+
+            .process-card {
+                padding: 1.25rem 1.15rem;
+            }
+
+            .process-card-num {
+                margin-bottom: 0.75rem;
+            }
+
+            .process-card-title {
+                font-size: 0.98rem;
+            }
+
+            .process-card-desc {
+                font-size: 0.8rem;
+                line-height: 1.6;
+            }
+
+            /* Section 02: Skills */
+            .skills-system-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin-top: 1.5rem;
+            }
+
+            .skills-system-card {
+                padding: 1.4rem 1.25rem;
+                border-radius: 12px;
+            }
+
+            .skills-system-card h3 {
+                font-size: 1.15rem;
+            }
+
+            .skills-system-card p {
+                font-size: 0.82rem;
+                line-height: 1.6;
+                margin-bottom: 1.15rem;
+            }
+
+            .skill-tag-chip {
+                font-size: 0.7rem;
+                padding: 0.25rem 0.55rem;
+            }
+
+            /* Section 03: Timeline Proyek */
+            .stage-timeline-container {
+                border-radius: 12px;
+            }
+
+            .stage-timeline-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.85rem;
+                padding: 0.85rem 1rem;
+            }
+
+            .stage-stats {
+                flex-wrap: wrap;
+                gap: 0.5rem 1rem;
+                font-size: 0.72rem;
+            }
+
+            .stage-canvas {
+                height: 380px;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* Section 04: Certs Slider */
+            .certs-header-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .certs-nav-controls {
+                align-self: flex-end;
+            }
+
+            .certs-slider-track {
+                gap: 1rem;
+                padding: 0.4rem 0.15rem 0.75rem;
+            }
+
+            .cert-card {
+                flex: 0 0 82%;
+                min-width: 235px;
+            }
+
+            .cert-img-wrap {
+                height: 155px;
+            }
+
+            .cert-body {
+                padding: 0.85rem 0.95rem 1rem;
+            }
+
+            .cert-name {
+                font-size: 0.82rem;
+            }
+
+            /* Section 05: FAQ Accordion */
+            .faq-wrap {
+                margin-top: 1.75rem;
+                gap: 0.65rem;
+            }
+
+            .faq-btn {
+                padding: 1.05rem 1.15rem;
+                font-size: 0.9rem;
+                gap: 0.75rem;
+            }
+
+            .faq-content {
+                padding: 0 1.15rem;
+            }
+
+            .faq-item.open .faq-content {
+                padding-bottom: 1.15rem;
+                max-height: 360px;
+            }
+
+            .faq-content p {
+                font-size: 0.82rem;
+                line-height: 1.65;
+            }
+
+            /* Section 06: Grand Finale CTA & Footer */
+            .cta-banner {
+                padding: 3.5rem 1.25rem 3rem;
+                margin: 2rem 0;
+                border-radius: 16px;
+            }
+
+            .cta-giant-title {
+                font-size: clamp(2rem, 8vw, 2.8rem);
+                line-height: 1.1;
+                margin: 0.85rem 0 1rem;
+            }
+
+            .cta-sub {
+                font-size: 0.88rem;
+                line-height: 1.65;
+                margin-bottom: 1.75rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                width: 100%;
+                gap: 0.75rem;
+            }
+
+            .btn-primary-large,
+            .btn-ghost-large {
+                width: 100%;
+                justify-content: center;
+                font-size: 0.88rem;
+                padding: 0.85rem 1.5rem;
+            }
+
+            .footer-marquee-strip {
+                padding: 0.75rem 0;
+            }
+
+            .footer-marquee-item {
+                font-size: 0.72rem;
+                padding: 0 1rem;
+            }
+
+            footer {
+                padding: 2.25rem 1.25rem 1.5rem;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.25rem;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                gap: 0.65rem 1.25rem;
+                font-size: 0.78rem;
+            }
 
             /* Clients */
-            .clients-section           { padding: 2.5rem 1.5rem; }
-            .clients-grid              { gap: 1rem 2rem; }
+            .clients-section {
+                padding: 2.5rem 1.25rem;
+            }
 
-            /* Footer */
-            footer                     { padding: 1.5rem; }
-            .footer-inner              { flex-direction: column; align-items: flex-start; gap: 1rem; }
-            .footer-links              { flex-wrap: wrap; gap: 0.75rem 1.5rem; }
+            .clients-grid {
+                gap: 1rem 1.5rem;
+            }
+
+            /* Project Modal */
+            .proj-modal-box {
+                max-width: calc(100vw - 1.5rem);
+                margin: 0.75rem;
+                max-height: 85vh;
+                border-radius: 14px;
+            }
+
+            .proj-modal-body {
+                padding: 1.5rem 1.25rem 1.25rem;
+            }
+
+            .proj-modal-title {
+                font-size: 1.15rem;
+            }
+
+            /* AI Chat widget */
+            .ai-chat-btn {
+                bottom: 1rem;
+                right: 1rem;
+                padding: 0.55rem 0.9rem;
+                font-size: 0.78rem;
+            }
+
+            .ai-chat-box {
+                bottom: 4.25rem;
+                right: 0.65rem;
+                left: 0.65rem;
+                width: auto;
+                max-width: 100%;
+                height: 70vh;
+            }
         }
 
         @media (max-width: 480px) {
-            h1.hero-name               { font-size: 2.6rem; letter-spacing: -0.03em; }
-            h2.section-title           { font-size: 2rem; }
-            .hero-actions              { flex-direction: column; }
-            .hero-actions .btn-primary,
-            .hero-actions .btn-ghost   { width: 100%; justify-content: center; }
-            .certs-grid                { grid-template-columns: 1fr; }
-            .bento-card                { padding: 1.25rem; }
-            .stat-num                  { font-size: 2.2rem; }
-            .stat-item                 { padding: 1.25rem; }
-            .proj-top                  { flex-direction: column; gap: 0.25rem; }
-            .btn-load-more             { width: 100%; justify-content: center; }
+            h1.hero-name {
+                font-size: clamp(2rem, 9.5vw, 2.75rem);
+            }
+
+            h2.section-title {
+                font-size: clamp(1.75rem, 8vw, 2.2rem);
+            }
+
+            .about-quote {
+                font-size: 1.15rem;
+            }
+
+            .cert-card {
+                flex: 0 0 88%;
+            }
+
+            .cta-giant-title {
+                font-size: clamp(1.85rem, 8.5vw, 2.4rem);
+            }
         }
+
 
         /* Text Justification */
         p, .proj-desc, .bio-desc, .section-sub {
