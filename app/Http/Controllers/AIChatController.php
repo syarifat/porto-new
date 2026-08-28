@@ -20,36 +20,46 @@ class AIChatController extends Controller
         $userMessage = trim($request->input('message'));
         $history = $request->input('history', []);
 
-        $apiKey = env('GROQ_API_KEY');
+        $apiKey = env('OPENROUTER_API_KEY');
+        $model  = env('OPENROUTER_MODEL', 'nvidia/nemotron-3.5-lightning:free');
 
         if (!$apiKey) {
             return response()->json([
-                'error' => 'API Key Groq belum dikonfigurasi di server.'
+                'error' => 'OPENROUTER_API_KEY belum dikonfigurasi di server.'
             ], 500);
         }
 
-        // Fetch dynamic context from Database
-        $projects = Project::orderBy('start_date', 'desc')->get();
-        $certificates = Certificate::orderBy('issued_date', 'desc')->get();
 
-        $projectList = $projects->map(function ($p) {
-            $dateRange = $p->start_date ? $p->start_date->format('M Y') : '';
-            if ($p->end_date) {
-                $dateRange .= ' s/d ' . $p->end_date->format('M Y');
-            } else {
-                $dateRange .= ' s/d Sekarang';
-            }
-            $partner = $p->partner_name ? " (Mitra: {$p->partner_name})" : "";
-            $status = $p->status === 'ongoing' ? ' [Sedang Berjalan]' : ' [Selesai]';
-            $category = $p->category ? " | Kategori: {$p->category}" : "";
-            return "- {$p->title} [{$dateRange}]{$status}{$partner}{$category}: {$p->description}";
-        })->implode("\n");
 
-        $certList = $certificates->map(function ($c) {
-            $issuer = $c->issued_by ? " oleh {$c->issued_by}" : "";
-            $date = $c->issued_date ? " ({$c->issued_date->format('M Y')})" : "";
-            return "- {$c->title}{$issuer}{$date}";
-        })->implode("\n");
+        // Fetch dynamic context from Database safely
+        $projectList = '';
+        $certList = '';
+        try {
+            $projects = Project::orderBy('start_date', 'desc')->get();
+            $certificates = Certificate::orderBy('issued_date', 'desc')->get();
+
+            $projectList = $projects->map(function ($p) {
+                $dateRange = $p->start_date ? $p->start_date->format('M Y') : '';
+                if ($p->end_date) {
+                    $dateRange .= ' s/d ' . $p->end_date->format('M Y');
+                } else {
+                    $dateRange .= ' s/d Sekarang';
+                }
+                $partner = $p->partner_name ? " (Mitra: {$p->partner_name})" : "";
+                $status = $p->status === 'ongoing' ? ' [Sedang Berjalan]' : ' [Selesai]';
+                $category = $p->category ? " | Kategori: {$p->category}" : "";
+                return "- {$p->title} [{$dateRange}]{$status}{$partner}{$category}: {$p->description}";
+            })->implode("\n");
+
+            $certList = $certificates->map(function ($c) {
+                $issuer = $c->issued_by ? " oleh {$c->issued_by}" : "";
+                $date = $c->issued_date ? " ({$c->issued_date->format('M Y')})" : "";
+                return "- {$c->title}{$issuer}{$date}";
+            })->implode("\n");
+        } catch (\Throwable $e) {
+            Log::warning('AIChat Database Fetch skipped: ' . $e->getMessage());
+        }
+
 
         $systemPrompt = <<<PROMPT
 Kamu adalah "SAT Assistant", AI Asisten pribadi resmi untuk portofolio interaktif milik Syarif Ahsani Taqwim.
@@ -156,12 +166,17 @@ PROMPT;
         // Add latest message
         $messages[] = ['role' => 'user', 'content' => $userMessage];
 
+        // Send request to OpenRouter
         try {
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $apiKey,
                 'Content-Type'  => 'application/json',
-            ])->timeout(25)->post('https://api.groq.com/openai/v1/chat/completions', [
-                'model'       => 'llama-3.3-70b-versatile',
+                'HTTP-Referer'  => config('app.url', 'https://portfolio.satcloud.tech'),
+                'X-Title'       => 'Syarif Portfolio AI',
+            ])
+            ->timeout(50)
+            ->post('https://openrouter.ai/api/v1/chat/completions', [
+                'model'       => $model,
                 'messages'    => $messages,
                 'temperature' => 0.65,
                 'max_tokens'  => 600,
@@ -177,18 +192,21 @@ PROMPT;
                 ]);
             }
 
-            Log::error('Groq API Error: ' . $response->body());
+            Log::error('OpenRouter API Error: ' . $response->body());
             return response()->json([
                 'success' => false,
-                'error'   => 'Gagal mendapat respons dari AI. Silakan coba beberapa saat lagi.'
+                'error'   => 'Gagal mendapat respons dari OpenRouter. Silakan coba beberapa saat lagi.'
             ], 500);
 
-        } catch (\Exception $e) {
-            Log::error('AIChat Exception: ' . $e->getMessage());
+        } catch (\Throwable $e) {
+            Log::error('AIChat OpenRouter Exception: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'error'   => 'Terjadi kesalahan koneksi ke layanan AI.'
+                'error'   => 'Terjadi kesalahan koneksi ke OpenRouter API.'
             ], 500);
         }
+
+
+
     }
 }
