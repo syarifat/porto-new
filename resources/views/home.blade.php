@@ -3072,56 +3072,18 @@
             <div class="about-quote">
                 “Membangun sistem yang menghubungkan <span class="accent-word">dunia fisik</span> ke ekosistem digital secara terukur, aman, dan efisien.”
             </div>
-
-
-            <div style="color: var(--text-2); font-size: 0.92rem; line-height: 1.8; font-weight: 300;">
-                <p style="margin-bottom: 0.85rem;">
-                    Halo, saya <strong>Syarif Ahsani Taqwim</strong>. Saya bekerja di persimpangan antara <span style="color: var(--accent); font-weight: 500;">Full-Stack Development</span>, <span style="color: var(--accent); font-weight: 500;">Internet of Things (IoT)</span>, dan <span style="color: var(--accent); font-weight: 500;">IT Infrastructure</span>.
-                </p>
-                <p>
-                    Fokus utama saya adalah merancang dan mengimplementasikan arsitektur teknologi yang tangguh, efisien, dan langsung memberikan dampak operasional nyata bagi bisnis maupun instansi.
-                </p>
-            </div>
-
-            <div class="about-meta-pills">
-                <div class="about-meta-pill"><span class="dot"></span> Full-Stack &amp; IoT</div>
-                <div class="about-meta-pill"><span class="dot"></span> Tulungagung, Jawa Timur</div>
-                <div class="about-meta-pill"><span class="dot"></span> End-to-End Architecture</div>
-            </div>
         </div>
 
-        <div class="about-features fade-up">
-            <div class="about-card">
-                <div class="about-card-title">
-                    <span class="badge-num">01</span>
-                    <span>End-to-End System Integration</span>
-                </div>
-                <div class="about-card-desc">
-                    Merancang dari sirkuit perangkat keras fisik, firmware IoT, hingga backend API dan interface modern dalam satu ekosistem terpadu.
-                </div>
-            </div>
-
-            <div class="about-card">
-                <div class="about-card-title">
-                    <span class="badge-num">02</span>
-                    <span>Reliability &amp; Low-Latency</span>
-                </div>
-                <div class="about-card-desc">
-                    Setiap arsitektur kode dan server dibangun dengan standar keamanan teruji, performa tinggi, serta kemudahan pemeliharaan jangka panjang.
-                </div>
-            </div>
-
-            <div class="about-card">
-                <div class="about-card-title">
-                    <span class="badge-num">03</span>
-                    <span>Pragmatic &amp; User-Centric</span>
-                </div>
-                <div class="about-card-desc">
-                    Mengutamakan kegunaan praktis agar sistem canggih tetap intuitif dan mudah dioperasikan oleh pengguna akhir.
-                </div>
-            </div>
+        <div class="fade-up" style="color: var(--text-2); font-size: 0.94rem; line-height: 1.85; font-weight: 300; display: flex; flex-direction: column; justify-content: center;">
+            <p style="margin-bottom: 1rem;">
+                Halo, saya <strong>Syarif Ahsani Taqwim</strong>. Saya bekerja di persimpangan antara <span style="color: var(--accent); font-weight: 500;">Full-Stack Development</span>, <span style="color: var(--accent); font-weight: 500;">Internet of Things (IoT)</span>, dan <span style="color: var(--accent); font-weight: 500;">IT Infrastructure</span>.
+            </p>
+            <p>
+                Fokus utama saya adalah merancang dan mengimplementasikan arsitektur teknologi yang tangguh, efisien, dan langsung memberikan dampak operasional nyata bagi bisnis maupun instansi.
+            </p>
         </div>
     </div>
+
 
     <!-- 4-Phases Workflow Grid (Inspired by Metacci Image 3) -->
     <div class="process-header-wrap fade-up">
