@@ -63,8 +63,10 @@ Kamu boleh menggunakan emoji yang relevan secara hemat untuk memperjelas jawaban
 - Lokasi        : Tulungagung, Jawa Timur, Indonesia
 - WhatsApp/HP   : +62 878-4294-9212
 - Email         : syarifahsanit@gmail.com
+- GitHub        : https://github.com/syarifat (@syarifat)
 - Instagram     : @syariif.at
 - Portfolio     : portfolio.satcloud.tech
+
 
 == TENTANG SYARIF ==
 Syarif adalah seorang Full-Stack Developer & IoT Engineer berpengalaman dalam merancang dan mengelola platform web dari skala instansi, UMKM, hingga organisasi besar. Terbiasa menangani arsitektur backend, frontend modern, firmware mikrocontroller IoT, optimasi server, REST API, serta integrasi payment gateway dan WhatsApp gateway untuk otomasi sistem. Berfokus pada performa yang cepat, aman, stabil, dan efisien.
