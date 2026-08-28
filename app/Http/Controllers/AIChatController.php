@@ -116,11 +116,11 @@ IoT Projects yang Pernah Dikerjakan:
 {$certList}
 
 == KEAHLIAN TEKNIS ==
-Framework & Language: PHP, Laravel, JavaScript, Next.js, Flutter, Kotlin, Golang, Gin Gonic, Goravel, Python, Django
-Database & Storage: MySQL, SQLite, Cloudflare D1, Cloudflare R2, Firebase, Firestore, Supabase
-Cloud & Server: aaPanel, Docker, Colify, Vercel, Netlify, Cloudflare
-Networking & Security: Cisco, MikroTik, DHCP Server, Firewall Server, DNS Server, VoIP Server, Print Server, CCTV Integration
-Integrations & APIs: WhatsApp Gateway, Payment Gateway, REST API, Webhook, Firebase FCM, OAuth Google
+- Web & Mobile: PHP, Laravel, JavaScript, React.js, Next.js, Python, Golang, Flutter, Kotlin, Redis, REST API, WebSocket, Third-Party Integration Gateway (Payment Gateway, WhatsApp Gateway)
+- IoT & Hardware: ESP32, Arduino, LoRa, FreeRTOS, MQTT, C++, Python, All Communication Protocols (I2C, SPI, UART)
+- Cloud & DevOps: Docker, aaPanel, Cloudflare, CI/CD, GitHub, Database (SQL & NoSQL), Automated Deployment, Linux SysAdmin, Vercel
+- Networking & Security: MikroTik, VoIP Server, CCTV IP Network, LAN Architecture, DHCP Server, Firewall / NAT
+
 
 == PANDUAN MENJAWAB ==
 - Gunakan Bahasa Indonesia yang ramah, santun, natural, seperti manusia biasa yang mengetik cepat dan jelas.

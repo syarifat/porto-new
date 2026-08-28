@@ -3166,12 +3166,16 @@
                 <span class="skill-tag-chip">PHP</span>
                 <span class="skill-tag-chip">Laravel</span>
                 <span class="skill-tag-chip">JavaScript</span>
+                <span class="skill-tag-chip">React.js</span>
                 <span class="skill-tag-chip">Next.js</span>
+                <span class="skill-tag-chip">Python</span>
                 <span class="skill-tag-chip">Golang</span>
                 <span class="skill-tag-chip">Flutter</span>
                 <span class="skill-tag-chip">Kotlin</span>
+                <span class="skill-tag-chip">Redis</span>
                 <span class="skill-tag-chip">REST API</span>
                 <span class="skill-tag-chip">WebSocket</span>
+                <span class="skill-tag-chip">Third Party Integration</span>
             </div>
         </div>
 
@@ -3185,13 +3189,13 @@
             <p>Perancangan perangkat cerdas terintegrasi, akuisisi data sensor, automasi aktuator, dan protokol komunikasi IoT.</p>
             <div class="skills-chips-wrap">
                 <span class="skill-tag-chip">ESP32</span>
-                <span class="skill-tag-chip">ESP8266</span>
                 <span class="skill-tag-chip">Arduino</span>
-                <span class="skill-tag-chip">RFID &amp; NFC</span>
-                <span class="skill-tag-chip">HX711 Load Cell</span>
-                <span class="skill-tag-chip">MQTT Protocol</span>
-                <span class="skill-tag-chip">C / C++</span>
-                <span class="skill-tag-chip">GPS NEO-6M</span>
+                <span class="skill-tag-chip">LoRa</span>
+                <span class="skill-tag-chip">FreeRTOS</span>
+                <span class="skill-tag-chip">MQTT</span>
+                <span class="skill-tag-chip">C++</span>
+                <span class="skill-tag-chip">Python</span>
+                <span class="skill-tag-chip">Communication Protocols</span>
             </div>
         </div>
 
@@ -3204,14 +3208,15 @@
             <h3>Cloud &amp; SysAdmin</h3>
             <p>Konfigurasi server Linux fisik &amp; cloud, isolasi container Docker, optimasi web server, dan automasi deployment.</p>
             <div class="skills-chips-wrap">
-                <span class="skill-tag-chip">Linux SysAdmin</span>
                 <span class="skill-tag-chip">Docker</span>
                 <span class="skill-tag-chip">aaPanel</span>
-                <span class="skill-tag-chip">Cloudflare D1 &amp; R2</span>
-                <span class="skill-tag-chip">Nginx</span>
-                <span class="skill-tag-chip">Vercel</span>
+                <span class="skill-tag-chip">Cloudflare</span>
                 <span class="skill-tag-chip">CI / CD</span>
-                <span class="skill-tag-chip">MySQL &amp; SQLite</span>
+                <span class="skill-tag-chip">GitHub</span>
+                <span class="skill-tag-chip">Database</span>
+                <span class="skill-tag-chip">Automated Deployment</span>
+                <span class="skill-tag-chip">Linux SysAdmin</span>
+                <span class="skill-tag-chip">Vercel</span>
             </div>
         </div>
 
@@ -3224,15 +3229,15 @@
             <h3>Enterprise Networking</h3>
             <p>Pembangunan topologi jaringan LAN/WAN kantor, manajemen bandwidth MikroTik/Cisco, server VoIP, dan integrasi CCTV.</p>
             <div class="skills-chips-wrap">
-                <span class="skill-tag-chip">MikroTik RouterOS</span>
-                <span class="skill-tag-chip">Cisco Packet Tracer</span>
-                <span class="skill-tag-chip">DNS &amp; DHCP</span>
-                <span class="skill-tag-chip">Firewall / NAT</span>
+                <span class="skill-tag-chip">MikroTik</span>
                 <span class="skill-tag-chip">VoIP Server</span>
                 <span class="skill-tag-chip">CCTV IP Network</span>
-                <span class="skill-tag-chip">LAN / WAN</span>
+                <span class="skill-tag-chip">LAN Architecture</span>
+                <span class="skill-tag-chip">DHCP Server</span>
+                <span class="skill-tag-chip">Firewall / NAT</span>
             </div>
         </div>
+
     </div>
 </section>
 
