@@ -20,14 +20,15 @@ class AIChatController extends Controller
         $userMessage = trim($request->input('message'));
         $history = $request->input('history', []);
 
-        $apiKey = env('OPENROUTER_API_KEY');
-        $model  = env('OPENROUTER_MODEL', 'nvidia/nemotron-3.5-lightning:free');
+        $apiKey = env('GROQ_API_KEY');
+        $model  = env('GROQ_MODEL', 'openai/gpt-oss-120b');
 
         if (!$apiKey) {
             return response()->json([
-                'error' => 'OPENROUTER_API_KEY belum dikonfigurasi di server.'
+                'error' => 'GROQ_API_KEY belum dikonfigurasi di server.'
             ], 500);
         }
+
 
 
 
@@ -166,19 +167,17 @@ PROMPT;
         // Add latest message
         $messages[] = ['role' => 'user', 'content' => $userMessage];
 
-        // Send request to OpenRouter (Primary model + Free model failover)
-        $modelsToTry = array_unique([$model, 'minimax/minimax-m2.7:free']);
+        // Send request to Groq (Primary model + Fast model failover)
+        $modelsToTry = array_unique([$model, 'openai/gpt-oss-120b', 'qwen/qwen3.8-27b']);
 
         foreach ($modelsToTry as $currentModel) {
             try {
                 $response = Http::withHeaders([
                     'Authorization' => 'Bearer ' . $apiKey,
                     'Content-Type'  => 'application/json',
-                    'HTTP-Referer'  => config('app.url', 'https://portfolio.satcloud.tech'),
-                    'X-Title'       => 'Syarif Portfolio AI',
                 ])
-                ->timeout(12)
-                ->post('https://openrouter.ai/api/v1/chat/completions', [
+                ->timeout(20)
+                ->post('https://api.groq.com/openai/v1/chat/completions', [
                     'model'       => $currentModel,
                     'messages'    => $messages,
                     'temperature' => 0.65,
@@ -197,17 +196,18 @@ PROMPT;
                     }
                 }
 
-                Log::warning("OpenRouter model {$currentModel} failed: " . $response->body());
+                Log::warning("Groq model {$currentModel} failed: " . $response->body());
 
             } catch (\Throwable $e) {
-                Log::warning("OpenRouter model {$currentModel} exception: " . $e->getMessage());
+                Log::warning("Groq model {$currentModel} exception: " . $e->getMessage());
             }
         }
 
         return response()->json([
             'success' => false,
-            'error'   => 'Layanan AI OpenRouter sedang mengalami antrean tinggi. Silakan coba sesaat lagi.'
+            'error'   => 'Layanan AI Groq sedang sibuk. Silakan coba kirim pesan sesaat lagi.'
         ], 500);
+
 
 
 
