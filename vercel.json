@@ -6,7 +6,7 @@
             "maxDuration": 30
         }
     },
-    "buildCommand": "composer install --no-dev --prefer-dist --no-interaction && npm ci --no-interaction && npm run build",
+    "buildCommand": "npm run build",
     "outputDirectory": "public",
     "routes": [
         { "src": "/build/(.*)", "dest": "/build/$1" },
