@@ -3537,7 +3537,7 @@
         <div class="clients-grid">
             @foreach($clients as $client)
             <div class="client-item">
-                <img src="{{ asset('storage/' . $client->partner_logo) }}" alt="{{ $client->partner_name }}" class="client-logo">
+                <img src="{{ Illuminate\Support\Facades\Storage::disk('public')->url($client->partner_logo) }}" alt="{{ $client->partner_name }}" class="client-logo">
                 <span class="client-name">{{ $client->partner_name }}</span>
             </div>
             @endforeach

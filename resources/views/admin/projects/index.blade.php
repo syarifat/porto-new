@@ -48,7 +48,7 @@
                         <td>
                             @if($project->partner_logo)
                                 <div style="display:flex;align-items:center;gap:0.5rem;">
-                                    <img src="{{ asset('storage/' . $project->partner_logo) }}" alt="{{ $project->partner_name }}" style="width:28px;height:28px;object-fit:contain;border-radius:4px;background:rgba(255,255,255,0.05);">
+                                    <img src="{{ Illuminate\Support\Facades\Storage::disk('public')->url($project->partner_logo) }}" alt="{{ $project->partner_name }}" style="width:28px;height:28px;object-fit:contain;border-radius:4px;background:rgba(255,255,255,0.05);">
                                     <span style="font-size:0.85rem;">{{ $project->partner_name }}</span>
                                 </div>
                             @else

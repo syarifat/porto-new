@@ -1,0 +1,19 @@
+{
+    "version": 2,
+    "functions": {
+        "api/index.php": {
+            "runtime": "vercel-php@0.9.0",
+            "maxDuration": 30
+        }
+    },
+    "buildCommand": "composer install --no-dev --prefer-dist --no-interaction && npm ci --no-interaction && npm run build",
+    "outputDirectory": "public",
+    "routes": [
+        { "src": "/build/(.*)", "dest": "/build/$1" },
+        { "src": "/favicon.ico", "dest": "/favicon.ico" },
+        { "src": "/robots.txt", "dest": "/robots.txt" },
+        { "src": "/logosat-(.*)\\.(svg|png|jpg|jpeg|ico)", "dest": "/logosat-$1.$2" },
+        { "src": "/google(.*).html", "dest": "/google$1.html" },
+        { "src": "/(.*)", "dest": "/api/index.php" }
+    ]
+}

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Project extends Model
 {
@@ -26,7 +27,7 @@ class Project extends Model
     public function getPartnerLogoUrlAttribute(): ?string
     {
         if ($this->partner_logo) {
-            return asset('storage/' . $this->partner_logo);
+            return Storage::disk('public')->url($this->partner_logo);
         }
         return null;
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Certificate;
 use App\Models\Project;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -24,7 +25,7 @@ class HomeController extends Controller
                 'description'  => $p->description,
                 'date'         => $p->start_date->format('M Y') . ($p->end_date ? ' – ' . $p->end_date->format('M Y') : ' – Sekarang'),
                 'partner_name' => $p->partner_name,
-                'partner_logo' => $p->partner_logo ? asset('storage/' . $p->partner_logo) : null,
+                'partner_logo' => $p->partner_logo ? Storage::disk('public')->url($p->partner_logo) : null,
                 'tech_stack'   => $p->tech_stack ? array_map('trim', explode(',', $p->tech_stack)) : [],
                 'category'     => $p->category,
                 'status'       => $p->status,
@@ -47,7 +48,7 @@ class HomeController extends Controller
                 'start_year'   => (int) $p->start_date->format('Y'),
                 'start_month'  => (int) $p->start_date->format('n'),
                 'partner_name' => $p->partner_name,
-                'partner_logo' => $p->partner_logo ? asset('storage/' . $p->partner_logo) : null,
+                'partner_logo' => $p->partner_logo ? Storage::disk('public')->url($p->partner_logo) : null,
                 'tech_stack'   => $p->tech_stack ? array_map('trim', explode(',', $p->tech_stack)) : [],
                 'category'     => $p->category,
                 'status'       => $p->status,

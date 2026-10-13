@@ -78,7 +78,7 @@
                 <label class="form-label">Logo Mitra Saat Ini</label>
                 @if($project->partner_logo)
                     <div style="display:flex;align-items:center;gap:1rem;padding:1rem;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;margin-bottom:0.75rem;">
-                        <img src="{{ asset('storage/' . $project->partner_logo) }}" alt="{{ $project->partner_name }}" style="width:70px;height:50px;object-fit:contain;">
+                        <img src="{{ Illuminate\Support\Facades\Storage::disk('public')->url($project->partner_logo) }}" alt="{{ $project->partner_name }}" style="width:70px;height:50px;object-fit:contain;">
                         <div style="flex:1;">
                             <div style="font-size:0.85rem;font-weight:500;">{{ $project->partner_name }}</div>
                             <div style="font-size:0.75rem;color:var(--text-muted);">{{ $project->partner_logo }}</div>

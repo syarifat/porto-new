@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Certificate extends Model
 {
@@ -22,6 +23,6 @@ class Certificate extends Model
 
     public function getImageUrlAttribute(): string
     {
-        return asset('storage/' . $this->image_path);
+        return Storage::disk('public')->url($this->image_path);
     }
 }
