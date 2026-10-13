@@ -6,9 +6,10 @@
             "maxDuration": 30
         }
     },
+    "outputDirectory": "public",
     "routes": [
-        { "src": "/build/(.*)", "dest": "/public/build/$1" },
-        { "src": "/(favicon\\.ico|robots\\.txt|.*\\.svg|.*\\.png|.*\\.jpg|.*\\.html)", "dest": "/public/$1" },
+        { "src": "/build/(.*)", "dest": "/build/$1" },
+        { "src": "/(favicon\\.ico|robots\\.txt|.*\\.svg|.*\\.png|.*\\.jpg|.*\\.html)", "dest": "/$1" },
         { "src": "/(.*)", "dest": "/api/index.php" }
     ]
 }
