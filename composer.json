@@ -51,7 +51,7 @@
         ],
         "vercel": [
             "Composer\\Config::disableProcessTimeout",
-            "@php artisan config:cache --ansi",
+            "@php artisan package:discover --ansi",
             "npm install --ignore-scripts",
             "npm run build"
         ],
